@@ -15,10 +15,10 @@ Download:
 
 https://github.com/matth96/Leaflet-with-meteor.git
 
-Create a project:
+Go to the project:
 
 ```bash
-meteor create Interactive-map
+cd path/to/Interactive-map
 ```
 
 run meteor:
