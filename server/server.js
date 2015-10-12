@@ -20,22 +20,30 @@ var amountDataStrings = rawData.feed.entry.length
 
 //loop through data
 for (var i = 0; i < amountDataStrings; i++) {
-    var AllTrashData = rawData.feed.entry[i].content.$t
-    var SplicedTrashData = AllTrashData.split(',');
-    var street = SplicedTrashData[3].split(':')[1];
-    var houseNumber = SplicedTrashData[4].split(':')[1];
+    var AllTrashData = rawData.feed.entry[i].content.$t,
+        SplicedTrashData = AllTrashData.split(','),
+        street = SplicedTrashData[3].split(':')[1],
+        houseNumber = SplicedTrashData[4].split(':')[1];
     //    var fulness = array[11].split(':')[1];
-    //   console.log(fulness)
-
-    //create string
-    var cleanDataString = {
-        "street": street,
-        "houseNumber": houseNumber
+    //    console.log(fulness);
+    var url = "http://nominatim.openstreetmap.org/search/" + street.replace(" ", "%20") + houseNumber.replace(" ", "%20") + "Amsterdam?format=json&addressdetails=1&limit";
+    var gps = HTTP.get(url).data[0];
+    if (gps != undefined) {
+        if (gps.lat != undefined) {
+            var longitude = gps.lon,
+                latitude = gps.lat;
+            var cleanDataString = {
+                "street": street,
+                "houseNumber": houseNumber,
+                "log": longitude,
+                "lat": latitude
+            }
+            cleanData.push(cleanDataString);
+        }
     }
-     cleanData.push(cleanDataString);
 }
 
-console.log(cleanData)
+
 
 // Listen to incoming HTTP requests, can only be used on the server
 WebApp.connectHandlers.use(function (req, res, next) {
