@@ -57,29 +57,29 @@ Template.map.rendered = function () {
     map.addControl(new L.Control.Gps({
         style: markerStyle
     }));
-
-    var query = Markers.find();
-    query.observe({
-        added: function (document) {
-            var marker = L.marker(document.latlng).addTo(map)
-                .on('click', function (event) {
-                    map.removeLayer(marker);
-                    Markers.remove({
-                        _id: document._id
-                    });
-                });
-        },
-        removed: function (oldDocument) {
-            layers = map._layers;
-            var key, val;
-            for (key in layers) {
-                val = layers[key];
-                if (val._latlng) {
-                    if (val._latlng.lat === oldDocument.latlng.lat && val._latlng.lng === oldDocument.latlng.lng) {
-                        map.removeLayer(val);
-                    }
-                }
-            }
-        }
-    });
+//
+//    var query = Markers.find();
+//    query.observe({
+//        added: function (document) {
+//            var marker = L.marker(document.latlng).addTo(map)
+//                .on('click', function (event) {
+//                    map.removeLayer(marker);
+//                    Markers.remove({
+//                        _id: document._id
+//                    });
+//                });
+//        },
+//        removed: function (oldDocument) {
+//            layers = map._layers;
+//            var key, val;
+//            for (key in layers) {
+//                val = layers[key];
+//                if (val._latlng) {
+//                    if (val._latlng.lat === oldDocument.latlng.lat && val._latlng.lng === oldDocument.latlng.lng) {
+//                        map.removeLayer(val);
+//                    }
+//                }
+//            }
+//        }
+//    });
 };
