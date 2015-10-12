@@ -21,13 +21,11 @@ Template.map.rendered = function () {
 
 
     var baseLayer = L.tileLayer(
-  'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+  'http://{s}.tile.openstreetmap.se/hydda/base/{z}/{x}/{y}.png',{
     attribution: '...',
     maxZoom: 18
   }
 );
-
-
     //create leaflet map and start coordiates
     var map = L.map('map', {
     }).setView([52.3547, 4.904], 13);
