@@ -19,6 +19,27 @@ var cleanData = [];
 var amountDataStrings = rawData.feed.entry.length
 
 //loop through data
+
+//
+//// define our function with the callback argument
+//function cleanData(arg1, arg2, callback) {
+//    // this generates a random number between
+//    // arg1 and arg2
+//    var my_number = Math.ceil(Math.random() *
+//        (arg1 - arg2) + arg2);
+//    // then we're done, so we'll call the callback and
+//    // pass our result
+//    callback(my_number);
+//}
+//// call the function
+//some_function(5, 15, function (num) {
+//    // this anonymous function will run when the
+//    // callback is called
+//    console.log("callback called! " + num);
+//});
+
+
+
 for (var i = 0; i < amountDataStrings; i++) {
     var AllTrashData = rawData.feed.entry[i].content.$t
     var SplicedTrashData = AllTrashData.split(',');
@@ -32,11 +53,10 @@ for (var i = 0; i < amountDataStrings; i++) {
         "street": street,
         "houseNumber": houseNumber
     }
-
+     cleanData.push(cleanDataString);
 }
+
 console.log(cleanData)
-
-
 
 // Listen to incoming HTTP requests, can only be used on the server
 WebApp.connectHandlers.use(function (req, res, next) {
