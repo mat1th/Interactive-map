@@ -31,7 +31,7 @@ Template.map.rendered = function () {
     }).setView([52.3547, 4.904], 13);
 
     //map sort
-    L.tileLayer.provider('Thunderforest.Transport').addTo(map);
+    L.tileLayer.provider('Hydda.Base').addTo(map);
 
     //if dubble click create a marker
     map.on('dblclick', function (event) {
