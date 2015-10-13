@@ -8,40 +8,86 @@ Meteor.startup(function () {
 
 // create marker collection
 var Markers = new Meteor.Collection('markers');
-Meteor.subscribe('markers');
-
-//create data collection
-var trashesCollection = new Meteor.Collection('trashesCollection');
-Meteor.subscribe('trashesCollection');
+Meteor.subscribe("markers");
 
 //if template "map" is renderd
 Template.map.rendered = function () {
-    //url to images for map
-    L.Icon.Default.imagePath = 'packages/bevanhunt_leaflet/images';
 
+    //create data collection
+    var trashesCollection = new Meteor.Collection('trashesCollection');
+    Meteor.subscribe('trashesCollection', function () {
+        var trashesData = trashesCollection.find().fetch();
+        setTrashes(trashesData)
+    });
+
+    var setTrashes = function (trashesData) {
+        var amountTrashes = trashesData.length,
+            i = 0;
+        console.log(trashesData)
+        for (i; i < amountTrashes; i++) {
+            var longitude = trashesData[i].log;
+            var latitude = trashesData[i].lat;
+            var street = trashesData[i].street;
+
+            L.marker([latitude, longitude], {
+                icon: full
+            }).addTo(map).bindPopup(street);
+        }
+    };
+
+    //url to images for map
     var baseLayer = L.tileLayer(
         'http://{s}.tile.openstreetmap.se/hydda/base/{z}/{x}/{y}.png', {
-            attribution: '...',
-            maxZoom: 18
-        }
-    );
-    //create leaflet map and start coordiates
-    var map = L.map('map', {}).setView([52.3547, 4.904], 13);
+            attribution: 'Informotion ',
+            maxZoom: 16,
+            minZoom: 13
+        });
 
     //map sort
+    //create leaflet map and start coordiates
+    var map = L.map('map', {
+        center: [52.376956, 4.902756],
+        zoom: 14,
+        opacity: 0,
+        layers: [baseLayer]
+    });
     L.tileLayer.provider('Hydda.Base').addTo(map);
 
-    //if dubble click create a marker
-    map.on('dblclick', function (event) {
-        Markers.insert({
-            latlng: event.latlng
-        });
+    var trashIcon = L.Icon.extend({
+        options: {
+            iconSize: [20, 50],
+            shadowSize: [50, 64],
+            iconAnchor: [22, 94],
+            shadowAnchor: [4, 62],
+            popupAnchor: [-3, -76]
+        }
     });
+
+    var full = new trashIcon({
+            iconUrl: 'icons/trash.svg'
+        }),
+        halfFull = new trashIcon({
+            iconUrl: 'icons/trash.svg'
+        }),
+        empty = new trashIcon({
+            iconUrl: 'icons/trash.svg'
+        });
+
+    //    var trash = L.layerGroup([twee, drie]);
+    //    var trashFull = L.layerGroup([een, drie]);
 
     //add compass
     map.addControl(new L.Control.Compass());
-    //add current location icon
+    //
+    //    var overlayMaps = {
+    //        "trash": trash,
+    //        "trashFull": trashFull
+    //    };
 
+    //    L.control.layers(overlayMaps).addTo(map);
+
+
+    //add current location icon
     //create style of a marker
     var markerStyle = {
         radius: 25,
@@ -55,23 +101,6 @@ Template.map.rendered = function () {
     map.addControl(new L.Control.Gps({
         style: markerStyle
     }));
-
-    var trashes = trashesCollection.find();
-    trashes.observe({
-        trash: function (document) {
-            console.log(trashes.fetch());
-            var marker =
-//            var marker = L.marker(document.latlng).addTo(map)
-//                .on('click', function (event) {
-//                    map.removeLayer(marker);
-//                    Markers.remove({
-//                        _id: document._id
-//                    });
-//                });
-        }
-
-    })
-
     //    var query = Markers.find();
     //    query.observe({
     //        added: function (document) {
