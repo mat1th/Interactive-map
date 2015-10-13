@@ -5,9 +5,9 @@ Meteor.publish("markers", function () {
 });
 
 //data collection
-var data = new Meteor.Collection('data');
-Meteor.publish("data", function () {
-    return data.find();
+var trashesCollection = new Meteor.Collection('trashesCollection');
+Meteor.publish("trashesCollection", function () {
+    return trashesCollection.find();
 });
 
 var RawDataUrl,
@@ -25,8 +25,6 @@ Meteor.startup(function () {
         }
     });
 });
-
-
 var getCleanData = function (RawDataUrl, MapQuestUrl) {
     var rawData = HTTP.get(RawDataUrl).data,
         //create cleanData array
@@ -37,7 +35,7 @@ var getCleanData = function (RawDataUrl, MapQuestUrl) {
         i = 0;
 
     //loop through data
-    if (cleanData === []) {
+    if (cleanData[0] === undefined) {
         for (i; i < amountDataStrings; i++) {
             var AllTrashData = rawData.feed.entry[i].content.$t,
                 SplicedTrashData = AllTrashData.split(','),
@@ -108,13 +106,23 @@ var getCleanData = function (RawDataUrl, MapQuestUrl) {
                             "log": longitude,
                             "lat": latitude
                         }
-                    cleanData.push(cleanDataString);
-                    console.log(cleanData)
+
+                    trashesCollection.insert(cleanDataString)
+//                    if (cleanData.length === amountDataStrings) {
+//                        createApi(cleanData)
+//                    }
+
                 }
             }
         }
     }
 };
+
+//var createApi = function (cleanData) {
+//
+//
+//}
+
 
 
 
