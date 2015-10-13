@@ -10,38 +10,69 @@ Meteor.publish("data", function () {
     return data.find();
 });
 
-var rawData = HTTP.get("https://spreadsheets.google.com/feeds/list/1mkgRVyHAmTS6VhL8q74XKdsF_adAVdNvTTilJshO5pY/od6/public/values?alt=json").data;
+var RawDataUrl,
+    MapQuestUrl;
 
-//create cleanData array
-var cleanData = [];
-
-//get amount of data strings
-var amountDataStrings = rawData.feed.entry.length
-
-//loop through data
-for (var i = 0; i < amountDataStrings; i++) {
-    var AllTrashData = rawData.feed.entry[i].content.$t,
-        SplicedTrashData = AllTrashData.split(','),
-        street = SplicedTrashData[3].split(':')[1],
-        houseNumber = SplicedTrashData[4].split(':')[1];
-    //    var fulness = array[11].split(':')[1];
-    //    console.log(fulness);
-    var url = "http://nominatim.openstreetmap.org/search/" + street.replace(" ", "%20") + houseNumber.replace(" ", "%20") + "Amsterdam?format=json&addressdetails=1&limit";
-    var gps = HTTP.get(url).data[0];
-    if (gps != undefined) {
-        if (gps.lat != undefined) {
-            var longitude = gps.lon,
-                latitude = gps.lat;
-            var cleanDataString = {
-                "street": street,
-                "houseNumber": houseNumber,
-                "log": longitude,
-                "lat": latitude
-            }
-            cleanData.push(cleanDataString);
+Meteor.startup(function () {
+    HTTP.get(Meteor.absoluteUrl("url.json"), function (err, result) {
+        if (err) {
+            return err;
         }
-    }
-}
+        if (result) {
+            var RawDataUrl = result.data.RawData,
+                MapQuestUrl = result.data.MapQuest;
+            getCleanData(RawDataUrl, MapQuestUrl);
+        }
+    });
+});
+
+
+var getCleanData = function (RawDataUrl, MapQuestUrl) {
+    var rawData = HTTP.get(RawDataUrl).data,
+        //create cleanData array
+        cleanData = [],
+        //get amount of data strings
+        amountDataStrings = rawData.feed.entry.length,
+        i = 0;
+
+    //loop through data
+
+//    if (cleanData === []) {
+//        for (i; i < amountDataStrings; i++) {
+//            var AllTrashData = rawData.feed.entry[i].content.$t,
+//                SplicedTrashData = AllTrashData.split(','),
+//                city = "Amsterdam",
+//                street = SplicedTrashData[3].split(':')[1],
+//                houseNumber = SplicedTrashData[4].split(':')[1],
+//
+//                //    var fulness = array[11].split(':')[1];
+//                //    console.log(fulness);
+//
+//                url = MapQuestUrl[0] + "\"" + street.replace(" ", "%20") + houseNumber.replace(" ", "%20") + "," + city + "\"" + MapQuestUrl[1];
+//            //             var gps = HTTP.get(url).data;
+//            if (gps != undefined) {
+//                if (gps.results[0].locations[0].latLng != undefined) {
+//                    var longitude = gps.results[0].locations[0].latLng.lng,
+//                        latitude = gps.results[0].locations[0].latLng.lat,
+//                        cleanDataString = {
+//                            "street": street,
+//                            "houseNumber": houseNumber,
+//                            "log": longitude,
+//                            "lat": latitude
+//                        }
+//                    cleanData.push(cleanDataString);
+//
+//                }
+//            }
+//        }
+//    }
+};
+
+
+
+
+
+
 
 
 
