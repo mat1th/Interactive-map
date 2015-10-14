@@ -15,44 +15,56 @@ body {
 .trash {
     background: #000;
     border-radius: 50%;
+    width: 8px !important;
+    height: 8px !important;
 }
-.homepage{
+.trash:hover {
+    background: #FF7D7D;
+}
+
+.homepage {
     margin: 2em;
 }
 
-.textcenter{
+.textcenter {
     text-align: center;
 }
-.red{
-    color:#D83E41;
+
+.red {
+    color: #D83E41;
 }
-.black{
+
+.black {
     color: #343434;
 }
+
 .homepagetitle,
-.homelink{
+.homelink {
     text-transform: uppercase;
 }
-.homeaction{
+
+.homeaction {
     margin: 2em;
     font-weight: 700;
 }
 
-.homepagetitle{
+.homepagetitle {
     margin: 3em;
     font-size: 3em;
 }
-.homelink{
+
+.homelink {
     text-decoration: none;
 }
 
 .leaflet-container {
-    background-color:rgba(255,0,0,0.0);
+    background-color: rgba(255, 0, 0, 0.0);
 }
 
-.leaflet-top leaflet-left{
+.leaflet-top leaflet-left {
     display: none;
 }
+
 
 /*
 .current {
