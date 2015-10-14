@@ -29,8 +29,8 @@ var getCleanData = function (RawDataUrl, MapQuestUrl) {
     var rawData = HTTP.get(RawDataUrl).data,
         //create cleanData array
         //get amount of data strings
-        //amountDataStrings = rawData.feed.entry.length,
-        amountDataStrings = 20,
+//        amountDataStrings = rawData.feed.entry.length,
+        amountDataStrings = 210,
         i = 0;
 
     //loop through data
@@ -61,17 +61,18 @@ var getCleanData = function (RawDataUrl, MapQuestUrl) {
             }
         }
     }
-    //    } else {
-    //        var deletelength = trashesCollection.find().fetch().length;
-    //        var deletedata = trashesCollection.find().fetch();
-    //        var a = 0
-    //
-    //        for (0; i < deletelength; i++) {
-    //            trashesCollection.remove(deletedata[i]._id)
-    //            console.log(trashesCollection.find().fetch().length)
-    //        }
-    //
-    //    }
+    //if you want to clean the trashesCollection.
+//         else {
+//            var deletelength = trashesCollection.find().fetch().length;
+//            var deletedata = trashesCollection.find().fetch();
+//            var a = 0
+//
+//            for (0; i < deletelength; i++) {
+//                trashesCollection.remove(deletedata[i]._id)
+//                console.log(trashesCollection.find().fetch().length)
+//            }
+//
+//        }
 };
 
 
