@@ -32,7 +32,8 @@ Template.map.rendered = function () {
         center: [52.376956, 4.902756],
         maxZoom: 14,
         minZoom: 14,
-        zoom: 14
+        zoom: 14,
+        zoomControl:false
     });
 
     //add bounds to map
@@ -70,17 +71,15 @@ Template.map.rendered = function () {
         }
     };
 
-//Create the map of Amsterdam Centrum and add render it.
+    //Create the map of Amsterdam Centrum and add render it.
     var myStyle = {
         "fillColor": "#F0F0F0",
         "fillOpacity": 1,
         "color": "#FFFFFF"
     }
-
     var geojson;
-    
-    
-//What happens on mouseover
+
+    //What happens on mouseover
     function highlightFeature(e) {
         var layer = e.target;
 
@@ -115,10 +114,4 @@ Template.map.rendered = function () {
             onEachFeature: onEachFeature
         }).addTo(map);    
     }
-<<<<<<< Updated upstream
 };
-=======
-
-
-};
->>>>>>> Stashed changes
