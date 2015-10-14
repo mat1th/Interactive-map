@@ -22,13 +22,22 @@ Template.map.rendered = function () {
         setTrashes(trashesData)
     });
 
+    HTTP.get(Meteor.absoluteUrl("/map.json"), function (err, result) {        
+        console.log(result.data);
+
+        var geoData = result.data;
+        geoDatafunction(geoData)
+
+
+    });
+
     //create leaflet map and start coordiates
     var map = L.map('map', {
         center: [52.376956, 4.902756],
         maxZoom: 14,
         minZoom: 14,
         zoom: 14
-//        layers: [baseLayer]
+            //        layers: [baseLayer]
     });
 
     //add bounds to map
@@ -65,4 +74,15 @@ Template.map.rendered = function () {
             }).addTo(map).bindPopup(street + number);
         }
     };
+
+    var myStyle = {
+        "fillColor": "#ff7800",
+        "fillOpacity": 1
+    }
+
+    var geoDatafunction = function (geoData) {
+        L.geoJson(geoData, {
+            style: myStyle
+        }).addTo(map);    
+    }
 };

@@ -39,3 +39,24 @@
     //    };
 
     //    L.control.layers(overlayMaps).addTo(map);
+
+// call the geoData, render it and give it colors.
+//    var geoDatafunction = function (geoData) {
+//        L.geoJson(geoData, {
+//            style: fillColor
+//            style: function (feature) {
+//                switch (feature.properties.name) {
+//                case 'Westelijke eilanden':
+//                    return {
+//                        color: "#ff0000",
+//                        fillOpacity: 1
+//                    };
+//                case 'Jordaan':
+//                    return {
+//                        color: "#0000ff",
+//                        fillOpacity: 1
+//                    };
+//                }
+//            }
+//        }).addTo(map);    
+//    }
