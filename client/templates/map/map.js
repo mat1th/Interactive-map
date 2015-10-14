@@ -22,22 +22,15 @@ Template.map.rendered = function () {
         setTrashes(trashesData)
     });
 
-    //url to images for map
-    var baseLayer = L.tileLayer(
-        'http://{s}.tile.openstreetmap.se/hydda/base/{z}/{x}/{y}.png', {
-            attribution: 'Informotion',
-            opacity: 0
-        });
     //create leaflet map and start coordiates
     var map = L.map('map', {
         center: [52.376956, 4.902756],
         maxZoom: 14,
         minZoom: 14,
-        zoom: 14,
-        opacity: 0,
-        layers: [baseLayer]
+        zoom: 14
+//        layers: [baseLayer]
     });
-    L.tileLayer.provider('Hydda.Base').addTo(map);
+
     //add bounds to map
     map.fitBounds([
     [52.380419542018174, 4.941530227661133],
@@ -48,24 +41,6 @@ Template.map.rendered = function () {
     var trashIcon = L.divIcon({
         className: 'trash'
     });
-
-    //add compass
-    map.addControl(new L.Control.Compass());
-
-    //add current location icon
-    //create style of a marker
-    var markerStyle = {
-        radius: 25,
-        weight: 4,
-        borderColor: "rgba(0, 170, 255, 0.7)",
-        color: '#00AAFF',
-        fill: true
-    };
-
-    //add current marker to map
-    map.addControl(new L.Control.Gps({
-        style: markerStyle
-    }));
 
     //disable dragging
     map.dragging.disable();
@@ -90,16 +65,4 @@ Template.map.rendered = function () {
             }).addTo(map).bindPopup(street + number);
         }
     };
-
-    //create layers
-    //    var trash = L.layerGroup([twee, drie]);
-    //    var trashFull = L.layerGroup([een, drie]);
-
-    //    var overlayMaps = {
-    //        "trash": trash,
-    //        "trashFull": trashFull
-    //    };
-
-    //    L.control.layers(overlayMaps).addTo(map);
-
 };
