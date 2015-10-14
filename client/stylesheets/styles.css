@@ -16,12 +16,34 @@ body {
     background: #000;
     border-radius: 50%;
 }
+.homepage{
+    margin: 2em;
+}
 
+.textcenter{
+    text-align: center;
+}
 .red{
     color:#D83E41;
 }
-.homepagetitle{
+.black{
+    color: #343434;
+}
+.homepagetitle,
+.homelink{
     text-transform: uppercase;
+}
+.homeaction{
+    margin: 2em;
+    font-weight: 700;
+}
+
+.homepagetitle{
+    margin: 3em;
+    font-size: 3em;
+}
+.homelink{
+    text-decoration: none;
 }
 
 .leaflet-container {

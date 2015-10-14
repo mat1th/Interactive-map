@@ -23,12 +23,8 @@ Template.map.rendered = function () {
     });
 
     HTTP.get(Meteor.absoluteUrl("/map.json"), function (err, result) {        
-        console.log(result.data);
-
         var geoData = result.data;
         geoDatafunction(geoData)
-
-
     });
 
     //create leaflet map and start coordiates
@@ -37,7 +33,6 @@ Template.map.rendered = function () {
         maxZoom: 14,
         minZoom: 14,
         zoom: 14
-            //        layers: [baseLayer]
     });
 
     //add bounds to map
