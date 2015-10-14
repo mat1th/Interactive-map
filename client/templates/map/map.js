@@ -70,14 +70,55 @@ Template.map.rendered = function () {
         }
     };
 
+//Create the map of Amsterdam Centrum and add render it.
     var myStyle = {
-        "fillColor": "#ff7800",
-        "fillOpacity": 1
+        "fillColor": "#F0F0F0",
+        "fillOpacity": 1,
+        "color": "#FFFFFF"
     }
 
+    var geojson;
+    
+    
+//What happens on mouseover
+    function highlightFeature(e) {
+        var layer = e.target;
+
+        layer.setStyle({
+            weight: 5,
+            fillColor: '#D83E41',
+            dashArray: '',
+            fillOpacity: 0.7
+        });
+
+        if (!L.Browser.ie && !L.Browser.opera) {
+            layer.bringToFront();
+        }
+    }
+
+    //reset on mouseout
+    function resetHighlight(e) {
+        geojson.resetStyle(e.target);
+    }
+
+    function onEachFeature(feature, layer) {
+        layer.on({
+            mouseover: highlightFeature,
+            mouseout: resetHighlight
+        });
+    }
+
+
     var geoDatafunction = function (geoData) {
-        L.geoJson(geoData, {
-            style: myStyle
+        geojson = L.geoJson(geoData, {
+            style: myStyle,
+            onEachFeature: onEachFeature
         }).addTo(map);    
     }
+<<<<<<< Updated upstream
 };
+=======
+
+
+};
+>>>>>>> Stashed changes
