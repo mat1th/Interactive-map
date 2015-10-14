@@ -26,22 +26,23 @@ Template.map.rendered = function () {
     var baseLayer = L.tileLayer(
         'http://{s}.tile.openstreetmap.se/hydda/base/{z}/{x}/{y}.png', {
             attribution: 'Informotion',
-            maxZoom: 14,
-            minZoom: 14
+            opacity: 0
         });
     //create leaflet map and start coordiates
     var map = L.map('map', {
         center: [52.376956, 4.902756],
-        maxZoom: 15,
-        minZoom: 15,
-        zoom: 15,
+        maxZoom: 14,
+        minZoom: 14,
+        zoom: 14,
+        opacity: 0,
         layers: [baseLayer]
     });
     L.tileLayer.provider('Hydda.Base').addTo(map);
     //add bounds to map
     map.fitBounds([
-     [52.359457601988254, 4.864282608032227],
-    [52.380419542018174, 4.941530227661133]]);
+    [52.380419542018174, 4.941530227661133],
+     [52.359457601988254, 4.864282608032227]
+   ]);
 
     //create div icon with class trash
     var trashIcon = L.divIcon({
@@ -65,6 +66,14 @@ Template.map.rendered = function () {
     map.addControl(new L.Control.Gps({
         style: markerStyle
     }));
+
+    //disable dragging
+    map.dragging.disable();
+    map.touchZoom.disable();
+    map.doubleClickZoom.disable();
+    map.scrollWheelZoom.disable();
+    map.boxZoom.disable();
+    map.keyboard.disable();
 
     //set trashes on map
     var setTrashes = function (trashesData) {
