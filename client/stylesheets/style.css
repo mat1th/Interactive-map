@@ -8,35 +8,6 @@ body {
     font-family: Arial;
 }
 
-.map {
-    height: 100vh;
-}
-.amsterdammap{
-    position: absolute;
-    width: 200px;
-    margin: 1em;
-    height: auto;
-    z-index: 1;
-}
-
-.trash {
-    background: #000;
-    border-radius: 50%;
-    width: 8px !important;
-    height: 8px !important;
-}
-.trash:hover {
-    background: #FF7D7D;
-}
-
-.homepage {
-    margin: 2em;
-}
-
-.textcenter {
-    text-align: center;
-}
-
 .red {
     color: #D83E41;
 }
@@ -44,34 +15,6 @@ body {
 .black {
     color: #343434;
 }
-
-.homepagetitle,
-.homelink {
-    text-transform: uppercase;
-}
-
-.homeaction {
-    margin: 2em;
-    font-weight: 700;
-}
-
-.homepagetitle {
-    margin: 3em;
-    font-size: 3em;
-}
-
-.homelink {
-    text-decoration: none;
-}
-
-.leaflet-container {
-    background-color: rgba(255, 0, 0, 0.0);
-}
-
-.leaflet-top leaflet-left {
-    display: none;
-}
-
 
 /*
 .current {

@@ -1,0 +1,26 @@
+.homepage {
+    margin: 2em;
+}
+
+.textcenter {
+    text-align: center;
+}
+
+.homepagetitle,
+.homelink {
+    text-transform: uppercase;
+}
+
+.homeaction {
+    margin: 2em;
+    font-weight: 700;
+}
+
+.homepagetitle {
+    margin: 3em;
+    font-size: 3em;
+}
+
+.homelink {
+    text-decoration: none;
+}

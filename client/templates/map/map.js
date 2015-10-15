@@ -15,6 +15,16 @@ var trashesCollection = new Meteor.Collection('trashesCollection');
 
 //if template "map" is renderd
 Template.map.rendered = function () {
+    var selector = function (selector) {
+            return document.querySelector(selector);
+        },
+        selectors = function (selector) {
+            return document.querySelectorAll(selector);
+        };
+//        SvgMapPart = selector('object svg').contentDocument;
+//    console.log(SvgMapPart)
+
+
     //subscribe to trashesCollection
     Meteor.subscribe('trashesCollection', function () {
         var trashesData = trashesCollection.find().fetch();
@@ -80,7 +90,6 @@ Template.map.rendered = function () {
     }
     var geojson;
 
-
     //What happens on mouseover
     function highlightFeature(e) {
         var layer = e.target;
@@ -114,22 +123,21 @@ Template.map.rendered = function () {
         if (!L.Browser.ie && !L.Browser.opera) {
             layer.bringToFront();
         };
-        
+
         layerName = layer.feature.properties.name;
-        
+
         div.innerHTML = layerName;
         div.style.width = "200px";
         div.style.height = "200px";
-        
+
         document.body.appendChild(div);
-        
+
         console.log(div)
-        
-        
+
+
         console.log(layer.feature.properties.name);
 
     };
-
 
     function onEachFeature(feature, layer) {
         layer.on({
