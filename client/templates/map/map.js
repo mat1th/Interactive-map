@@ -19,8 +19,6 @@ Template.map.rendered = function () {
         selectors = function (selector) {
             return document.querySelectorAll(selector);
         };
-    //        SvgMapPart = selector('object svg').contentDocument;
-    //    console.log(SvgMapPart)
 
     //subscribe to trashesCollection
     Meteor.subscribe('trashesCollection', function () {
@@ -135,25 +133,18 @@ Template.map.rendered = function () {
 
     function clickFeature(e) {
         var layer = e.target;
-        var div = document.createElement("div");
-        layer.setStyle({
-            fillColor: '#000000',
-            dashArray: '',
-            fillOpacity: 0.7
-        });
+        SvgMapPart = selector('.namediv')
+        console.log(SvgMapPart);
+        SvgMapPart.innerHTML = layer.feature.properties.name;
+        
+        var x = event.clientX;
+        var y = event.clientY;
+        
+        
 
-        if (!L.Browser.ie && !L.Browser.opera) {
-            layer.bringToFront();
-        };
-
-        layerName = layer.feature.properties.name;
-
-        div.innerHTML = layerName;
-
-        document.body.appendChild(div);
-
-        console.log(div)
-
+        SvgMapPart.style.position = "absolute";
+        SvgMapPart.style.left = x + 'px';
+        SvgMapPart.style.top = y + 'px';
 
         console.log(layer.feature.properties.name);
 
