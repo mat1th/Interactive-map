@@ -44,7 +44,8 @@ Template.map.rendered = function () {
         maxZoom: 14,
         minZoom: 14,
         zoom: 14,
-        zoomControl: false
+        zoomControl: false,
+        attributionControl: false
     });
 
     //add bounds to map
@@ -127,8 +128,6 @@ Template.map.rendered = function () {
         layerName = layer.feature.properties.name;
 
         div.innerHTML = layerName;
-        div.style.width = "200px";
-        div.style.height = "200px";
 
         document.body.appendChild(div);
 
