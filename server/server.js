@@ -104,15 +104,26 @@ var getGeoFlickrFotos = function (flickrGetPlaceIdUrl, flickrGetFotosUrl, flickr
                 FotoGeoData = HTTP.get(url3).data,
                 latitude = FotoGeoData.photo.location.latitude,
                 longitude = FotoGeoData.photo.location.longitude,
-
                 fotoLocation = {
                     "id": id,
                     "log": longitude,
                     "lat": latitude
-                }
+                };
             fotoLocationsCollection.insert(fotoLocation)
         }
     }
+    //if you want to clean the fotoLocationsCollection.
+    //         else {
+    //            var deletelength = fotoLocationsCollection.find().fetch().length;
+    //            var deletedata = fotoLocationsCollection.find().fetch();
+    //            var a = 0
+    //
+    //            for (0; i < deletelength; i++) {
+    //                fotoLocationsCollection.remove(deletedata[i]._id)
+    //                console.log(fotoLocationsCollection.find().fetch().length)
+    //            }
+    //
+    //        }
 
 }
 
