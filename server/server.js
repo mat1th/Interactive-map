@@ -97,21 +97,23 @@ var getGeoFlickrFotos = function (flickrGetPlaceIdUrl, flickrGetFotosUrl, flickr
 
         //get geolocation of foto's
         f = 0;
+    if (fotoLocationsCollection.find().fetch()[0] === undefined) {
+        for (f; f < amountFotos; f++) {
+            var id = fotos[f].id,
+                url3 = flickrGetGeoFotoUrl[0] + id + flickrGetGeoFotoUrl[1],
+                FotoGeoData = HTTP.get(url3).data,
+                latitude = FotoGeoData.photo.location.latitude,
+                longitude = FotoGeoData.photo.location.longitude,
 
-    for (f; f < amountFotos; f++) {
-        var id = fotos[f].id,
-            url3 = flickrGetGeoFotoUrl[0] + id + flickrGetGeoFotoUrl[1],
-            FotoGeoData = HTTP.get(url3).data,
-            latitude = FotoGeoData.photo.location.latitude,
-            longitude = FotoGeoData.photo.location.longitude,
-
-            fotoLocation = {
-                "id": id,
-                "log": longitude,
-                "lat": latitude
-            }
-        fotoLocationsCollection.insert(fotoLocation)
+                fotoLocation = {
+                    "id": id,
+                    "log": longitude,
+                    "lat": latitude
+                }
+            fotoLocationsCollection.insert(fotoLocation)
+        }
     }
+
 }
 
 // Listen to incoming HTTP requests, can only be used on the server
