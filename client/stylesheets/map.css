@@ -10,9 +10,16 @@
     z-index: 1;
 }
 
-.trash {
+.trashicon {
     background: #000;
     border-radius: 50%;
+    width: 8px !important;
+    height: 8px !important;
+}
+
+.fotoicon {
+    background: #F80C79;
+    border-radius: 0%;
     width: 8px !important;
     height: 8px !important;
 }

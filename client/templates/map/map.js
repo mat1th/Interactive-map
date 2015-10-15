@@ -6,12 +6,10 @@ Meteor.startup(function () {
     $(window).resize(); // trigger resize event
 });
 
-// create marker collection
-var Markers = new Meteor.Collection('markers');
-Meteor.subscribe("markers");
-
 //create trashesCollection
 var trashesCollection = new Meteor.Collection('trashesCollection');
+var fotoLocationsCollection = new Meteor.Collection('fotoLocationsCollection');
+
 
 //if template "map" is renderd
 Template.map.rendered = function () {
@@ -21,15 +19,20 @@ Template.map.rendered = function () {
         selectors = function (selector) {
             return document.querySelectorAll(selector);
         };
-//        SvgMapPart = selector('object svg').contentDocument;
-//    console.log(SvgMapPart)
-
+    //        SvgMapPart = selector('object svg').contentDocument;
+    //    console.log(SvgMapPart)
 
     //subscribe to trashesCollection
     Meteor.subscribe('trashesCollection', function () {
         var trashesData = trashesCollection.find().fetch();
         //callback to setTrashes
         setTrashes(trashesData)
+    });
+
+    //subscribe to fotoLocationsCollection
+    Meteor.subscribe('fotoLocationsCollection', function () {
+        var fotosData = fotoLocationsCollection.find().fetch();
+        setFotoLocation(fotosData)
     });
 
     HTTP.get(Meteor.absoluteUrl("/map.json"), function (err, result) {        
@@ -56,7 +59,11 @@ Template.map.rendered = function () {
 
     //create div icon with class trash
     var trashIcon = L.divIcon({
-        className: 'trash'
+        className: 'trashicon'
+    });
+
+    var fotoIcon = L.divIcon({
+        className: 'fotoicon'
     });
 
     //disable dragging
@@ -80,6 +87,20 @@ Template.map.rendered = function () {
                 icon: trashIcon,
                 riseOnHover: true,
             }).addTo(map).bindPopup(street + number);
+        }
+    };
+
+
+    var setFotoLocation = function (fotosData) {
+        var Amountfotos = fotosData.length,
+            f = 0;
+        for (f; f < Amountfotos; f++) {
+            var longitude = fotosData[f].log;
+            var latitude = fotosData[f].lat;
+            L.marker([latitude, longitude], {
+                icon: fotoIcon,
+                riseOnHover: true,
+            }).addTo(map);
         }
     };
 
