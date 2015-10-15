@@ -10,26 +10,27 @@ Meteor.publish("trashesCollection", function () {
     return trashesCollection.find();
 });
 
-var RawDataUrl,
-    MapQuestUrl;
+var rawDataUrl,
+    mapQuestUrl;
 
 Meteor.startup(function () {
     HTTP.get(Meteor.absoluteUrl("url.json"), function (err, result) {
-        if (err) {
-            return err;
-        }
         if (result) {
-            var RawDataUrl = result.data.RawData,
-                MapQuestUrl = result.data.MapQuest;
-            getCleanData(RawDataUrl, MapQuestUrl);
+            var rawDataUrl = result.data.rawData,
+                mapQuestUrl = result.data.mapQuest,
+                flickrGetPlaceIdUrl = result.data.flickrGetPlaceId;
+            getCleanData(rawDataUrl, mapQuestUrl);
+            getGeoFlickrFotos(flickrGetPlaceIdUrl)
         }
     });
 });
-var getCleanData = function (RawDataUrl, MapQuestUrl) {
-    var rawData = HTTP.get(RawDataUrl).data,
+
+//get geo data of trashes
+var getCleanData = function (rawDataUrl, mapQuestUrl) {
+    var rawData = HTTP.get(rawDataUrl).data,
         //create cleanData array
         //get amount of data strings
-//        amountDataStrings = rawData.feed.entry.length,
+        //        amountDataStrings = rawData.feed.entry.length,
         amountDataStrings = 210,
         i = 0;
 
@@ -42,8 +43,8 @@ var getCleanData = function (RawDataUrl, MapQuestUrl) {
                 street = SplicedTrashData[3].split(':')[1],
                 houseNumber = SplicedTrashData[4].split(':')[1],
                 //    var fulness = array[11].split(':')[1];
-                url = MapQuestUrl[0] + "\"" + street.replace(" ", "%20") + houseNumber.replace(" ", "%20") + "," + city + "\"" + MapQuestUrl[1];
-                var gps = HTTP.get(url).data;
+                url = mapQuestUrl[0] + "\"" + street.replace(" ", "%20") + houseNumber.replace(" ", "%20") + "," + city + "\"" + mapQuestUrl[1];
+            var gps = HTTP.get(url).data;
 
             if (gps != undefined) {
                 if (gps.results[0].locations[0].latLng != undefined) {
@@ -62,19 +63,26 @@ var getCleanData = function (RawDataUrl, MapQuestUrl) {
         }
     }
     //if you want to clean the trashesCollection.
-//         else {
-//            var deletelength = trashesCollection.find().fetch().length;
-//            var deletedata = trashesCollection.find().fetch();
-//            var a = 0
-//
-//            for (0; i < deletelength; i++) {
-//                trashesCollection.remove(deletedata[i]._id)
-//                console.log(trashesCollection.find().fetch().length)
-//            }
-//
-//        }
+    //         else {
+    //            var deletelength = trashesCollection.find().fetch().length;
+    //            var deletedata = trashesCollection.find().fetch();
+    //            var a = 0
+    //
+    //            for (0; i < deletelength; i++) {
+    //                trashesCollection.remove(deletedata[i]._id)
+    //                console.log(trashesCollection.find().fetch().length)
+    //            }
+    //
+    //        }
 };
 
+var getGeoFlickrFotos = function (flickrGetPlaceIdUrl) {
+    var city = "Amsterdam",
+        postCode = 1013,
+        country = "Nederland",
+        url = flickrGetPlaceIdUrl[0] + city + "%2C" + country + "%2C" + postCode + flickrGetPlaceIdUrl[1],
+        placeID = HTTP.get(url).data.places.place[0].place_id;
+}
 
 // Listen to incoming HTTP requests, can only be used on the server
 WebApp.connectHandlers.use(function (req, res, next) {
