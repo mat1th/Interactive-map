@@ -24,8 +24,9 @@ Template.map.rendered = function () {
 
     HTTP.get(Meteor.absoluteUrl("/map.json"), function (err, result) {        
         var geoData = result.data;
-        geoDatafunction(geoData)
+        geoDatafunction(geoData);
     });
+
 
     //create leaflet map and start coordiates
     var map = L.map('map', {
@@ -33,7 +34,7 @@ Template.map.rendered = function () {
         maxZoom: 14,
         minZoom: 14,
         zoom: 14,
-        zoomControl:false
+        zoomControl: false
     });
 
     //add bounds to map
@@ -79,6 +80,7 @@ Template.map.rendered = function () {
     }
     var geojson;
 
+
     //What happens on mouseover
     function highlightFeature(e) {
         var layer = e.target;
@@ -92,26 +94,56 @@ Template.map.rendered = function () {
 
         if (!L.Browser.ie && !L.Browser.opera) {
             layer.bringToFront();
-        }
-    }
+        };
+    };
 
     //reset on mouseout
     function resetHighlight(e) {
         geojson.resetStyle(e.target);
-    }
+    };
+
+    function clickFeature(e) {
+        var layer = e.target;
+        var div = document.createElement("div");
+        layer.setStyle({
+            fillColor: '#000000',
+            dashArray: '',
+            fillOpacity: 0.7
+        });
+
+        if (!L.Browser.ie && !L.Browser.opera) {
+            layer.bringToFront();
+        };
+        
+        layerName = layer.feature.properties.name;
+        
+        div.innerHTML = layerName;
+        div.style.width = "200px";
+        div.style.height = "200px";
+        
+        document.body.appendChild(div);
+        
+        console.log(div)
+        
+        
+        console.log(layer.feature.properties.name);
+
+    };
+
 
     function onEachFeature(feature, layer) {
         layer.on({
             mouseover: highlightFeature,
-            mouseout: resetHighlight
+            mouseout: resetHighlight,
+            click: clickFeature
         });
-    }
-
+    };
 
     var geoDatafunction = function (geoData) {
         geojson = L.geoJson(geoData, {
             style: myStyle,
             onEachFeature: onEachFeature
-        }).addTo(map);    
-    }
+        }).addTo(map)   
+    };
+
 };
