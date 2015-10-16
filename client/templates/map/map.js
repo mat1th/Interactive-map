@@ -6,10 +6,11 @@ Meteor.startup(function () {
     $(window).resize(); // trigger resize event
 });
 
-//create trashesCollection
+//create Collections
 var trashesCollection = new Meteor.Collection('trashesCollection');
 var fotoLocationsCollection = new Meteor.Collection('fotoLocationsCollection');
-
+var fotoLocationsJulyCollection = new Meteor.Collection('fotoLocationsJulyCollection');
+var fotoLocationsAugustCollection = new Meteor.Collection('fotoLocationsAugustCollection');
 
 //if template "map" is renderd
 Template.map.rendered = function () {
@@ -30,7 +31,15 @@ Template.map.rendered = function () {
     //subscribe to fotoLocationsCollection
     Meteor.subscribe('fotoLocationsCollection', function () {
         var fotosData = fotoLocationsCollection.find().fetch();
-        setFotoLocation(fotosData)
+        setFotoLocation(fotosData);
+    });
+    Meteor.subscribe('fotoLocationsJulyCollection', function () {
+        var fotosData = fotoLocationsJulyCollection.find().fetch();
+        setFotoLocationJuly(fotosData);
+    });
+    Meteor.subscribe('fotoLocationsAugustCollection', function () {
+        var fotosData = fotoLocationsAugustCollection.find().fetch();
+        setFotoLocationAugust(fotosData);
     });
 
     HTTP.get(Meteor.absoluteUrl("/map.json"), function (err, result) {        
@@ -56,12 +65,13 @@ Template.map.rendered = function () {
    ]);
 
     var baseLayer = L.tileLayer(
-        'http://{s}.tile.openstreetmap.se/hydda/base/{z}/{x}/{y}.png', {
+        'http://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png', {
             attribution: 'Informotion',
-            opacity: 0
+            subdomains: 'abcd',
+            maxZoom: 19
         });
 
-    L.tileLayer.provider('Hydda.Base').addTo(map);
+    L.tileLayer.provider('CartoDB.PositronNoLabels').addTo(map);
 
     //create div icon with class trash
     var trashIcon = L.divIcon({
@@ -71,6 +81,12 @@ Template.map.rendered = function () {
     var fotoIcon = L.divIcon({
         className: 'fotoicon'
     });
+     var fotoIconJuly = L.divIcon({
+        className: 'foto-icon-july'
+    });
+     var fotoIconAugust = L.divIcon({
+        className: 'foto-icon-august'
+    });
 
     //disable dragging
     map.dragging.disable();
@@ -79,6 +95,46 @@ Template.map.rendered = function () {
     map.scrollWheelZoom.disable();
     map.boxZoom.disable();
     map.keyboard.disable();
+
+
+    //set foto's on map
+        var setFotoLocation = function (fotosData) {
+            var Amountfotos = fotosData.length,
+                f = 0;
+            for (f; f < Amountfotos; f++) {
+                var longitude = fotosData[f].log;
+                var latitude = fotosData[f].lat;
+                L.marker([latitude, longitude], {
+                    icon: fotoIcon,
+                    riseOnHover: true,
+                }).addTo(map);
+            }
+        };
+    //set foto's july on map
+    var setFotoLocationJuly = function (fotosData) {
+        var Amountfotos = fotosData.length,
+            f = 0;
+        for (f; f < Amountfotos; f++) {
+            var longitude = fotosData[f].log;
+            var latitude = fotosData[f].lat;
+            L.marker([latitude, longitude], {
+                icon: fotoIconJuly,
+                riseOnHover: true,
+            }).addTo(map);
+        }
+    };
+    var setFotoLocationAugust = function (fotosData) {
+        var Amountfotos = fotosData.length,
+            f = 0;
+        for (f; f < Amountfotos; f++) {
+            var longitude = fotosData[f].log;
+            var latitude = fotosData[f].lat;
+            L.marker([latitude, longitude], {
+                icon: fotoIconAugust,
+                riseOnHover: true,
+            }).addTo(map);
+        }
+    };
 
     //set trashes on map
     var setTrashes = function (trashesData) {
@@ -96,24 +152,10 @@ Template.map.rendered = function () {
         }
     };
 
-
-    var setFotoLocation = function (fotosData) {
-        var Amountfotos = fotosData.length,
-            f = 0;
-        for (f; f < Amountfotos; f++) {
-            var longitude = fotosData[f].log;
-            var latitude = fotosData[f].lat;
-            L.marker([latitude, longitude], {
-                icon: fotoIcon,
-                riseOnHover: true,
-            }).addTo(map);
-        }
-    };
-
     //Create the map of Amsterdam Centrum and add render it.
     var myStyle = {
-        "fillColor": "#F0F0F0",
-        "fillOpacity": 1,
+        "fillColor": "#000",
+        "fillOpacity": 0.5,
         "color": "#FFFFFF"
     }
     var geojson;
@@ -121,7 +163,6 @@ Template.map.rendered = function () {
     //What happens on mouseover
     function highlightFeature(e) {
         var layer = e.target;
-
         layer.setStyle({
             weight: 5,
             fillColor: '#D83E41',
@@ -145,17 +186,12 @@ Template.map.rendered = function () {
         console.log(SvgMapPart);
         SvgMapPart.innerHTML = layer.feature.properties.name;
 
-        var x = event.clientX;
-        var y = event.clientY;
-
-
+        var xPosition = event.clientX;
+        var yPosition = event.clientY;
 
         SvgMapPart.style.position = "absolute";
-        SvgMapPart.style.left = x + 'px';
-        SvgMapPart.style.top = y + 'px';
-
-        console.log(layer.feature.properties.name);
-
+        SvgMapPart.style.left = xPosition + 'px';
+        SvgMapPart.style.top = yPosition + 'px';
     };
 
     function onEachFeature(feature, layer) {

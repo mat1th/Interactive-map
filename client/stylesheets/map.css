@@ -17,11 +17,23 @@
     height: 8px !important;
 }
 
-.fotoicon {
-    background: #F80C79;
+.fotoicon,
+.foto-icon-july,
+.foto-icon-august{
     border-radius: 0%;
     width: 8px !important;
     height: 8px !important;
+}
+
+.foto-icon-july {
+    background: #D40CF8;
+}
+.foto-icon-august {
+    background: #0CF85E;
+}
+
+.fotoicon {
+    background: #F80C79;
 }
 
 .trash:hover {

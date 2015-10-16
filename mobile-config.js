@@ -11,3 +11,4 @@ App.accessRule('meteor.local/*');
 // allow tiles
 App.accessRule('*.openstreetmap.org/*');
 App.accessRule('*.tile.thunderforest.com/*');
+App.accessRule('*.basemaps.cartocdn.com/*');
