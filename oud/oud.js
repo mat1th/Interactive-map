@@ -1,11 +1,5 @@
     //url to images for map
-//    var baseLayer = L.tileLayer(
-//        'http://{s}.tile.openstreetmap.se/hydda/base/{z}/{x}/{y}.png', {
-//            attribution: 'Informotion',
-//            opacity: 0
-//        });
 
-//    L.tileLayer.provider('Hydda.Base').addTo(map);
 
 
 

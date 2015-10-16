@@ -124,9 +124,9 @@ var getGeoFlickrPhotos = function (flickrGetPlaceIdUrl, flickrGetPhotosUrl, flic
 
     var getGeoLoctionOfPhotoIds = function (photos) {
         //loop to get gps location
-//        if (fotoLocationsCollection.find().fetch()[0] === undefined) {
+        if (fotoLocationsCollection.find().fetch()[0] === undefined) {
             var amountPhotos = photos.length,
-                f = 3723;
+                f = 0;
             console.log(amountPhotos)
             for (f; f < amountPhotos; f++) {
                 var id = photos[f],
@@ -142,7 +142,7 @@ var getGeoFlickrPhotos = function (flickrGetPlaceIdUrl, flickrGetPhotosUrl, flic
                 fotoLocationsCollection.insert(fotoLocation)
                 console.log(fotoLocationsCollection.find().fetch().length)
             }
-//        }
+        }
         //    if you want to clean the fotoLocationsCollection.
         //        else {
         //            var deletelength = fotoLocationsCollection.find().fetch().length;

@@ -55,6 +55,14 @@ Template.map.rendered = function () {
      [52.359457601988254, 4.864282608032227]
    ]);
 
+    var baseLayer = L.tileLayer(
+        'http://{s}.tile.openstreetmap.se/hydda/base/{z}/{x}/{y}.png', {
+            attribution: 'Informotion',
+            opacity: 0
+        });
+
+    L.tileLayer.provider('Hydda.Base').addTo(map);
+
     //create div icon with class trash
     var trashIcon = L.divIcon({
         className: 'trashicon'
@@ -136,11 +144,11 @@ Template.map.rendered = function () {
         SvgMapPart = selector('.namediv')
         console.log(SvgMapPart);
         SvgMapPart.innerHTML = layer.feature.properties.name;
-        
+
         var x = event.clientX;
         var y = event.clientY;
-        
-        
+
+
 
         SvgMapPart.style.position = "absolute";
         SvgMapPart.style.left = x + 'px';
