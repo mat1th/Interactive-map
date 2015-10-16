@@ -20,10 +20,10 @@ Meteor.startup(function () {
             var rawDataUrl = result.data.rawData,
                 mapQuestUrl = result.data.mapQuest,
                 flickrGetPlaceIdUrl = result.data.flickrGetPlaceId,
-                flickrGetFotosUrl = result.data.flickrGetFotos,
-                flickrGetGeoFotoUrl = result.data.flickrGetGeoFoto;
+                flickrGetPhotosUrl = result.data.flickrGetPhotos,
+                flickrGetGeoPhotoUrl = result.data.flickrGetGeoPhoto;
             getCleanData(rawDataUrl, mapQuestUrl);
-            getGeoFlickrFotos(flickrGetPlaceIdUrl, flickrGetFotosUrl, flickrGetGeoFotoUrl)
+            getGeoFlickrPhotos(flickrGetPlaceIdUrl, flickrGetPhotosUrl, flickrGetGeoPhotoUrl)
         }
     });
 });
@@ -75,11 +75,9 @@ var getCleanData = function (rawDataUrl, mapQuestUrl) {
     //                trashesCollection.remove(deletedata[i]._id)
     //                console.log(trashesCollection.find().fetch().length)
     //            }
-    //
     //        }
 };
-
-var getGeoFlickrFotos = function (flickrGetPlaceIdUrl, flickrGetFotosUrl, flickrGetGeoFotoUrl) {
+var getGeoFlickrPhotos = function (flickrGetPlaceIdUrl, flickrGetPhotosUrl, flickrGetGeoPhotoUrl) {
     //get place_d of amsterdam centrum
     var city = "Amsterdam",
         postCode = 1013,
@@ -89,41 +87,74 @@ var getGeoFlickrFotos = function (flickrGetPlaceIdUrl, flickrGetFotosUrl, flickr
 
         //get foto's with the placeID
         //divine min and max take date
-        min_taken_date = "2015-09-01",
-        max_taken_date = "2015-09-30",
-        url2 = flickrGetFotosUrl[0] + min_taken_date + flickrGetFotosUrl[1] + max_taken_date + flickrGetFotosUrl[2] + placeID + flickrGetFotosUrl[3],
-        fotos = HTTP.get(url2).data.photos.photo,
-        amountFotos = fotos.length,
+        september = {
+            "min_taken_date": "2015-09-01",
+            "max_taken_date": "2015-09-30"
+        },
+        firstPage = 1,
+        photos = [],
+        url2 = flickrGetPhotosUrl[0] + september.min_taken_date + flickrGetPhotosUrl[1] + september.max_taken_date + flickrGetPhotosUrl[2] + placeID + flickrGetPhotosUrl[3] + firstPage + flickrGetPhotosUrl[4];
 
-        //get geolocation of foto's
-        f = 0;
-    if (fotoLocationsCollection.find().fetch()[0] === undefined) {
-        for (f; f < amountFotos; f++) {
-            var id = fotos[f].id,
-                url3 = flickrGetGeoFotoUrl[0] + id + flickrGetGeoFotoUrl[1],
-                FotoGeoData = HTTP.get(url3).data,
-                latitude = FotoGeoData.photo.location.latitude,
-                longitude = FotoGeoData.photo.location.longitude,
-                fotoLocation = {
-                    "id": id,
-                    "log": longitude,
-                    "lat": latitude
-                };
-            fotoLocationsCollection.insert(fotoLocation)
+    HTTP.get(url2, function (err, result) {
+        var page = 0,
+            pages = result.data.photos.pages;
+        getAllFotos(page, pages)
+    });
+
+    var getAllFotos = function (page, pages) {
+        for (page; page < pages; page++) {
+            var fotoUrl = flickrGetPhotosUrl[0] + september.min_taken_date + flickrGetPhotosUrl[1] + september.max_taken_date + flickrGetPhotosUrl[2] + placeID + flickrGetPhotosUrl[3] + page + flickrGetPhotosUrl[4];
+            HTTP.get(fotoUrl, function (err, result) {
+                var anoumtPhotoIDs = result.data.photos.photo.length;
+                for (var p = 0; p < anoumtPhotoIDs; p++) {
+                    photos.push(result.data.photos.photo[p].id);
+                    if (page === pages) {
+                        if (photos.length === 4749) {
+                            if (p === anoumtPhotoIDs - 1) {
+                                getGeoLoctionOfPhotoIds(photos);
+                            }
+                        }
+                    }
+                }
+            });
         }
     }
-    //if you want to clean the fotoLocationsCollection.
-    //         else {
-    //            var deletelength = fotoLocationsCollection.find().fetch().length;
-    //            var deletedata = fotoLocationsCollection.find().fetch();
-    //            var a = 0
-    //
-    //            for (0; i < deletelength; i++) {
-    //                fotoLocationsCollection.remove(deletedata[i]._id)
-    //                console.log(fotoLocationsCollection.find().fetch().length)
-    //            }
-    //
-    //        }
+
+    //get geolocation of foto's
+
+    var getGeoLoctionOfPhotoIds = function (photos) {
+        //loop to get gps location
+//        if (fotoLocationsCollection.find().fetch()[0] === undefined) {
+            var amountPhotos = photos.length,
+                f = 3723;
+            console.log(amountPhotos)
+            for (f; f < amountPhotos; f++) {
+                var id = photos[f],
+                    url3 = flickrGetGeoPhotoUrl[0] + id + flickrGetGeoPhotoUrl[1];
+                FotoGeoData = HTTP.get(url3).data,
+                    latitude = FotoGeoData.photo.location.latitude,
+                    longitude = FotoGeoData.photo.location.longitude,
+                    fotoLocation = {
+                        "id": id,
+                        "log": longitude,
+                        "lat": latitude
+                    };
+                fotoLocationsCollection.insert(fotoLocation)
+                console.log(fotoLocationsCollection.find().fetch().length)
+            }
+//        }
+        //    if you want to clean the fotoLocationsCollection.
+        //        else {
+        //            var deletelength = fotoLocationsCollection.find().fetch().length;
+        //            var deletedata = fotoLocationsCollection.find().fetch();
+        //            var a = 0
+        //
+        //            for (0; a < deletelength; a++) {
+        //                fotoLocationsCollection.remove(deletedata[a]._id)
+        //                console.log(fotoLocationsCollection.find().fetch().length)
+        //            }
+        //        }
+    };
 
 }
 
