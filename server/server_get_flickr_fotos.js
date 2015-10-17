@@ -1,16 +1,16 @@
-//fotoLocationsCollection collection
+//september fotoLocationsCollection collection
 var fotoLocationsCollection = new Meteor.Collection('fotoLocationsCollection');
 Meteor.publish("fotoLocationsCollection", function () {
     return fotoLocationsCollection.find();
 });
 
-//fotoLocationsJulyCollection collection
+//July fotoLocationsJulyCollection collection
 var fotoLocationsJulyCollection = new Meteor.Collection('fotoLocationsJulyCollection');
 Meteor.publish("fotoLocationsJulyCollection", function () {
     return fotoLocationsJulyCollection.find();
 });
 
-//fotoLocationsAugustCollection collection
+//August  fotoLocationsAugustCollection collection
 var fotoLocationsAugustCollection = new Meteor.Collection('fotoLocationsAugustCollection');
 Meteor.publish("fotoLocationsAugustCollection", function () {
     return fotoLocationsAugustCollection.find();
@@ -78,6 +78,15 @@ var getGeoFlickrPhotos = function (flickrGetPlaceIdUrl, flickrGetPhotosUrl, flic
             getAllFotosAugust(page, pagesAugust, totalPhotosAugust, month);
         }
     });
+    HTTP.get(url2September, function (err, result) {
+     if (result) {
+         var page = 1,
+             pagesSeptember = result.data.photos.pages,
+             totalPhotosSeptember = result.data.photos.total,
+             month = "September";
+         getAllFotosSeptember(page, pagesAugust, totalPhotosAugust, month);
+     }
+ });
 
 
     //Get foto's of a month July
@@ -206,4 +215,71 @@ var getGeoFlickrPhotos = function (flickrGetPlaceIdUrl, flickrGetPhotosUrl, flic
 //            }
         };
     };
+
+       var getAllFotosSeptember = function (page, pagesSeptember, totalPhotosSeptember, month) {
+
+        for (page; page < pagesSeptember; page++) {
+
+            //urls
+            var url2September = flickrGetPhotosUrl[0] + September.min_taken_date + flickrGetPhotosUrl[1] + September.max_taken_date + flickrGetPhotosUrl[2] + placeID + flickrGetPhotosUrl[3] + page + flickrGetPhotosUrl[4];
+            HTTP.get(url2September, function (err, result) {
+                if (err) {
+                    console.log(err);
+                }
+                if (result) {
+                    var anoumtPhotoIDs = result.data.photos.photo.length,
+                        p = 0;
+                    for (p; p < anoumtPhotoIDs; p++) {
+                        photosSeptember.push(result.data.photos.photo[p].id);
+                        if (page === pagesSeptember) {
+                            if (photosSeptember.length === totalPhotosSeptember - 92) {
+                                if (p === anoumtPhotoIDs - 1) {
+                                    console.log("Get geo location of September")
+                                    getGeoLoctionOfPhotoIdsSeptember(photosSeptember);
+                                    console.log(fotoLocationsSeptemberCollection.find().fetch());
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        //get geolocation of foto's
+        var getGeoLoctionOfPhotoIdsSeptember = function (photosSeptember) {
+            //loop to get gps location
+            if (fotoLocationsCollection.find().fetch()[0] === undefined) {
+                var amountPhotos = photosSeptember.length,
+                    f = 1052;
+                console.log(amountPhotos);
+                for (f; f < amountPhotos; f++) {
+                    var id = photosSeptember[f],
+                        url3 = flickrGetGeoPhotoUrl[0] + id + flickrGetGeoPhotoUrl[1],
+                        FotoGeoData = HTTP.get(url3).data,
+                        latitude = FotoGeoData.photo.location.latitude,
+                        longitude = FotoGeoData.photo.location.longitude,
+                        fotoLocation = {
+                            "id": id,
+                            "log": longitude,
+                            "lat": latitude
+                        };
+                    fotoLocationsCollection.insert(fotoLocation);
+                    console.log(fotoLocationsCollection.find().fetch().length);
+                }
+            }
+            //    if you want to clean the fotoLocationsSeptemberCollection uncomment the folowing rules
+//            else {
+//                var deletelength = fotoLocationsSeptemberCollection.find().fetch().length;
+//                var deletedata = fotoLocationsSeptemberCollection.find().fetch();
+//                var a = 0
+//
+//                for (0; a < deletelength; a++) {
+//                    fotoLocationsSeptemberCollection.remove(deletedata[a]._id)
+//                    console.log(fotoLocationsSeptemberCollection.find().fetch().length)
+//                }
+//            }
+        };
+    };
+
+
 };
