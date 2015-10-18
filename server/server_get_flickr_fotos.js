@@ -22,6 +22,7 @@ Meteor.startup(function () {
             console.log(err);
         }
         if (result) {
+            //get urls from flickr
             var flickrGetPlaceIdUrl = result.data.flickrGetPlaceId,
                 flickrGetPhotosUrl = result.data.flickrGetPhotos,
                 flickrGetGeoPhotoUrl = result.data.flickrGetGeoPhoto;
@@ -125,6 +126,7 @@ var getGeoFlickrPhotos = function (flickrGetPlaceIdUrl, flickrGetPhotosUrl, flic
                 console.log(amountPhotos);
                 for (f; f < amountPhotos; f++) {
                     var id = photosJuly[f],
+                        //set url and get fotogeodata
                         url3 = flickrGetGeoPhotoUrl[0] + id + flickrGetGeoPhotoUrl[1],
                         FotoGeoData = HTTP.get(url3).data,
                         latitude = FotoGeoData.photo.location.latitude,
@@ -152,9 +154,8 @@ var getGeoFlickrPhotos = function (flickrGetPlaceIdUrl, flickrGetPhotosUrl, flic
         };
     };
     var getAllFotosAugust = function (page, pagesAugust, totalPhotosAugust, month) {
-
+        //loop all pages
         for (page; page < pagesAugust; page++) {
-
             //urls
             var url2August = flickrGetPhotosUrl[0] + August.min_taken_date + flickrGetPhotosUrl[1] + August.max_taken_date + flickrGetPhotosUrl[2] + placeID + flickrGetPhotosUrl[3] + page + flickrGetPhotosUrl[4];
             HTTP.get(url2August, function (err, result) {
