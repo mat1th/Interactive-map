@@ -9,8 +9,9 @@ header {
 }
 
 .map {
+    margin-left: 243px;
     height: 100vh;
-    width: 100vw;
+    width: 100%;
 }
 
 .amsterdammap {

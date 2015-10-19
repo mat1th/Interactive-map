@@ -44,20 +44,23 @@
 }
 
 .filter > .filters > div > img {
-    width: 30px;
+    cursor: pointer;
+    width: 20px;
     margin: 20px;
     display: inline-block;
     float: left;
 }
 
 .filter > .filters > div > p {
-    width: 100px;
+    width: 120px;
     margin: 20px 60px 20px 0;
     display: inline-block;
     float: right;
 }
+
 .filter > .filters > div {
-   clear: both;
+    cursor: pointer;
+    clear: both;
 }
 
 
