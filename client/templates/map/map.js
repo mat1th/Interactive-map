@@ -191,7 +191,9 @@ Template.map.rendered = function () {
 
         SvgMapPart.style.position = "absolute";
         SvgMapPart.style.left = xPosition + 'px';
-        SvgMapPart.style.top = yPosition + 'px';
+        SvgMapPart.style.top = yPosition + -20 + 'px';
+
+        console.log(layer.feature.properties.name);
     };
 
     function onEachFeature(feature, layer) {
