@@ -42,11 +42,21 @@ Template.map.rendered = function () {
         setFotoLocationAugust(fotosData);
     });
 
+    
     HTTP.get(Meteor.absoluteUrl("/map.json"), function (err, result) {        
         var geoData = result.data;
+        
+        var gData = result.data.features;
+        console.log(gData);
+        //trying some things out
+        var i = 0;
+        for(i; i < gData.length; i++) {
+            console.log(result.data.features)   
+        }
+        
         geoDatafunction(geoData);
+        console.log(geoData);
     });
-
 
     //create leaflet map and start coordiates
     var map = L.map('map', {
@@ -110,31 +120,31 @@ Template.map.rendered = function () {
                 }).addTo(map);
             }
         };
-//    //set foto's july on map
-//    var setFotoLocationJuly = function (fotosData) {
-//        var Amountfotos = fotosData.length,
-//            f = 0;
-//        for (f; f < Amountfotos; f++) {
-//            var longitude = fotosData[f].log;
-//            var latitude = fotosData[f].lat;
-//            L.marker([latitude, longitude], {
-//                icon: fotoIconJuly,
-//                riseOnHover: true,
-//            }).addTo(map);
-//        }
-//    };
-//    var setFotoLocationAugust = function (fotosData) {
-//        var Amountfotos = fotosData.length,
-//            f = 0;
-//        for (f; f < Amountfotos; f++) {
-//            var longitude = fotosData[f].log;
-//            var latitude = fotosData[f].lat;
-//            L.marker([latitude, longitude], {
-//                icon: fotoIconAugust,
-//                riseOnHover: true,
-//            }).addTo(map);
-//        }
-//    };
+    //set foto's july on map
+    var setFotoLocationJuly = function (fotosData) {
+        var Amountfotos = fotosData.length,
+            f = 0;
+        for (f; f < Amountfotos; f++) {
+            var longitude = fotosData[f].log;
+            var latitude = fotosData[f].lat;
+            L.marker([latitude, longitude], {
+                icon: fotoIconJuly,
+                riseOnHover: true,
+            }).addTo(map);
+        }
+    };
+    var setFotoLocationAugust = function (fotosData) {
+        var Amountfotos = fotosData.length,
+            f = 0;
+        for (f; f < Amountfotos; f++) {
+            var longitude = fotosData[f].log;
+            var latitude = fotosData[f].lat;
+            L.marker([latitude, longitude], {
+                icon: fotoIconAugust,
+                riseOnHover: true,
+            }).addTo(map);
+        }
+    };
 
     //set trashes on map
     var setTrashes = function (trashesData) {
@@ -158,17 +168,21 @@ Template.map.rendered = function () {
         "fillOpacity": 0.5,
         "color": "#FFFFFF"
     }
+    
     var geojson;
-
+    
     //What happens on mouseover
     function highlightFeature(e) {
         var layer = e.target;
-        layer.setStyle({
-            weight: 5,
-            fillColor: '#D83E41',
-            dashArray: '',
-            fillOpacity: 0.7
-        });
+        var layerName = layer.feature.properties.name;
+        if(layerName !== "rightgone" && layerName !== "leftgone") {
+            layer.setStyle({
+                weight: 5,
+                fillColor: '#D83E41',
+                dashArray: '',
+                fillOpacity: 0.7
+            });
+        }
 
         if (!L.Browser.ie && !L.Browser.opera) {
             layer.bringToFront();
@@ -182,18 +196,23 @@ Template.map.rendered = function () {
 
     function clickFeature(e) {
         var layer = e.target;
+        var layerName = layer.feature.properties.name;
         SvgMapPart = selector('.popup')
         console.log(SvgMapPart);
-        SvgMapPart.innerHTML = layer.feature.properties.name;
+       
 
         var xPosition = event.clientX;
         var yPosition = event.clientY;
+        
+        //If clicked outside of Amsterdam Centrum, no div is being shown
+        if(layerName !== "rightgone" && layerName !== "leftgone") {
+            SvgMapPart.innerHTML = layerName;
+            SvgMapPart.style.position = "absolute";
+            SvgMapPart.style.left = xPosition + 'px';
+            SvgMapPart.style.top = yPosition + -60 + 'px';
+        };
 
-        SvgMapPart.style.position = "absolute";
-        SvgMapPart.style.left = xPosition + 'px';
-        SvgMapPart.style.top = yPosition + -20 + 'px';
-
-        console.log(layer.feature.properties.name);
+//        console.log(layer.feature.properties.name);
     };
 
     function onEachFeature(feature, layer) {
