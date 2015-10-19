@@ -21,6 +21,14 @@ Template.map.rendered = function () {
             return document.querySelectorAll(selector);
         };
 
+    var toggleFilterImg = selector('.togglefilterimg'),
+        toggleFilter = selector('.togglefilter'),
+        filter = selector('.filter'),
+        crowdedness = selector('.crowdedness'),
+        informotion = selector('.informotion'),
+        trashes = selector('.trashes'),
+        cleaningIntensity = selector('.cleaning-intensity');
+
     //subscribe to trashesCollection
     Meteor.subscribe('trashesCollection', function () {
         var trashesData = trashesCollection.find().fetch();
@@ -42,21 +50,16 @@ Template.map.rendered = function () {
         setFotoLocationAugust(fotosData);
     });
 
-    
-    HTTP.get(Meteor.absoluteUrl("/map.json"), function (err, result) {        
-        var geoData = result.data;
-        
-        var gData = result.data.features;
-        console.log(gData);
-        //trying some things out
-        var i = 0;
-        for(i; i < gData.length; i++) {
-            console.log(result.data.features)   
-        }
-        
-        geoDatafunction(geoData);
-        console.log(geoData);
-    });
+    var layerNames = [];        
+    HTTP.get(Meteor.absoluteUrl("/map.json"), function (err, result) {                
+        geoData = result.data;                
+        var gData = geoData.features;        
+        var i = 0;        
+        for (i; i < gData.length; i++) {            
+            layerNames.push(gData[i].properties.name);        
+        };                
+        geoDatafunction(geoData);        
+    });    
 
     //create leaflet map and start coordiates
     var map = L.map('map', {
@@ -91,10 +94,10 @@ Template.map.rendered = function () {
     var fotoIcon = L.divIcon({
         className: 'fotoicon'
     });
-     var fotoIconJuly = L.divIcon({
+    var fotoIconJuly = L.divIcon({
         className: 'foto-icon-july'
     });
-     var fotoIconAugust = L.divIcon({
+    var fotoIconAugust = L.divIcon({
         className: 'foto-icon-august'
     });
 
@@ -108,43 +111,40 @@ Template.map.rendered = function () {
 
 
     //set foto's on map
-        var setFotoLocation = function (fotosData) {
-            var Amountfotos = fotosData.length,
-                f = 0;
-            for (f; f < Amountfotos; f++) {
-                var longitude = fotosData[f].log;
-                var latitude = fotosData[f].lat;
-                L.marker([latitude, longitude], {
-                    icon: fotoIcon,
-                    riseOnHover: true,
-                }).addTo(map);
-            }
-        };
+    //        var setFotoLocation = function (fotosData) {
+    //            var Amountfotos = fotosData.length,
+    //                f = 0;
+    //            for (f; f < Amountfotos; f++) {
+    //                var longitude = fotosData[f].log;
+    //                var latitude = fotosData[f].lat;
+    //                L.marker([latitude, longitude], {
+    //                    icon: fotoIcon,
+    //                }).addTo(map);
+    //            }
+    //        };
     //set foto's july on map
-    var setFotoLocationJuly = function (fotosData) {
-        var Amountfotos = fotosData.length,
-            f = 0;
-        for (f; f < Amountfotos; f++) {
-            var longitude = fotosData[f].log;
-            var latitude = fotosData[f].lat;
-            L.marker([latitude, longitude], {
-                icon: fotoIconJuly,
-                riseOnHover: true,
-            }).addTo(map);
-        }
-    };
-    var setFotoLocationAugust = function (fotosData) {
-        var Amountfotos = fotosData.length,
-            f = 0;
-        for (f; f < Amountfotos; f++) {
-            var longitude = fotosData[f].log;
-            var latitude = fotosData[f].lat;
-            L.marker([latitude, longitude], {
-                icon: fotoIconAugust,
-                riseOnHover: true,
-            }).addTo(map);
-        }
-    };
+    //    var setFotoLocationJuly = function (fotosData) {
+    //        var Amountfotos = fotosData.length,
+    //            f = 0;
+    //        for (f; f < Amountfotos; f++) {
+    //            var longitude = fotosData[f].log;
+    //            var latitude = fotosData[f].lat;
+    //            L.marker([latitude, longitude], {
+    //                icon: fotoIconJuly,
+    //            }).addTo(map);
+    //        }
+    //    };
+    //    var setFotoLocationAugust = function (fotosData) {
+    //        var Amountfotos = fotosData.length,
+    //            f = 0;
+    //        for (f; f < Amountfotos; f++) {
+    //            var longitude = fotosData[f].log;
+    //            var latitude = fotosData[f].lat;
+    //            L.marker([latitude, longitude], {
+    //                icon: fotoIconAugust,
+    //            }).addTo(map);
+    //        }
+    //    };
 
     //set trashes on map
     var setTrashes = function (trashesData) {
@@ -164,28 +164,27 @@ Template.map.rendered = function () {
 
     //Create the map of Amsterdam Centrum and add render it.
     var myStyle = {
-        "fillColor": "#000",
-        "fillOpacity": 0.5,
-        "color": "#FFFFFF"
+        "fillColor": "#fff",
+        "fillOpacity": 0.0,
+        "color": "RGBA(255, 255, 255, 0)"
     }
-    
+
     var geojson;
-    
+
     //What happens on mouseover
     function highlightFeature(e) {
         var layer = e.target;
         var layerName = layer.feature.properties.name;
-        if(layerName !== "rightgone" && layerName !== "leftgone") {
+        if (layerName !== "rightgone" && layerName !== "leftgone") {
             layer.setStyle({
-                weight: 5,
+                //                weight: 5,
                 fillColor: '#D83E41',
                 dashArray: '',
-                fillOpacity: 0.7
+                fillOpacity: 1
             });
-        }
-
-        if (!L.Browser.ie && !L.Browser.opera) {
-            layer.bringToFront();
+            if (!L.Browser.ie && !L.Browser.opera) {
+                layer.bringToFront();
+            };
         };
     };
 
@@ -195,24 +194,21 @@ Template.map.rendered = function () {
     };
 
     function clickFeature(e) {
+        console.log(layerNames)
         var layer = e.target;
         var layerName = layer.feature.properties.name;
         SvgMapPart = selector('.popup')
-        console.log(SvgMapPart);
-       
 
         var xPosition = event.clientX;
         var yPosition = event.clientY;
-        
+
         //If clicked outside of Amsterdam Centrum, no div is being shown
-        if(layerName !== "rightgone" && layerName !== "leftgone") {
+        if (layerName !== "rightgone" && layerName !== "leftgone") {
             SvgMapPart.innerHTML = layerName;
             SvgMapPart.style.position = "absolute";
-            SvgMapPart.style.left = xPosition + 'px';
+            SvgMapPart.style.left = xPosition + 30 + 'px';
             SvgMapPart.style.top = yPosition + -60 + 'px';
         };
-
-//        console.log(layer.feature.properties.name);
     };
 
     function onEachFeature(feature, layer) {
@@ -229,5 +225,37 @@ Template.map.rendered = function () {
             onEachFeature: onEachFeature
         }).addTo(map)   
     };
+
+    //filters
+    var closed = false;
+    toggleFilter.addEventListener('click', function () {
+        if (closed === false) {
+            closed = true;
+            TweenMax.to(filter, 2, {
+                x: -243
+            });
+            TweenMax.to(toggleFilterImg, 2, {
+                rotation: -45
+            });
+            TweenMax.to(informotion, 2, {
+                css: {
+                    marginLeft: -243
+                }
+            });
+        } else {
+            closed = false;
+            TweenMax.to(filter, 2, {
+                x: 0
+            });
+            TweenMax.to(toggleFilterImg, 2, {
+                rotation: 0
+            });
+            TweenMax.to(informotion, 2, {
+                css: {
+                    marginLeft: -0
+                }
+            });
+        }
+    });
 
 };

@@ -22,7 +22,7 @@
     margin: 0;
 }
 
-.filtertitle > img {
+.filtertitle > div {
     display: inline-block;
     padding: 10px;
     height: 37px;
