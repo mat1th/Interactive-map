@@ -1,3 +1,6 @@
+.informotion{
+}
+
 .map {
     height: 100vh;
 }
@@ -19,7 +22,7 @@
 
 .fotoicon,
 .foto-icon-july,
-.foto-icon-august{
+.foto-icon-august {
     border-radius: 0%;
     width: 8px !important;
     height: 8px !important;
@@ -28,6 +31,7 @@
 .foto-icon-july {
     background: #D40CF8;
 }
+
 .foto-icon-august {
     background: #0CF85E;
 }

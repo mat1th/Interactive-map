@@ -1,0 +1,10 @@
+.filter{
+    position: absolute;
+    z-index: 2;
+}
+
+.filter > fieldset{
+    background: #fff;
+    border: none;
+
+}

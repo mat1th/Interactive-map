@@ -1,7 +1,18 @@
 <template name="map">
-    <object data="amsterdammap.svg" type="image/svg+xml" class="amsterdammap">Your browser does not support SVG</object>
-    <div id="container">
-        <div id="map" class="map"></div>
-        <div id="placename" class="namediv"></div>
-    </div>
+    <section class="filter">
+        <fieldset>
+            <h2>Filters</h2>
+            <input type="checkbox">
+            <label for="">prullenbakken</label>
+
+        </fieldset>
+    </section>
+    <section class="informotion">
+        <object data="amsterdammap.svg" type="image/svg+xml" class="amsterdammap">Your browser does not support SVG</object>
+        <div id="container">
+            <div id="map" class="map"></div>
+            <div id="placename" class="namediv"></div>
+        </div>
+    </section>
+
 </template>
