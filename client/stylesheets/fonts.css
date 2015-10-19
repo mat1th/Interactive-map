@@ -1,0 +1,48 @@
+@font-face {
+  font-family: 'Fira Sans';
+  font-style: normal;
+  font-weight: 300;
+  src: local('Fira Sans Light'), local('FiraSans-Light'), url(https://fonts.gstatic.com/s/firasans/v5/VTBnrK42EiOBncVyQXZ7j5S3E-kSBmtLoNJPDtbj2Pk.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Fira Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Fira Sans'), local('FiraSans-Regular'), url(https://fonts.gstatic.com/s/firasans/v5/EjsrzDkQUQCDwsBtLpcVQSZ2oysoEQEeKwjgmXLRnTc.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Fira Sans';
+  font-style: normal;
+  font-weight: 500;
+  src: local('Fira Sans Medium'), local('FiraSans-Medium'), url(https://fonts.gstatic.com/s/firasans/v5/zM2u8V3CuPVwAAXFQcDi4JS3E-kSBmtLoNJPDtbj2Pk.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Fira Sans';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Fira Sans Bold'), local('FiraSans-Bold'), url(https://fonts.gstatic.com/s/firasans/v5/DugPdSljmOTocZOR2CItOpS3E-kSBmtLoNJPDtbj2Pk.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Fira Sans';
+  font-style: italic;
+  font-weight: 300;
+  src: local('Fira Sans Light Italic'), local('FiraSans-LightItalic'), url(https://fonts.gstatic.com/s/firasans/v5/6s0YCA9oCTF6hM60YM-qTd6Naowg1QhaIq8kLGtQSos.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Fira Sans';
+  font-style: italic;
+  font-weight: 400;
+  src: local('Fira Sans Italic'), local('FiraSans-Italic'), url(https://fonts.gstatic.com/s/firasans/v5/QURAmFz4b80g324-oF-UjywlidHJgAgmTjOEEzwu1L8.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Fira Sans';
+  font-style: italic;
+  font-weight: 500;
+  src: local('Fira Sans Medium Italic'), local('FiraSans-MediumItalic'), url(https://fonts.gstatic.com/s/firasans/v5/6s0YCA9oCTF6hM60YM-qTbqoDFxW0sKUoJN81ZzAEu8.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Fira Sans';
+  font-style: italic;
+  font-weight: 700;
+  src: local('Fira Sans Bold Italic'), local('FiraSans-BoldItalic'), url(https://fonts.gstatic.com/s/firasans/v5/6s0YCA9oCTF6hM60YM-qTTdGNerWpg2Hn6A-BxWgZ_I.ttf) format('truetype');
+}

@@ -1,3 +1,5 @@
+
+
 html,
 body {
     margin: 0;
@@ -5,7 +7,7 @@ body {
 }
 
 body {
-    font-family: Arial;
+      font-family: 'Fira Sans', sans-serif;
 }
 
 .red {
@@ -15,6 +17,7 @@ body {
 .black {
     color: #343434;
 }
+
 
 /*
 .current {

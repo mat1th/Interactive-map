@@ -1,5 +1,14 @@
-.informotion{
+header {
+    height: 60px;
 }
+
+.logo > img {
+    margin: 1em;
+    width: 10.1%;
+    height: 2.8%;
+}
+
+.informotion {}
 
 .map {
     height: 100vh;
