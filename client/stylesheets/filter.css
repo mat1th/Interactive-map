@@ -1,14 +1,68 @@
-.filter{
+.filter {
+    margin: 0;
+    padding: 0;
     position: absolute;
     z-index: 2;
 }
 
-.filter > fieldset{
-    background: #fff;
-    border: none;
-
+.filter h2 {
+    padding: 10px;
+    margin: 0;
+    width: 100px;
+    display: inline-block;
 }
 
 .filtertitle {
+    font-weight: 500;
+    text-transform: uppercase;
+    height: auto;
     background: #AE2424;
+    color: #fff;
+    width: 300px;
+    margin: 0;
 }
+
+.filtertitle > img {
+    display: inline-block;
+    padding: 10px;
+    height: 37px;
+    width: 37px;
+    float: right;
+    background: #5A0E12;
+}
+
+.filter > .filters {
+    text-transform: uppercase;
+    font-weight: 500;
+    color: #ffffff;
+    width: 243px;
+    height: 90vh;
+    margin: 0;
+    padding: 0;
+    background: #de3a3a;
+    border: none;
+}
+
+.filter > .filters > div > img {
+    width: 30px;
+    margin: 20px;
+    display: inline-block;
+    float: left;
+}
+
+.filter > .filters > div > p {
+    width: 100px;
+    margin: 20px 60px 20px 0;
+    display: inline-block;
+    float: right;
+}
+.filter > .filters > div {
+   clear: both;
+}
+
+
+/*
+.filter > .filters > div {
+    margin: 10px 2em;
+}
+*/
