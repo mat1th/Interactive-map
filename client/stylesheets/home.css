@@ -1,14 +1,14 @@
-.background{
+.background {
     height: 100vh;
     width: 100vw;
     margin: 0;
     padding: 0;
     background: url('img/background.png');
-  background-size: cover;
+    background-size: cover;
 }
 
 .homepage {
-/*    margin: 2em;*/
+    /*    margin: 2em;*/
 }
 
 .textcenter {
@@ -21,7 +21,7 @@
 }
 
 .homeaction {
-/*    margin: 2em;*/
+    /*    margin: 2em;*/
     font-weight: 700;
 }
 

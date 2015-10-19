@@ -182,7 +182,7 @@ Template.map.rendered = function () {
 
     function clickFeature(e) {
         var layer = e.target;
-        SvgMapPart = selector('.namediv')
+        SvgMapPart = selector('.popup')
         console.log(SvgMapPart);
         SvgMapPart.innerHTML = layer.feature.properties.name;
 
