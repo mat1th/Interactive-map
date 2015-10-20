@@ -198,16 +198,18 @@ Template.map.rendered = function () {
 
     function clickFeature(e) {
         console.log(layerNames)
-        var layer = e.target;
-        var layerName = layer.feature.properties.name;
-        SvgMapPart = selector('.popup')
+        var layer = e.target,
+            layerName = layer.feature.properties.name,
+            SvgMapPart = selector('.mappopup'),
+            popup = selector('.popup');
+
         SvgMapPart.classList.remove("none");
         var xPosition = event.clientX;
         var yPosition = event.clientY;
 
         //If clicked outside of Amsterdam Centrum, no div is being shown
         if (layerName !== "rightgone" && layerName !== "leftgone") {
-            SvgMapPart.innerHTML = layerName;
+            popup.innerHTML = layerName;
             SvgMapPart.style.position = "absolute";
             SvgMapPart.style.left = xPosition + -30 + 'px';
             SvgMapPart.style.top = yPosition + -90 + 'px';
