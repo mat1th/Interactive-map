@@ -27,7 +27,9 @@ Template.map.rendered = function () {
         informotion = selector('.informotion'),
         crowdedness = selector('.crowdedness'),
         trashes = selector('.trashes'),
-        cleaningIntensity = selector('.cleaning-intensity');
+        cleaningIntensity = selector('.cleaning-intensity'),
+        wijken = selector('.wijken'),
+        wijkenP = selector('.wijken p');
 
     //subscribe to trashesCollection
     Meteor.subscribe('trashesCollection', function () {
@@ -110,43 +112,43 @@ Template.map.rendered = function () {
     map.keyboard.disable();
 
 
-//    //set foto's september on map
-//    var setFotoLocation = function (fotosData) {
-//        var Amountfotos = fotosData.length,
-//            f = 0;
-//        for (f; f < Amountfotos; f++) {
-//            var longitude = fotosData[f].log;
-//            var latitude = fotosData[f].lat;
-//            L.marker([latitude, longitude], {
-//                icon: fotoIcon,
-//            }).addTo(map);
-//        }
-//    };
-//    //    set foto's july on map
-//    var setFotoLocationJuly = function (fotosData) {
-//        var Amountfotos = fotosData.length,
-//            f = 0;
-//        for (f; f < Amountfotos; f++) {
-//            var longitude = fotosData[f].log;
-//            var latitude = fotosData[f].lat;
-//            L.marker([latitude, longitude], {
-//                icon: fotoIconJuly,
-//            }).addTo(map);
-//        }
-//    };
-//    //     set foto's August on map
-//    var setFotoLocationAugust = function (fotosData) {
-//        var Amountfotos = fotosData.length,
-//            f = 0;
-//        for (f; f < Amountfotos; f++) {
-//            var longitude = fotosData[f].log;
-//            var latitude = fotosData[f].lat;
-//            L.marker([latitude, longitude], {
-//                icon: fotoIconAugust,
-//            }).addTo(map);
-//        }
-//    };
-//
+    //    //set foto's september on map
+    //    var setFotoLocation = function (fotosData) {
+    //        var Amountfotos = fotosData.length,
+    //            f = 0;
+    //        for (f; f < Amountfotos; f++) {
+    //            var longitude = fotosData[f].log;
+    //            var latitude = fotosData[f].lat;
+    //            L.marker([latitude, longitude], {
+    //                icon: fotoIcon,
+    //            }).addTo(map);
+    //        }
+    //    };
+    //    //    set foto's july on map
+    //    var setFotoLocationJuly = function (fotosData) {
+    //        var Amountfotos = fotosData.length,
+    //            f = 0;
+    //        for (f; f < Amountfotos; f++) {
+    //            var longitude = fotosData[f].log;
+    //            var latitude = fotosData[f].lat;
+    //            L.marker([latitude, longitude], {
+    //                icon: fotoIconJuly,
+    //            }).addTo(map);
+    //        }
+    //    };
+    //    //     set foto's August on map
+    //    var setFotoLocationAugust = function (fotosData) {
+    //        var Amountfotos = fotosData.length,
+    //            f = 0;
+    //        for (f; f < Amountfotos; f++) {
+    //            var longitude = fotosData[f].log;
+    //            var latitude = fotosData[f].lat;
+    //            L.marker([latitude, longitude], {
+    //                icon: fotoIconAugust,
+    //            }).addTo(map);
+    //        }
+    //    };
+    //
     //set trashes on map
     var setTrashes = function (trashesData) {
         var amountTrashes = trashesData.length,
@@ -207,7 +209,7 @@ Template.map.rendered = function () {
         if (layerName !== "rightgone" && layerName !== "leftgone") {
             SvgMapPart.innerHTML = layerName;
             SvgMapPart.style.position = "absolute";
-            SvgMapPart.style.left = xPosition + -30 +  'px';
+            SvgMapPart.style.left = xPosition + -30 + 'px';
             SvgMapPart.style.top = yPosition + -90 + 'px';
         };
     };
@@ -305,6 +307,34 @@ Template.map.rendered = function () {
     });
     cleaningIntensity.addEventListener('click', function () {
         cleaningIntensity.classList.toggle('disabled')
+    });
+
+    //wijken
+    wijken.addEventListener('mouseover', function () {
+        TweenMax.to(wijken, 0.2, {
+            opacity: 0.60
+        });
+    });
+    wijken.addEventListener('mouseout', function () {
+        if (wijkenP.innerHTML !== "Verberg wijken") {
+            TweenMax.to(wijken, 0.2, {
+                opacity: 1
+            });
+        }
+    });
+    wijken.addEventListener('click', function () {
+        if (wijkenP.innerHTML === "Verberg wijken") {
+            wijkenP.innerHTML = "toon wijken"
+            TweenMax.to(wijken, 0.2, {
+                opacity: 0.6
+            });
+        } else {
+            wijkenP.innerHTML = "Verberg wijken"
+            TweenMax.to(wijken, 0.2, {
+                opacity: 1
+            });
+        }
+
     });
 
 };
