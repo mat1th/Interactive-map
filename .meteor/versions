@@ -12,6 +12,7 @@ browser-policy@1.0.5
 browser-policy-common@1.0.4
 browser-policy-content@1.0.6
 browser-policy-framing@1.0.6
+brylie:leaflet-heat@0.1.3_1
 caching-compiler@1.0.0
 caching-html-compiler@1.0.2
 callback-hook@1.0.4
