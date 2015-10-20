@@ -3,35 +3,42 @@
         <section class="logo">
             <img src="img/logo.png" alt="logo">
         </section>
+        <section class="wijken">
+            <img src="img/wijken.png" alt="">
+            <p>Toon wijken</p>
+        </section>
     </header>
     <section class="filter">
         <section class="filtertitle">
-            <h2>Filters</h2>
+            <h2>Legenda</h2>
             <div class="togglefilter">
-                 <img src="icons/close.svg" alt="closebutton" class="togglefilterimg">
+                <img src="icons/close.svg" alt="closebutton" class="togglefilterimg">
             </div>
 
         </section>
         <section class="filters">
-           <div class="crowdedness">
-               <img src="icons/triangle.svg" alt="Drukte">
+            <div class="crowdedness">
+                <img src="icons/triangle.svg" alt="Drukte">
                 <p>Drukte</p>
             </div>
+            <div class="border"></div>
             <div class="trashes">
                 <img src="icons/square.svg" alt="Prullenbakken">
                 <p>Prullenbakken</p>
             </div>
+            <div class="border"></div>
             <div class="cleaning-intensity">
-               <img src="icons/circle.svg" alt="Schoonmaak intensiteit">
-               <p>Schoonmaak intensiteit</p>
+                <img src="icons/circle.svg" alt="Schoonmaak intensiteit">
+                <p>Schoonmaak intensiteit</p>
             </div>
+            <div class="border"></div>
         </section>
     </section>
     <section class="informotion">
         <object data="amsterdammap.svg" type="image/svg+xml" class="amsterdammap">Your browser does not support SVG</object>
         <div id="container">
             <div id="map" class="map"></div>
-            <div id="placename" class="popup"></div>
+            <div id="placename" class="popup none"></div>
         </div>
     </section>
 

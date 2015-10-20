@@ -13,10 +13,11 @@
 }
 
 .filtertitle {
-    font-weight: 500;
+    font-weight: 700;
+    font-size: 15px;
     text-transform: uppercase;
     height: auto;
-    background: #AE2424;
+    background: #BD2C2C;
     color: #fff;
     width: 300px;
     margin: 0;
@@ -28,7 +29,7 @@
     height: 37px;
     width: 37px;
     float: right;
-    background: #5A0E12;
+    background: #de3a3a;
 }
 
 .filter > .filters {
@@ -36,7 +37,7 @@
     font-weight: 500;
     color: #ffffff;
     width: 243px;
-    height: 90vh;
+    height: calc(100vh - 70px - 56px);
     margin: 0;
     padding: 0;
     background: #de3a3a;
@@ -45,13 +46,14 @@
 
 .filter > .filters > div > img {
     cursor: pointer;
-    width: 20px;
-    margin: 20px;
+    width: 15px;
+    margin: 22px;
     display: inline-block;
     float: left;
 }
 
 .filter > .filters > div > p {
+    font-weight: 500;
     width: 120px;
     margin: 20px 60px 20px 0;
     display: inline-block;
@@ -61,6 +63,22 @@
 .filter > .filters > div {
     cursor: pointer;
     clear: both;
+}
+
+.filter > .filters > .border {
+    cursor: pointer;
+    height: 1px;
+    background-color: #bd2c2c;
+    color: #bd2c2c;
+    clear: both;
+}
+
+.disabled > p{
+    text-decoration: line-through;
+    color: RGBA(255, 255, 255, 0.72)
+}
+.disabled > img{
+    opacity: 0.72;
 }
 
 

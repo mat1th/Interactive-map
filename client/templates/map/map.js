@@ -198,7 +198,7 @@ Template.map.rendered = function () {
         var layer = e.target;
         var layerName = layer.feature.properties.name;
         SvgMapPart = selector('.popup')
-
+        SvgMapPart.classList.remove("none");
         var xPosition = event.clientX;
         var yPosition = event.clientY;
 
@@ -229,6 +229,7 @@ Template.map.rendered = function () {
     //filters
     var closed = false;
     toggleFilter.addEventListener('click', function () {
+
         if (closed === false) {
             closed = true;
             TweenMax.to(filter, 2, {
