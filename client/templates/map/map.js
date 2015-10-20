@@ -1,9 +1,9 @@
 // on startup run resizing event
 Meteor.startup(function () {
-    $(window).resize(function () {
-        $('#map').css('height', window.innerHeight);
-    });
-    $(window).resize(); // trigger resize event
+    //    $(window).resize(function () {
+    //        $('#map').css('height', window.innerHeight);
+    //    });
+    //    $(window).resize(); // trigger resize event
 });
 
 //create Collections
@@ -24,8 +24,8 @@ Template.map.rendered = function () {
     var toggleFilterImg = selector('.togglefilterimg'),
         toggleFilter = selector('.togglefilter'),
         filter = selector('.filter'),
-        crowdedness = selector('.crowdedness'),
         informotion = selector('.informotion'),
+        crowdedness = selector('.crowdedness'),
         trashes = selector('.trashes'),
         cleaningIntensity = selector('.cleaning-intensity');
 
@@ -110,42 +110,43 @@ Template.map.rendered = function () {
     map.keyboard.disable();
 
 
-    //set foto's on map
-    //        var setFotoLocation = function (fotosData) {
-    //            var Amountfotos = fotosData.length,
-    //                f = 0;
-    //            for (f; f < Amountfotos; f++) {
-    //                var longitude = fotosData[f].log;
-    //                var latitude = fotosData[f].lat;
-    //                L.marker([latitude, longitude], {
-    //                    icon: fotoIcon,
-    //                }).addTo(map);
-    //            }
-    //        };
-    //set foto's july on map
-    //    var setFotoLocationJuly = function (fotosData) {
-    //        var Amountfotos = fotosData.length,
-    //            f = 0;
-    //        for (f; f < Amountfotos; f++) {
-    //            var longitude = fotosData[f].log;
-    //            var latitude = fotosData[f].lat;
-    //            L.marker([latitude, longitude], {
-    //                icon: fotoIconJuly,
-    //            }).addTo(map);
-    //        }
-    //    };
-    //    var setFotoLocationAugust = function (fotosData) {
-    //        var Amountfotos = fotosData.length,
-    //            f = 0;
-    //        for (f; f < Amountfotos; f++) {
-    //            var longitude = fotosData[f].log;
-    //            var latitude = fotosData[f].lat;
-    //            L.marker([latitude, longitude], {
-    //                icon: fotoIconAugust,
-    //            }).addTo(map);
-    //        }
-    //    };
-
+//    //set foto's september on map
+//    var setFotoLocation = function (fotosData) {
+//        var Amountfotos = fotosData.length,
+//            f = 0;
+//        for (f; f < Amountfotos; f++) {
+//            var longitude = fotosData[f].log;
+//            var latitude = fotosData[f].lat;
+//            L.marker([latitude, longitude], {
+//                icon: fotoIcon,
+//            }).addTo(map);
+//        }
+//    };
+//    //    set foto's july on map
+//    var setFotoLocationJuly = function (fotosData) {
+//        var Amountfotos = fotosData.length,
+//            f = 0;
+//        for (f; f < Amountfotos; f++) {
+//            var longitude = fotosData[f].log;
+//            var latitude = fotosData[f].lat;
+//            L.marker([latitude, longitude], {
+//                icon: fotoIconJuly,
+//            }).addTo(map);
+//        }
+//    };
+//    //     set foto's August on map
+//    var setFotoLocationAugust = function (fotosData) {
+//        var Amountfotos = fotosData.length,
+//            f = 0;
+//        for (f; f < Amountfotos; f++) {
+//            var longitude = fotosData[f].log;
+//            var latitude = fotosData[f].lat;
+//            L.marker([latitude, longitude], {
+//                icon: fotoIconAugust,
+//            }).addTo(map);
+//        }
+//    };
+//
     //set trashes on map
     var setTrashes = function (trashesData) {
         var amountTrashes = trashesData.length,
@@ -206,8 +207,8 @@ Template.map.rendered = function () {
         if (layerName !== "rightgone" && layerName !== "leftgone") {
             SvgMapPart.innerHTML = layerName;
             SvgMapPart.style.position = "absolute";
-            SvgMapPart.style.left = xPosition + 30 + 'px';
-            SvgMapPart.style.top = yPosition + -60 + 'px';
+            SvgMapPart.style.left = xPosition + -30 +  'px';
+            SvgMapPart.style.top = yPosition + -90 + 'px';
         };
     };
 
@@ -229,8 +230,8 @@ Template.map.rendered = function () {
     //filters
     var closed = false;
     toggleFilter.addEventListener('click', function () {
-
         if (closed === false) {
+            var windowWidth = window.innerHeight;
             closed = true;
             TweenMax.to(filter, 2, {
                 x: -243
@@ -239,11 +240,13 @@ Template.map.rendered = function () {
                 rotation: -45
             });
             TweenMax.to(informotion, 2, {
+                width: windowWidth,
                 css: {
                     marginLeft: -243
                 }
             });
         } else {
+            var informotionWidth = informotion.offsetWidth;
             closed = false;
             TweenMax.to(filter, 2, {
                 x: 0
@@ -252,11 +255,56 @@ Template.map.rendered = function () {
                 rotation: 0
             });
             TweenMax.to(informotion, 2, {
+                width: informotionWidth,
                 css: {
                     marginLeft: -0
                 }
             });
         }
+    });
+    //crowdedness
+    crowdedness.addEventListener('mouseover', function () {
+        TweenMax.to(crowdedness, 0.2, {
+            opacity: 0.60
+        });
+    });
+    crowdedness.addEventListener('mouseout', function () {
+        TweenMax.to(crowdedness, 0.2, {
+            opacity: 1
+        });
+    });
+    crowdedness.addEventListener('click', function () {
+        crowdedness.classList.toggle('disabled')
+    });
+
+    //trashes
+    trashes.addEventListener('mouseover', function () {
+        TweenMax.to(trashes, 0.2, {
+            opacity: 0.60
+        });
+    });
+    trashes.addEventListener('mouseout', function () {
+        TweenMax.to(trashes, 0.2, {
+            opacity: 1
+        });
+    });
+    trashes.addEventListener('click', function () {
+        trashes.classList.toggle('disabled')
+    });
+
+    //cleaningIntensity
+    cleaningIntensity.addEventListener('mouseover', function () {
+        TweenMax.to(trashes, 0.2, {
+            opacity: 0.60
+        });
+    });
+    cleaningIntensity.addEventListener('mouseout', function () {
+        TweenMax.to(cleaningIntensity, 0.2, {
+            opacity: 1
+        });
+    });
+    cleaningIntensity.addEventListener('click', function () {
+        cleaningIntensity.classList.toggle('disabled')
     });
 
 };
