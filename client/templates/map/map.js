@@ -28,8 +28,8 @@ Template.map.rendered = function () {
         crowdedness = selector('.crowdedness'),
         trashes = selector('.trashes'),
         cleaningIntensity = selector('.cleaning-intensity'),
-        wijken = selector('.wijken'),
-        wijkenP = selector('.wijken p');
+        districts = selector('.districts'),
+        districtsP = selector('.districts p');
 
     //subscribe to trashesCollection
     Meteor.subscribe('trashesCollection', function () {
@@ -392,20 +392,20 @@ Template.map.rendered = function () {
         cleaningIntensity.classList.toggle('disabled')
     });
 
-    //wijken
-    wijken.addEventListener('mouseover', function () {
-        TweenMax.to(wijken, 0.2, {
+    //districts
+    districts.addEventListener('mouseover', function () {
+        TweenMax.to(districts, 0.2, {
             opacity: 0.60
         });
     });
-    wijken.addEventListener('mouseout', function () {
-        TweenMax.to(wijken, 0.2, {
+    districts.addEventListener('mouseout', function () {
+        TweenMax.to(districts, 0.2, {
             opacity: 1
         });
     });
-    wijken.addEventListener('click', function () {
-        if (wijkenP.innerHTML === "Verberg wijken") {
-            wijkenP.innerHTML = "toon wijken"
+    districts.addEventListener('click', function () {
+        if (districtsP.innerHTML === "Verberg wijken") {
+            districtsP.innerHTML = "Toon wijken"
             var i = 0;
             for (i; i < layerIDs.length; i++) {
                 console.log(layerIDs[i])
@@ -414,11 +414,11 @@ Template.map.rendered = function () {
                 }
             };
         } else {
-            wijkenP.innerHTML = "Verberg wijken"
+            districtsP.innerHTML = "Verberg wijken"
             var i = 0;
             for (i; i < layerIDs.length; i++) {
                 if (layerIDs[i] !== "left-gone" && layerIDs[i] !== "right-gone") {
-                    document.getElementById(layerIDs[i]).setAttribute('class', 'toonwijk');
+                    document.getElementById(layerIDs[i]).setAttribute('class', 'showdistrict');
                 }
             };
         }

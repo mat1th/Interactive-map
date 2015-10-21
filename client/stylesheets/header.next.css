@@ -12,7 +12,7 @@ header {
     /*    width: auto;*/
 }
 
-.wijken {
+.districts {
     margin: 10px 30px 10px 10px;
     height: 40px;
     float: right;
@@ -24,13 +24,13 @@ header {
     border-color: #333333;
 }
 
-.wijken > img {
+.districts > img {
     height: 26px;
     display: inline-block;
     margin: 7px;
 }
 
-.wijken > p {
+.districts > p {
     margin: 11px;
     padding: 0 0 20px 0 0;
     font-size: 13px;
