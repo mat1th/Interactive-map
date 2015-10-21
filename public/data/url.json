@@ -1,0 +1,14 @@
+{
+    "rawData": "https://spreadsheets.google.com/feeds/list/1mkgRVyHAmTS6VhL8q74XKdsF_adAVdNvTTilJshO5pY/od6/public/values?alt=json",
+    "mapQuest": ["http://open.mapquestapi.com/geocoding/v1/address?key=d2XyQ3Jpk8hGUPEA4YbkEUAr742lTKeE&callbackjson&json={location:{street:","},options:{thumbMaps:false,maxResults:1}}"],
+    "flickrGetPlaceId": ["https://api.flickr.com/services/rest/?method=flickr.places.find&api_key=6faf5bded1f4507f3093077b58fef3db&query=", "&format=json&nojsoncallback=1"],
+    "flickrGetPhotos": ["https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=6faf5bded1f4507f3093077b58fef3db&min_taken_date=","&max_taken_date=", "&place_id=", "&per_page=250&page=", "&format=json&nojsoncallback=1"],
+    "flickrGetGeoPhoto":["https://api.flickr.com/services/rest/?method=flickr.photos.geo.getLocation&api_key=6faf5bded1f4507f3093077b58fef3db&photo_id=", "&format=json&nojsoncallback=1"]
+}
+
+
+
+
+
+
+

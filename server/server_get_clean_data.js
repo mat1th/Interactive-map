@@ -8,7 +8,7 @@ var rawDataUrl,
     mapQuestUrl;
 
 Meteor.startup(function () {
-    HTTP.get(Meteor.absoluteUrl("url.json"), function (err, result) {
+    HTTP.get(Meteor.absoluteUrl("data/url.json"), function (err, result) {
         if (err) {
             console.log(err);
         }
