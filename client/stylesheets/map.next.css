@@ -117,12 +117,11 @@
 }
 
 .overlay {
-    fill: "#ffffff";
+    fill: #ffffff;
     fill-opacity: 1;
     stroke: #ffffff;
     stroke-width: 2px;
     stroke-linejoin: round;
-    
 }
 
 .transparent {
@@ -131,4 +130,10 @@
 
 .leaflet-marker-pane {
     z-index: 2;
+}
+
+.toonwijk {
+    stroke: #ADADAD;
+    stroke-width: 2px;
+    stroke-linejoin: round;
 }

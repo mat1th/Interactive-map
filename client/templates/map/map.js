@@ -109,22 +109,22 @@ Template.map.rendered = function () {
     }); 
 
 
-//    var createheatmap = function (heatmapLayer) {
-//        var heat = L.heatLayer(heatmapLayer, {
-//            radius: 18,
-//            blur: 20,
-//            max: 1.5,
-//            gradient: {
-//                0: '#FFB700',
-//                0.5: '#FFB700',
-//                0.75: '#21B532',
-//                0.80: '#941E64',
-////                0.50: '#C45D9A',
-////                0.60: '#B13B80',
-//                1: '#941E64'
-//            }
-//        }).addTo(map);
-//    }
+    //    var createheatmap = function (heatmapLayer) {
+    //        var heat = L.heatLayer(heatmapLayer, {
+    //            radius: 18,
+    //            blur: 20,
+    //            max: 1.5,
+    //            gradient: {
+    //                0: '#FFB700',
+    //                0.5: '#FFB700',
+    //                0.75: '#21B532',
+    //                0.80: '#941E64',
+    ////                0.50: '#C45D9A',
+    ////                0.60: '#B13B80',
+    //                1: '#941E64'
+    //            }
+    //        }).addTo(map);
+    //    }
 
     //disable dragging
     map.dragging.disable();
@@ -379,9 +379,22 @@ Template.map.rendered = function () {
     wijken.addEventListener('click', function () {
         if (wijkenP.innerHTML === "Verberg wijken") {
             wijkenP.innerHTML = "toon wijken"
-
+            var i = 0;
+            for (i; i < layerIDs.length; i++) {
+                console.log(layerIDs[i])
+                if (layerIDs[i] !== "left-gone" && layerIDs[i] !== "right-gone") {
+                    document.getElementById(layerIDs[i]).removeAttribute('class');
+                }
+            };
         } else {
             wijkenP.innerHTML = "Verberg wijken"
+            var i = 0;
+            for (i; i < layerIDs.length; i++) {
+                if (layerIDs[i] !== "left-gone" && layerIDs[i] !== "right-gone") {
+                    document.getElementById(layerIDs[i]).setAttribute('class', 'toonwijk');
+                }
+            };
+
         }
     });
 
