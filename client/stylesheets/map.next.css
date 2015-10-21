@@ -24,7 +24,6 @@ html, body {
     height: 6px !important;
 }
 
-
 .foto-icon-july,
 .foto-icon-august,
 .foto-icon-september{
@@ -35,18 +34,6 @@ html, body {
     border-bottom: 5px solid #A0171C;
 }
 
-.foto-icon-july {
-    /*    background: #AE2424;*/
-}
-
-.foto-icon-august {
-    /*    background: #AE2424;*/
-}
-
-.fotoicon {
-    /*    background: #AE2424;*/
-}
-
 .leaflet-container {
     background-color: rgba(255, 0, 0, 0.0);
 }
@@ -54,7 +41,6 @@ html, body {
 .leaflet-top leaflet-left {
     display: none;
 }
-
 
 /*popup*/
 

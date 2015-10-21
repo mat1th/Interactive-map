@@ -1,9 +1,6 @@
 // on startup run resizing event
 Meteor.startup(function () {
-    //    $(window).resize(function () {
-    //        $('#map').css('height', window.innerHeight);
-    //    });
-    //    $(window).resize(); // trigger resize event
+
 });
 
 //create Collections
@@ -28,6 +25,10 @@ Template.map.rendered = function () {
         crowdedness = selector('.crowdedness'),
         trashes = selector('.trashes'),
         cleaningIntensity = selector('.cleaning-intensity'),
+        nextMonth = selector('.nextmonth'),
+        previousMonth = selector('.previousmonth'),
+        months = selector('.months'),
+        month = selector('.month'),
         districts = selector('.districts'),
         districtsP = selector('.districts p');
 
@@ -392,6 +393,99 @@ Template.map.rendered = function () {
     });
     cleaningIntensity.addEventListener('click', function () {
         cleaningIntensity.classList.toggle('disabled')
+    });
+
+    // month controllers
+    TweenMax.to(previousMonth, 0.2, {
+        opacity: 0.3
+    });
+
+    var slides = $('.slides');
+    var $slideWrapper = $('.months');
+    var width = [0, -44, -90, -185];
+    var width2 = [0, 0, -90, -185];
+    var currentImageCount = 1;
+
+    var moveToNext = function () {
+        if (currentImageCount !== 3) {
+            currentImageCount++;
+            TweenMax.to(slides, 0.5, {
+                x: width[currentImageCount]
+            });
+            TweenMax.to(previousMonth, 0.2, {
+                opacity: 1
+            });
+            if (currentImageCount === 3) {
+                TweenMax.to(nextMonth, 0.2, {
+                    opacity: 0.3
+                });
+            }
+        } else {
+            TweenMax.to(nextMonth, 0.2, {
+                opacity: 0.3
+            });
+        }
+    };
+
+    var moveToPrevious = function () {
+        if (currentImageCount !== 1) {
+            currentImageCount--;
+            TweenMax.to(slides, 0.5, {
+                x: width2[currentImageCount]
+            });
+            TweenMax.to(nextMonth, 0.2, {
+                opacity: 1
+            });
+            if (currentImageCount === 1) {
+                TweenMax.to(previousMonth, 0.2, {
+                    opacity: 0.3
+                });
+            }
+        } else {
+            console.log(currentImageCount)
+            TweenMax.to(previousMonth, 0.2, {
+                opacity: 0.3
+            });
+        }
+    };
+
+    nextMonth.addEventListener('mouseover', function () {
+        if (currentImageCount !== 3) {
+            TweenMax.to(nextMonth, 0.2, {
+                opacity: 0.60
+            });
+        }
+    });
+    nextMonth.addEventListener('mouseout', function () {
+        if (currentImageCount !== 3) {
+            TweenMax.to(nextMonth, 0.2, {
+                opacity: 1
+            });
+        }
+
+    });
+
+    previousMonth.addEventListener('mouseover', function () {
+        if (currentImageCount !== 1) {
+            TweenMax.to(previousMonth, 0.2, {
+                opacity: 0.60
+            });
+        }
+    });
+    previousMonth.addEventListener('mouseout', function () {
+        if (currentImageCount !== 1) {
+            TweenMax.to(previousMonth, 0.2, {
+                opacity: 1
+            });
+        }
+    });
+
+    nextMonth.addEventListener('click', function () {
+        moveToNext()
+    });
+
+    previousMonth.addEventListener('click', function () {
+        moveToPrevious()
     });
 
     //districts
