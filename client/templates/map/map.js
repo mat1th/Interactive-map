@@ -198,43 +198,37 @@ Template.map.rendered = function () {
 
     //What happens on mouseover
     function highlightFeature(e) {
-        //        var layer = e.target;
-        //        var layerName = layer.feature.properties.name;
-        //        if (layerName !== "rightgone" && layerName !== "leftgone") {
-        //            layer.setStyle({
-        //                //                weight: 5,
-        //                fillColor: '#D83E41',
-        //                dashArray: '',
-        //                fillOpacity: 1
-        //            });
-        //            if (!L.Browser.ie && !L.Browser.opera) {
-        //                layer.bringToFront();
-        //            };
-        //        };
         var layer = e.target;
         var layerName = layer.feature.properties.name,
             SvgMapPart = selector('.mappopup'),
-            popup = selector('.popup');
+            popup = selector('.popup'),
+            overlayList = document.querySelectorAll(".overlay");
 
-        SvgMapPart.classList.remove("none");
         var xPosition = event.clientX;
         var yPosition = event.clientY;
-        if (layerName !== "rightgone" && layerName !== "leftgone") {
-            popup.innerHTML = layerName;
-            SvgMapPart.style.position = "absolute";
-            SvgMapPart.style.left = xPosition + -30 + 'px';
-            SvgMapPart.style.top = yPosition + -130 + 'px';
+        
+        //If there are elements with the "overlay" class, then hover will work and shows popup. Otherwise not.
+        if (overlayList.length === 0) {
+            SvgMapPart.classList.remove("none");
+            if (layerName !== "rightgone" && layerName !== "leftgone") {
+                popup.innerHTML = layerName;
+                SvgMapPart.style.position = "absolute";
+                SvgMapPart.style.left = xPosition + -30 + 'px';
+                SvgMapPart.style.top = yPosition + -130 + 'px';
 
-            layer.setStyle({
-                //                weight: 5,
-                fillColor: '#D83E41',
-                dashArray: '',
-                fillOpacity: 1
-            });
-            if (!L.Browser.ie && !L.Browser.opera) {
-                layer.bringToFront();
+                layer.setStyle({
+                    //                weight: 5,
+                    fillColor: '#D83E41',
+                    dashArray: '',
+                    fillOpacity: 1
+                });
+                if (!L.Browser.ie && !L.Browser.opera) {
+                    layer.bringToFront();
+                };
+            } else {
             };
         } else {
+            //adds class that hides the popup
             SvgMapPart.classList.add("none");
         }
     };
@@ -245,25 +239,32 @@ Template.map.rendered = function () {
     };
 
     function clickFeature(e, gData) {
-        var layertje = e.target;
-        var layerName = layertje.feature.properties.name;
-        var layerID = layertje.feature.properties.id;
+        var layertje = e.target,
+            layerName = layertje.feature.properties.name,
+            layerID = layertje.feature.properties.id,
+            SvgMapPart = selector('.mappopup'),
+            overlayList = document.querySelectorAll(".overlay");
 
+        SvgMapPart.classList.add("none");
+        
+        //If there are elements with the "overlay" class, then classes will be added to paths. Otherwise not.
+        if (overlayList.length === 0) {
         //gives classes to paths, with which they can be styled
-        if (layerName !== "rightgone" && layerName !== "leftgone") {
-            var i = 0;
-            for (i; i < layerIDs.length; i++) {
-                console.log(document.getElementById(layerIDs[i]));
-                console.log(document.getElementById("we"));
+            if (layerName !== "rightgone" && layerName !== "leftgone") {
+                var i = 0;
+                for (i; i < layerIDs.length; i++) {
+                    var checkingz = document.getElementById(layerIDs[i]).className;
+                    //                console.log(document.getElementById(layerIDs[i]));
 
-                if (layerIDs[i] !== layerID) {
-                    document.getElementById(layerIDs[i]).setAttribute('class', 'overlay');
-                } else {
-                    document.getElementById(layerIDs[i]).setAttribute('class', 'transparent');
+                    if (layerIDs[i] !== layerID) {
+                        document.getElementById(layerIDs[i]).setAttribute('class', 'overlay');
+                    } else {
+                        document.getElementById(layerIDs[i]).setAttribute('class', 'transparent');
+                    };
                 };
             };
         };
-    }
+    };
 
     function onEachFeature(feature, layer) {
         layer.on({
