@@ -290,8 +290,7 @@ Template.map.rendered = function () {
     var myMap = document.getElementById("map");
     var windowWidth = window.innerWidth; 
     var informotionWidth = windowWidth - 243 + "px";
-    console.log(informotionWidth);
-    console.log(myMap);
+   
     toggleFilter.addEventListener('click', function () {
         if (closed === false) {
             var windowWidth = window.innerHeight;
@@ -308,6 +307,7 @@ Template.map.rendered = function () {
                     marginLeft: -243
                 }
             });
+            TweenMax.to(myMap, 2, {left: "100px"});
         } else {
             var informotionWidth = informotion.offsetWidth;
             closed = false;
@@ -323,6 +323,7 @@ Template.map.rendered = function () {
                     marginLeft: -0
                 }
             });
+            TweenMax.to(myMap, 2, {left: 0});
         }
     });
     //crowdedness
