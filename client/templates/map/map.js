@@ -224,14 +224,14 @@ Template.map.rendered = function () {
                 });
                 if (!L.Browser.ie && !L.Browser.opera) {
                     layer.bringToFront();
-                };
-            } else {};
-        } else {
-            //adds class that hides the popup
-            SvgMapPart.classList.add("none");
-        }
+                }
+            } else {
+                console.log("out of order")
+                    //adds class that hides the popup
+                SvgMapPart.classList.add("none");
+            }
+        };
     };
-
     //reset on mouseout
     function resetHighlight(e) {
         geojson.resetStyle(e.target);
