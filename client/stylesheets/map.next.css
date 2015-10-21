@@ -117,10 +117,16 @@
 }
 
 .wit {
-    fill: "#ffffff";
+    fill: #ffffff;
+    border: #fff;
+    border-width: 10px;
     fill-opacity: 1;
 }
 
 .transparent {
-    fill: transparent;   
+    fill: transparent;
+}
+
+.leaflet-marker-pane {
+    z-index: 2;
 }
