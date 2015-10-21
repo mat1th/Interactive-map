@@ -1,7 +1,12 @@
+body {
+    overflow-x: hidden;
+}
+
 .map {
-    margin-left: 243px;
+    margin-left: 130px;
     height: calc(100vh - 70px);
-    width: calc(100vw - 243px);
+/*    width: calc(100vw - 243px);*/
+    width: 100%;
 }
 
 .amsterdammap {
