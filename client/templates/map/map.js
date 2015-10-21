@@ -287,6 +287,11 @@ Template.map.rendered = function () {
 
     //filters
     var closed = false;
+    var myMap = document.getElementById("map");
+    var windowWidth = window.innerWidth; 
+    var informotionWidth = windowWidth - 243 + "px";
+    console.log(informotionWidth);
+    console.log(myMap);
     toggleFilter.addEventListener('click', function () {
         if (closed === false) {
             var windowWidth = window.innerHeight;
@@ -418,5 +423,4 @@ Template.map.rendered = function () {
 
         }
     });
-
 };
