@@ -24,9 +24,10 @@ html, body {
     height: 6px !important;
 }
 
-.fotoicon,
+
 .foto-icon-july,
-.foto-icon-august {
+.foto-icon-august,
+.foto-icon-september{
     width: 0 !important;
     height: 0 !important;
     border-left: 5px solid transparent;

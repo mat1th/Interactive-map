@@ -39,10 +39,6 @@ Template.map.rendered = function () {
     });
 
     //subscribe to fotoLocationsCollection
-    Meteor.subscribe('fotoLocationsCollection', function () {
-        var fotosData = fotoLocationsCollection.find().fetch();
-        setFotoLocation(fotosData);
-    });
     Meteor.subscribe('fotoLocationsJulyCollection', function () {
         var fotosData = fotoLocationsJulyCollection.find().fetch();
         setFotoLocationJuly(fotosData);
@@ -50,6 +46,10 @@ Template.map.rendered = function () {
     Meteor.subscribe('fotoLocationsAugustCollection', function () {
         var fotosData = fotoLocationsAugustCollection.find().fetch();
         setFotoLocationAugust(fotosData);
+    });
+    Meteor.subscribe('fotoLocationsCollection', function () {
+        var fotosData = fotoLocationsCollection.find().fetch();
+        setFotoLocationSeptember(fotosData);
     });
 
     var layerIDs = [];       
@@ -135,7 +135,7 @@ Template.map.rendered = function () {
     map.keyboard.disable();
 
     //set foto's september on map
-    var setFotoLocation = function (fotosData) {
+    var setFotoLocationSeptember = function (fotosData) {
         var Amountfotos = fotosData.length,
             f = 0;
         for (f; f < Amountfotos; f++) {
@@ -146,30 +146,30 @@ Template.map.rendered = function () {
             }).addTo(map);
         }
     };
-    //    set foto's july on map
-    var setFotoLocationJuly = function (fotosData) {
-        var Amountfotos = fotosData.length,
-            f = 0;
-        for (f; f < Amountfotos; f++) {
-            var longitude = fotosData[f].log;
-            var latitude = fotosData[f].lat;
-            L.marker([latitude, longitude], {
-                icon: fotoIconJuly,
-            }).addTo(map);
-        }
-    };
-    //     set foto's August on map
-    var setFotoLocationAugust = function (fotosData) {
-        var Amountfotos = fotosData.length,
-            f = 0;
-        for (f; f < Amountfotos; f++) {
-            var longitude = fotosData[f].log;
-            var latitude = fotosData[f].lat;
-            L.marker([latitude, longitude], {
-                icon: fotoIconAugust,
-            }).addTo(map);
-        }
-    };
+    //    //    set foto's july on map
+    //    var setFotoLocationJuly = function (fotosData) {
+    //        var Amountfotos = fotosData.length,
+    //            f = 0;
+    //        for (f; f < Amountfotos; f++) {
+    //            var longitude = fotosData[f].log;
+    //            var latitude = fotosData[f].lat;
+    //            L.marker([latitude, longitude], {
+    //                icon: fotoIconJuly,
+    //            }).addTo(map);
+    //        }
+    //    };
+    //    //     set foto's August on map
+    //    var setFotoLocationAugust = function (fotosData) {
+    //        var Amountfotos = fotosData.length,
+    //            f = 0;
+    //        for (f; f < Amountfotos; f++) {
+    //            var longitude = fotosData[f].log;
+    //            var latitude = fotosData[f].lat;
+    //            L.marker([latitude, longitude], {
+    //                icon: fotoIconAugust,
+    //            }).addTo(map);
+    //        }
+    //    };
 
     //set trashes on map
     var setTrashes = function (trashesData) {
@@ -203,7 +203,7 @@ Template.map.rendered = function () {
             SvgMapPart = selector('.mappopup'),
             popup = selector('.popup'),
             overlayList = document.querySelectorAll(".overlay");
-       
+
         var xPosition = event.clientX;
         var yPosition = event.clientY;
 
@@ -215,7 +215,6 @@ Template.map.rendered = function () {
                 SvgMapPart.style.position = "absolute";
                 SvgMapPart.style.left = xPosition + -30 + 'px';
                 SvgMapPart.style.top = yPosition + -130 + 'px';
-
                 layer.setStyle({
                     //                weight: 5,
                     fillColor: '#D83E41',
@@ -226,8 +225,7 @@ Template.map.rendered = function () {
                     layer.bringToFront();
                 }
             } else {
-                console.log("out of order")
-                    //adds class that hides the popup
+                //adds class that hides the popup
                 SvgMapPart.classList.add("none");
             }
         };
@@ -290,7 +288,7 @@ Template.map.rendered = function () {
     var myMap = document.getElementById("map");
     var windowWidth = window.innerWidth; 
     var informotionWidth = windowWidth - 243 + "px";
-   
+
     toggleFilter.addEventListener('click', function () {
         if (closed === false) {
             var windowWidth = window.innerHeight;
@@ -307,7 +305,9 @@ Template.map.rendered = function () {
                     marginLeft: -243
                 }
             });
-            TweenMax.to(myMap, 2, {left: "100px"});
+            TweenMax.to(myMap, 2, {
+                left: "100px"
+            });
         } else {
             var informotionWidth = informotion.offsetWidth;
             closed = false;
@@ -323,7 +323,9 @@ Template.map.rendered = function () {
                     marginLeft: -0
                 }
             });
-            TweenMax.to(myMap, 2, {left: 0});
+            TweenMax.to(myMap, 2, {
+                left: 0
+            });
         }
     });
     //crowdedness

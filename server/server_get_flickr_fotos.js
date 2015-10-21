@@ -272,7 +272,7 @@ var getGeoFlickrPhotos = function (flickrGetPlaceIdUrl, flickrGetPhotosUrl, flic
         }
         //    if you want to clean the fotoLocationsCollection uncomment the folowing rules
         else {
-            console.log("collection of september is not empty")
+            console.log("collection of september is not empty");
                 //var deletelength = fotoLocationsCollection.find().fetch().length;
                 //var deletedata = fotoLocationsCollection.find().fetch();
                 //var a = 0

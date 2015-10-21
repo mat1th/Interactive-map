@@ -9,7 +9,28 @@ header {
 .logo > img {
     margin: 1.2em;
     height: 30px;
-    /*    width: auto;*/
+}
+
+.month {
+    display: inline-block;
+    color: #333333;
+}
+
+.monthselect {
+    float: right;
+    padding: 20px 40px 10px 40px;
+    display: inline-block;
+    width: 150px;
+}
+
+.monthprevious {
+    display: inline-block;
+    width: 20px;
+}
+
+.monthnext {
+    display: inline-block;
+    width: 20px;
 }
 
 .districts {
