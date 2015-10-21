@@ -379,7 +379,7 @@ Template.map.rendered = function () {
 
     //cleaningIntensity
     cleaningIntensity.addEventListener('mouseover', function () {
-        TweenMax.to(trashes, 0.2, {
+        TweenMax.to(cleaningIntensity, 0.2, {
             opacity: 0.60
         });
     });
