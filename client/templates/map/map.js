@@ -203,7 +203,7 @@ Template.map.rendered = function () {
             SvgMapPart = selector('.mappopup'),
             popup = selector('.popup'),
             overlayList = document.querySelectorAll(".overlay");
-
+       
         var xPosition = event.clientX;
         var yPosition = event.clientY;
 
@@ -420,7 +420,6 @@ Template.map.rendered = function () {
                     document.getElementById(layerIDs[i]).setAttribute('class', 'toonwijk');
                 }
             };
-
         }
     });
 };
