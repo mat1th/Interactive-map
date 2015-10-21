@@ -259,7 +259,7 @@ Template.map.rendered = function () {
                 console.log(document.getElementById("we"));
 
                 if (layerIDs[i] !== layerID) {
-                    document.getElementById(layerIDs[i]).setAttribute('class', 'wit');
+                    document.getElementById(layerIDs[i]).setAttribute('class', 'overlay');
                 } else {
                     document.getElementById(layerIDs[i]).setAttribute('class', 'transparent');
                 };

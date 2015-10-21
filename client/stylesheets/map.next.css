@@ -116,11 +116,19 @@
     display: none !important;
 }
 
-.wit {
+.overlay {
     fill: "#ffffff";
     fill-opacity: 1;
+    stroke: #ffffff;
+    stroke-width:2px;
+    stroke-linejoin: round;
+    
 }
 
 .transparent {
     fill: transparent;   
+}
+
+.leaflet-marker-pane {
+    z-index: 2;
 }
