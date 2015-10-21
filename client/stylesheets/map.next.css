@@ -115,3 +115,12 @@
 .none {
     display: none !important;
 }
+
+.wit {
+    fill: "#ffffff";
+    fill-opacity: 1;
+}
+
+.transparent {
+    fill: transparent;   
+}

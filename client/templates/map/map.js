@@ -52,16 +52,17 @@ Template.map.rendered = function () {
         setFotoLocationAugust(fotosData);
     });
 
-    var layerNames = [];        
+    var layerIDs = [];       
     HTTP.get(Meteor.absoluteUrl("data/map.json"), function (err, result) {                
         geoData = result.data;                
-        var gData = geoData.features;        
+        var gData = geoData.features;
         var i = 0;        
         for (i; i < gData.length; i++) {            
-            layerNames.push(gData[i].properties.name);        
+            layerIDs.push(gData[i].properties.id);
         };                
-        geoDatafunction(geoData);        
-    });    
+        geoDatafunction(geoData);     
+    });
+
 
     //create leaflet map and start coordiates
     var map = L.map('map', {
@@ -103,24 +104,24 @@ Template.map.rendered = function () {
         className: 'foto-icon-august'
     });
 
-//    var latlngs = ;
+    //    var latlngs = ;
     HTTP.get(Meteor.absoluteUrl("data/schoonmaakintensiteit.json"), function (err, result) {                
         heatmapLayer = result.data;                
         createheatmap(heatmapLayer);        
     });    
 
-var createheatmap = function (heatmapLayer){
-      var heat = L.heatLayer(heatmapLayer, {
-        radius: 25,
-        blur: 20,
-        max: 1.5,
-        gradient: {
-            0.2: '#E5CD90',
-            0.50: '#B9B9B5',
-            1: '#941E64'
-        }
-    }).addTo(map);
-}
+    var createheatmap = function (heatmapLayer) {
+        var heat = L.heatLayer(heatmapLayer, {
+            radius: 25,
+            blur: 20,
+            max: 1.5,
+            gradient: {
+                0.2: '#E5CD90',
+                0.50: '#B9B9B5',
+                1: '#941E64'
+            }
+        }).addTo(map);
+    }
 
     //disable dragging
     map.dragging.disable();
@@ -245,25 +246,26 @@ var createheatmap = function (heatmapLayer){
         geojson.resetStyle(e.target);
     };
 
-    function clickFeature(e) {
-        //        console.log(layerNames)
-        //        var layer = e.target,
-        //            layerName = layer.feature.properties.name,
-        //            SvgMapPart = selector('.mappopup'),
-        //            popup = selector('.popup');
-        //
-        //        SvgMapPart.classList.remove("none");
-        //        var xPosition = event.clientX;
-        //        var yPosition = event.clientY;
-        //
-        //        //If clicked outside of Amsterdam Centrum, no div is being shown
-        //        if (layerName !== "rightgone" && layerName !== "leftgone") {
-        //            popup.innerHTML = layerName;
-        //            SvgMapPart.style.position = "absolute";
-        //            SvgMapPart.style.left = xPosition + -30 + 'px';
-        //            SvgMapPart.style.top = yPosition + -90 + 'px';
-        //        };
-    };
+    function clickFeature(e, gData) {
+        var layertje = e.target;
+        var layerName = layertje.feature.properties.name;
+        var layerID = layertje.feature.properties.id;
+
+        //gives classes to paths, with which they can be styled
+        if (layerName !== "rightgone" && layerName !== "leftgone") {
+            var i = 0;
+            for (i; i < layerIDs.length; i++) {
+                console.log(document.getElementById(layerIDs[i]));
+                console.log(document.getElementById("we"));
+
+                if (layerIDs[i] !== layerID) {
+                    document.getElementById(layerIDs[i]).setAttribute('class', 'wit');
+                } else {
+                    document.getElementById(layerIDs[i]).setAttribute('class', 'transparent');
+                };
+            };
+        };
+    }
 
     function onEachFeature(feature, layer) {
         //        console.log(layer._path)
@@ -282,9 +284,9 @@ var createheatmap = function (heatmapLayer){
             onEachFeature: onEachFeature
         }).addTo(map) 
 
-          geojson.eachLayer(function (layer) {
-        layer._path.id = layer.feature.properties.id;
-    });
+        geojson.eachLayer(function (layer) {
+            layer._path.id = layer.feature.properties.id;
+        });
     };
 
     //filters
