@@ -98,8 +98,8 @@ Template.map.rendered = function () {
         className: 'trashicon'
     });
 
-    var fotoIcon = L.divIcon({
-        className: 'fotoicon'
+    var fotoIconSeptember = L.divIcon({
+        className: 'foto-icon-september'
     });
     var fotoIconJuly = L.divIcon({
         className: 'foto-icon-july'
@@ -134,43 +134,43 @@ Template.map.rendered = function () {
     map.boxZoom.disable();
     map.keyboard.disable();
 
-    //    //set foto's september on map
-    //    var setFotoLocation = function (fotosData) {
-    //        var Amountfotos = fotosData.length,
-    //            f = 0;
-    //        for (f; f < Amountfotos; f++) {
-    //            var longitude = fotosData[f].log;
-    //            var latitude = fotosData[f].lat;
-    //            L.marker([latitude, longitude], {
-    //                icon: fotoIcon,
-    //            }).addTo(map);
-    //        }
-    //    };
-    //    //    set foto's july on map
-    //    var setFotoLocationJuly = function (fotosData) {
-    //        var Amountfotos = fotosData.length,
-    //            f = 0;
-    //        for (f; f < Amountfotos; f++) {
-    //            var longitude = fotosData[f].log;
-    //            var latitude = fotosData[f].lat;
-    //            L.marker([latitude, longitude], {
-    //                icon: fotoIconJuly,
-    //            }).addTo(map);
-    //        }
-    //    };
-    //    //     set foto's August on map
-    //    var setFotoLocationAugust = function (fotosData) {
-    //        var Amountfotos = fotosData.length,
-    //            f = 0;
-    //        for (f; f < Amountfotos; f++) {
-    //            var longitude = fotosData[f].log;
-    //            var latitude = fotosData[f].lat;
-    //            L.marker([latitude, longitude], {
-    //                icon: fotoIconAugust,
-    //            }).addTo(map);
-    //        }
-    //    };
-    //
+    //set foto's september on map
+    var setFotoLocation = function (fotosData) {
+        var Amountfotos = fotosData.length,
+            f = 0;
+        for (f; f < Amountfotos; f++) {
+            var longitude = fotosData[f].log;
+            var latitude = fotosData[f].lat;
+            L.marker([latitude, longitude], {
+                icon: fotoIconSeptember,
+            }).addTo(map);
+        }
+    };
+    //    set foto's july on map
+    var setFotoLocationJuly = function (fotosData) {
+        var Amountfotos = fotosData.length,
+            f = 0;
+        for (f; f < Amountfotos; f++) {
+            var longitude = fotosData[f].log;
+            var latitude = fotosData[f].lat;
+            L.marker([latitude, longitude], {
+                icon: fotoIconJuly,
+            }).addTo(map);
+        }
+    };
+    //     set foto's August on map
+    var setFotoLocationAugust = function (fotosData) {
+        var Amountfotos = fotosData.length,
+            f = 0;
+        for (f; f < Amountfotos; f++) {
+            var longitude = fotosData[f].log;
+            var latitude = fotosData[f].lat;
+            L.marker([latitude, longitude], {
+                icon: fotoIconAugust,
+            }).addTo(map);
+        }
+    };
+
     //set trashes on map
     var setTrashes = function (trashesData) {
         var amountTrashes = trashesData.length,
@@ -206,7 +206,7 @@ Template.map.rendered = function () {
 
         var xPosition = event.clientX;
         var yPosition = event.clientY;
-        
+
         //If there are elements with the "overlay" class, then hover will work and shows popup. Otherwise not.
         if (overlayList.length === 0) {
             SvgMapPart.classList.remove("none");
@@ -225,8 +225,7 @@ Template.map.rendered = function () {
                 if (!L.Browser.ie && !L.Browser.opera) {
                     layer.bringToFront();
                 };
-            } else {
-            };
+            } else {};
         } else {
             //adds class that hides the popup
             SvgMapPart.classList.add("none");
@@ -246,10 +245,10 @@ Template.map.rendered = function () {
             overlayList = document.querySelectorAll(".overlay");
 
         SvgMapPart.classList.add("none");
-        
+
         //If there are elements with the "overlay" class, then classes will be added to paths. Otherwise not.
         if (overlayList.length === 0) {
-        //gives classes to paths, with which they can be styled
+            //gives classes to paths, with which they can be styled
             if (layerName !== "rightgone" && layerName !== "leftgone") {
                 var i = 0;
                 for (i; i < layerIDs.length; i++) {
@@ -333,7 +332,22 @@ Template.map.rendered = function () {
         });
     });
     crowdedness.addEventListener('click', function () {
-        crowdedness.classList.toggle('disabled')
+        crowdedness.classList.toggle('disabled');
+        var fotoAugust = selectors('.foto-icon-august'),
+            fotoJuly = selectors('.foto-icon-july'),
+            fotoSeptember = selectors('.foto-icon-september'),
+            a = 0,
+            j = 0,
+            s = 0;
+        for (a; a < fotoAugust.length; a++) {
+            fotoAugust[a].classList.toggle("none");
+        };
+        for (j; j < fotoJuly.length; j++) {
+            fotoJuly[j].classList.toggle("none");
+        }
+        for (s; s < fotoSeptember.length; s++) {
+            fotoSeptember[s].classList.toggle("none");
+        }
     });
 
     //trashes
@@ -347,8 +361,14 @@ Template.map.rendered = function () {
             opacity: 1
         });
     });
+    var trashesfilter = false;
     trashes.addEventListener('click', function () {
-        trashes.classList.toggle('disabled')
+        var trashIcons = selectors('.trashicon'),
+            t = 0;
+        trashes.classList.toggle('disabled');
+        for (t; t < trashIcons.length; t++) {
+            trashIcons[t].classList.toggle("none");
+        }
     });
 
     //cleaningIntensity
