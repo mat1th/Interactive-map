@@ -60,14 +60,18 @@ Template.map.rendered = function () {
         for (i; i < gData.length; i++) {            
             layerIDs.push(gData[i].properties.id);
         };                
-        geoDatafunction(geoData);     
-    });
+        geoDatafunction(geoData);        
+    });   
 
+    HTTP.get(Meteor.absoluteUrl("data/schoonmaakintensiteit.json"), function (err, result) {                
+        heatmapLayer = result.data;                
+        createheatmap(heatmapLayer);        
+    });    
 
     //create leaflet map and start coordiates
     var map = L.map('map', {
         center: [52.376956, 4.902756],
-        maxZoom: 14,
+        maxZoom: 10,
         minZoom: 14,
         zoom: 14,
         zoomControl: false,
@@ -102,26 +106,25 @@ Template.map.rendered = function () {
     });
     var fotoIconAugust = L.divIcon({
         className: 'foto-icon-august'
-    });
+    }); 
 
-    //    var latlngs = ;
-    HTTP.get(Meteor.absoluteUrl("data/schoonmaakintensiteit.json"), function (err, result) {                
-        heatmapLayer = result.data;                
-        createheatmap(heatmapLayer);        
-    });    
 
-    var createheatmap = function (heatmapLayer) {
-        var heat = L.heatLayer(heatmapLayer, {
-            radius: 25,
-            blur: 20,
-            max: 1.5,
-            gradient: {
-                0.2: '#E5CD90',
-                0.50: '#B9B9B5',
-                1: '#941E64'
-            }
-        }).addTo(map);
-    }
+//    var createheatmap = function (heatmapLayer) {
+//        var heat = L.heatLayer(heatmapLayer, {
+//            radius: 18,
+//            blur: 20,
+//            max: 1.5,
+//            gradient: {
+//                0: '#FFB700',
+//                0.5: '#FFB700',
+//                0.75: '#21B532',
+//                0.80: '#941E64',
+////                0.50: '#C45D9A',
+////                0.60: '#B13B80',
+//                1: '#941E64'
+//            }
+//        }).addTo(map);
+//    }
 
     //disable dragging
     map.dragging.disable();
@@ -130,7 +133,6 @@ Template.map.rendered = function () {
     map.scrollWheelZoom.disable();
     map.boxZoom.disable();
     map.keyboard.disable();
-
 
     //    //set foto's september on map
     //    var setFotoLocation = function (fotosData) {
@@ -209,7 +211,6 @@ Template.map.rendered = function () {
         //                layer.bringToFront();
         //            };
         //        };
-
         var layer = e.target;
         var layerName = layer.feature.properties.name,
             SvgMapPart = selector('.mappopup'),
@@ -236,9 +237,6 @@ Template.map.rendered = function () {
         } else {
             SvgMapPart.classList.add("none");
         }
-
-
-
     };
 
     //reset on mouseout
@@ -268,8 +266,6 @@ Template.map.rendered = function () {
     }
 
     function onEachFeature(feature, layer) {
-        //        console.log(layer._path)
-        ////        layer._path.id = feature.properties.id;
         layer.on({
             mouseover: highlightFeature,
             mouseout: resetHighlight,
@@ -386,9 +382,7 @@ Template.map.rendered = function () {
 
         } else {
             wijkenP.innerHTML = "Verberg wijken"
-
         }
-
     });
 
 };
