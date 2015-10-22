@@ -30,7 +30,8 @@ Template.map.rendered = function () {
         months = selector('.months'),
         month = selector('.month'),
         districts = selector('.districts'),
-        districtsP = selector('.districts p');
+        districtsP = selector('.districts p'),
+        statistics = selector('.statistics');
 
     //subscribe to trashesCollection
     Meteor.subscribe('trashesCollection', function () {
@@ -219,6 +220,9 @@ Template.map.rendered = function () {
             overlayList = document.querySelectorAll(".overlay");
 
         SvgMapPart.classList.add("none");
+        TweenMax.to(statistics, 1, {
+            opacity: 1
+        });
 
         //If there are elements with the "overlay" class, then classes will be added to paths. Otherwise not.
         if (overlayList.length === 0) {

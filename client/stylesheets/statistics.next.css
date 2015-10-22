@@ -1,0 +1,25 @@
+.statistics{
+    top: 70px;
+    right: 0;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin: 0;
+    float: right;
+    padding: 0;
+    position: absolute;
+    z-index: 1;
+    background: #E6E6E6;
+    height: calc(100vh - 70px);
+    width: 500px;
+    opacity: 0;
+}
+
+.districtname {
+    padding: 10px;
+    margin: 0;
+    width: 100px;
+    display: inline-block;
+}
+.graphs{
+
+}
