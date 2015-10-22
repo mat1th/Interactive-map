@@ -41,26 +41,27 @@ Template.map.rendered = function () {
 
     //subscribe to fotoLocationsCollection
     Meteor.subscribe('fotoLocationsJulyCollection', function () {
-        var fotosData = fotoLocationsJulyCollection.find().fetch();
-        setFotoLocationJuly(fotosData);
+        var fotosDataJuly = fotoLocationsJulyCollection.find().fetch();
+        setFotoLocationJuly(fotosDataJuly);
+        Meteor.subscribe('fotoLocationsAugustCollection', function () {
+            var fotosDataAugust = fotoLocationsAugustCollection.find().fetch();
+            Meteor.subscribe('fotoLocationsCollection', function () {
+                var fotosDataSeptember = fotoLocationsCollection.find().fetch();
+                toggleMonths(fotosDataJuly, fotosDataAugust, fotosDataSeptember)
+            });
+        });
     });
-    Meteor.subscribe('fotoLocationsAugustCollection', function () {
-        var fotosData = fotoLocationsAugustCollection.find().fetch();
-        setFotoLocationAugust(fotosData);
-    });
-    Meteor.subscribe('fotoLocationsCollection', function () {
-        var fotosData = fotoLocationsCollection.find().fetch();
-        setFotoLocationSeptember(fotosData);
-    });
+
+
 
     var layerIDs = [];       
     HTTP.get(Meteor.absoluteUrl("data/map.json"), function (err, result) {                
-        geoData = result.data;                
+        geoData = result.data;
         var gData = geoData.features;
-        var i = 0;        
-        for (i; i < gData.length; i++) {            
+        var i = 0;
+        for (i; i < gData.length; i++) {
             layerIDs.push(gData[i].properties.id);
-        };                
+        };            
         geoDatafunction(geoData);        
     });   
 
@@ -98,16 +99,15 @@ Template.map.rendered = function () {
     var trashIcon = L.divIcon({
         className: 'trashicon'
     });
-
-    var fotoIconSeptember = L.divIcon({
-        className: 'foto-icon-september'
-    });
     var fotoIconJuly = L.divIcon({
         className: 'foto-icon-july'
     });
     var fotoIconAugust = L.divIcon({
         className: 'foto-icon-august'
     }); 
+    var fotoIconSeptember = L.divIcon({
+        className: 'foto-icon-september'
+    });
 
 
     //    var createheatmap = function (heatmapLayer) {
@@ -135,43 +135,18 @@ Template.map.rendered = function () {
     map.boxZoom.disable();
     map.keyboard.disable();
 
-    //set foto's september on map
-    var setFotoLocationSeptember = function (fotosData) {
-        var Amountfotos = fotosData.length,
+    //    set foto's july on map
+    var setFotoLocationJuly = function (fotosDataJuly) {
+        var Amountfotos = fotosDataJuly.length,
             f = 0;
         for (f; f < Amountfotos; f++) {
-            var longitude = fotosData[f].log;
-            var latitude = fotosData[f].lat;
+            var longitude = fotosDataJuly[f].log;
+            var latitude = fotosDataJuly[f].lat;
             L.marker([latitude, longitude], {
-                icon: fotoIconSeptember,
+                icon: fotoIconJuly,
             }).addTo(map);
         }
     };
-    //    //    set foto's july on map
-    //    var setFotoLocationJuly = function (fotosData) {
-    //        var Amountfotos = fotosData.length,
-    //            f = 0;
-    //        for (f; f < Amountfotos; f++) {
-    //            var longitude = fotosData[f].log;
-    //            var latitude = fotosData[f].lat;
-    //            L.marker([latitude, longitude], {
-    //                icon: fotoIconJuly,
-    //            }).addTo(map);
-    //        }
-    //    };
-    //    //     set foto's August on map
-    //    var setFotoLocationAugust = function (fotosData) {
-    //        var Amountfotos = fotosData.length,
-    //            f = 0;
-    //        for (f; f < Amountfotos; f++) {
-    //            var longitude = fotosData[f].log;
-    //            var latitude = fotosData[f].lat;
-    //            L.marker([latitude, longitude], {
-    //                icon: fotoIconAugust,
-    //            }).addTo(map);
-    //        }
-    //    };
-
     //set trashes on map
     var setTrashes = function (trashesData) {
         var amountTrashes = trashesData.length,
@@ -448,7 +423,6 @@ Template.map.rendered = function () {
             });
         }
     };
-
     nextMonth.addEventListener('mouseover', function () {
         if (currentImageCount !== 3) {
             TweenMax.to(nextMonth, 0.2, {
@@ -464,7 +438,6 @@ Template.map.rendered = function () {
         }
 
     });
-
     previousMonth.addEventListener('mouseover', function () {
         if (currentImageCount !== 1) {
             TweenMax.to(previousMonth, 0.2, {
@@ -480,13 +453,93 @@ Template.map.rendered = function () {
         }
     });
 
-    nextMonth.addEventListener('click', function () {
-        moveToNext()
-    });
 
-    previousMonth.addEventListener('click', function () {
-        moveToPrevious()
-    });
+    function toggleMonths(fotosDataJuly, fotosDataAugust, fotosDataSeptember) {
+        nextMonth.addEventListener('click', function () {
+            var juliIcons = selectors('.foto-icon-july');
+            var augustIcons = selectors('.foto-icon-august');
+            var sepemberIcons = selectors('.foto-icon-september');
+            //            fotosDataJuly
+            setTimeout(function () {
+                if (currentImageCount === 2) {
+                    var j = 0;
+                    for (j; j < juliIcons.length; j++) {
+                        juliIcons[j].parentNode.removeChild(juliIcons[j]);
+                    }
+                    // set foto's August on map
+                    var AmountfotosAugust = fotosDataAugust.length,
+                        f = 0;
+                    for (f; f < AmountfotosAugust; f++) {
+                        var longitude = fotosDataAugust[f].log;
+                        var latitude = fotosDataAugust[f].lat;
+                        L.marker([latitude, longitude], {
+                            icon: fotoIconAugust,
+                        }).addTo(map);
+                    }
+                }
+                if (currentImageCount === 3) {
+                    var s = 0;
+                    for (s; s < augustIcons.length; s++) {
+                        augustIcons[s].parentNode.removeChild(augustIcons[s]);
+                    }
+                    //set foto's september on map
+                    var AmountfotosSeptember = fotosDataSeptember.length,
+                        sf = 0;
+                    console.log(AmountfotosSeptember)
+                    for (sf; sf < AmountfotosSeptember; sf++) {
+                        var longitude = fotosDataSeptember[sf].log;
+                        var latitude = fotosDataSeptember[sf].lat;
+                        L.marker([latitude, longitude], {
+                            icon: fotoIconSeptember,
+                        }).addTo(map);
+                    }
+                }
+            }, 800);
+            moveToNext()
+        });
+
+        previousMonth.addEventListener('click', function () {
+            var juliIcons = selectors('.foto-icon-july');
+            var augustIcons = selectors('.foto-icon-august');
+            var sepemberIcons = selectors('.foto-icon-september');
+            //            fotosDataJuly
+            setTimeout(function () {
+                if (currentImageCount === 1) {
+                    var j = 0;
+                    for (j; j < augustIcons.length; j++) {
+                        augustIcons[j].parentNode.removeChild(augustIcons[j]);
+                    }
+                    // set foto's August on map
+                    var AmountfotosJuly = fotosDataJuly.length,
+                        f = 0;
+                    for (f; f < AmountfotosJuly; f++) {
+                        var longitude = fotosDataJuly[f].log;
+                        var latitude = fotosDataJuly[f].lat;
+                        L.marker([latitude, longitude], {
+                            icon: fotoIconJuly,
+                        }).addTo(map);
+                    }
+                }
+                if (currentImageCount === 2) {
+                    var j = 0;
+                    for (j; j < sepemberIcons.length; j++) {
+                        sepemberIcons[j].parentNode.removeChild(sepemberIcons[j]);
+                    }
+                    // set foto's August on map
+                    var AmountfotosAugust = fotosDataAugust.length,
+                        f = 0;
+                    for (f; f < AmountfotosAugust; f++) {
+                        var longitude = fotosDataAugust[f].log;
+                        var latitude = fotosDataAugust[f].lat;
+                        L.marker([latitude, longitude], {
+                            icon: fotoIconAugust,
+                        }).addTo(map);
+                    }
+                }
+            }, 800);
+            moveToPrevious()
+        });
+    }
 
     //districts
     districts.addEventListener('mouseover', function () {
