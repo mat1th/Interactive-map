@@ -32,7 +32,8 @@ Template.map.rendered = function () {
         districts = selector('.districts'),
         districtsP = selector('.districts p'),
         closeButton = selector('.close'),
-        statistics = selector('.statistics');
+        statistics = selector('.statistics'),
+        districtname = selector('.districtname');
 
     //subscribe to trashesCollection
     Meteor.subscribe('trashesCollection', function () {
@@ -230,11 +231,13 @@ Template.map.rendered = function () {
         var getBoutdsOfDistrict = e.target.getBounds();
         var DistrictNorthEast = getBoutdsOfDistrict._northEast.lng;
         var DistrictSouthWest = getBoutdsOfDistrict._southWest.lng;
-        var newNorthEast = DistrictNorthEast + 0.01;
-        var newSouthWest = DistrictSouthWest + 0.01;
+        var newNorthEast = DistrictNorthEast + 0.008;
+        var newSouthWest = DistrictSouthWest + 0.008;
         getBoutdsOfDistrict._northEast.lng = newNorthEast;
         getBoutdsOfDistrict._southWest.lng = newSouthWest;
         map.fitBounds(getBoutdsOfDistrict);
+
+        districtname.innerHTML = layerName;
         //If there are elements with the "overlay" class, then classes will be added to paths. Otherwise not.
         if (overlayList.length === 0) {
             //gives classes to paths, with which they can be styled

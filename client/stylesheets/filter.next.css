@@ -32,6 +32,11 @@
     background: #de3a3a;
 }
 
+.togglefilterimg {
+    width: 28px;
+    padding: 4px 3.5px;
+}
+
 .filter > .filters {
     text-transform: uppercase;
     font-weight: 500;
@@ -73,11 +78,12 @@
     clear: both;
 }
 
-.disabled > p{
+.disabled > p {
     text-decoration: line-through;
     color: RGBA(255, 255, 255, 0.72)
 }
-.disabled > img{
+
+.disabled > img {
     opacity: 0.60;
 }
 
