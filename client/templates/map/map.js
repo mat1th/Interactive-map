@@ -129,13 +129,13 @@ Template.map.rendered = function () {
     //        }).addTo(map);
     //    }
 
-//    disable dragging
-        map.dragging.disable();
-        map.touchZoom.disable();
-        map.doubleClickZoom.disable();
-        map.scrollWheelZoom.disable();
-        map.boxZoom.disable();
-        map.keyboard.disable();
+    //    disable dragging
+    map.dragging.disable();
+    map.touchZoom.disable();
+    map.doubleClickZoom.disable();
+    map.scrollWheelZoom.disable();
+    map.boxZoom.disable();
+    map.keyboard.disable();
 
     //    set foto's july on map
     var setFotoLocationJuly = function (fotosDataJuly) {
@@ -227,7 +227,14 @@ Template.map.rendered = function () {
         //            opacity: 1,
         //        });
         statistics.classList.remove("none");
-        map.fitBounds(e.target.getBounds());
+        var getBoutdsOfDistrict = e.target.getBounds();
+        var DistrictNorthEast = getBoutdsOfDistrict._northEast.lng;
+        var DistrictSouthWest = getBoutdsOfDistrict._southWest.lng;
+        var newNorthEast = DistrictNorthEast + 0.01;
+        var newSouthWest = DistrictSouthWest + 0.01;
+        getBoutdsOfDistrict._northEast.lng = newNorthEast;
+        getBoutdsOfDistrict._southWest.lng = newSouthWest;
+        map.fitBounds(getBoutdsOfDistrict);
         //If there are elements with the "overlay" class, then classes will be added to paths. Otherwise not.
         if (overlayList.length === 0) {
             //gives classes to paths, with which they can be styled
@@ -254,9 +261,9 @@ Template.map.rendered = function () {
         //            opacity: 0
         //        });
         map.fitBounds([
-    [52.380419542018174, 4.941530227661133],
-     [52.359457601988254, 4.864282608032227]
-   ]);
+            [52.380419542018174, 4.941530227661133],
+            [52.359457601988254, 4.864282608032227]
+        ]);
         statistics.classList.add("none");
         var i = 0;
         for (i; i < layerIDs.length; i++) {
