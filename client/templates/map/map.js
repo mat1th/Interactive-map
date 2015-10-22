@@ -461,6 +461,7 @@ Template.map.rendered = function () {
             var sepemberIcons = selectors('.foto-icon-september');
             //            fotosDataJuly
             setTimeout(function () {
+                crowdedness.classList.remove('disabled');
                 if (currentImageCount === 2) {
                     var j = 0;
                     for (j; j < juliIcons.length; j++) {
@@ -504,6 +505,7 @@ Template.map.rendered = function () {
             var sepemberIcons = selectors('.foto-icon-september');
             //            fotosDataJuly
             setTimeout(function () {
+                crowdedness.classList.remove('disabled');
                 if (currentImageCount === 1) {
                     var j = 0;
                     for (j; j < augustIcons.length; j++) {
