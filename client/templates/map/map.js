@@ -213,7 +213,7 @@ Template.map.rendered = function () {
         geojson.resetStyle(e.target);
     };
 
-    function clickFeature(e, gData) {
+    function clickFeature(e) {
         var layertje = e.target,
             layerName = layertje.feature.properties.name,
             layerID = layertje.feature.properties.id,
@@ -246,7 +246,16 @@ Template.map.rendered = function () {
     };
 
     closeButton.addEventListener('click', function () {
-
+        districts.classList.remove("none");
+        closeButton.classList.add("none");
+        TweenMax.to(statistics, 1, {
+            opacity: 0
+        });
+        var i = 0;
+        for (i; i < layerIDs.length; i++) {
+            document.getElementById(layerIDs[i]).removeAttribute('class', 'overlay');
+            document.getElementById(layerIDs[i]).removeAttribute('class', 'transparent');
+        };
     });
 
     function onEachFeature(feature, layer) {
