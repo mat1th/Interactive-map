@@ -31,6 +31,7 @@ Template.map.rendered = function () {
         month = selector('.month'),
         districts = selector('.districts'),
         districtsP = selector('.districts p'),
+        closeButton = selector('.close'),
         statistics = selector('.statistics');
 
     //subscribe to trashesCollection
@@ -220,10 +221,11 @@ Template.map.rendered = function () {
             overlayList = document.querySelectorAll(".overlay");
 
         SvgMapPart.classList.add("none");
+        closeButton.classList.remove("none");
+        districts.classList.add("none");
         TweenMax.to(statistics, 1, {
             opacity: 1
         });
-
         //If there are elements with the "overlay" class, then classes will be added to paths. Otherwise not.
         if (overlayList.length === 0) {
             //gives classes to paths, with which they can be styled
@@ -243,6 +245,10 @@ Template.map.rendered = function () {
         };
     };
 
+    closeButton.addEventListener('click', function () {
+
+    });
+
     function onEachFeature(feature, layer) {
         layer.on({
             mouseover: highlightFeature,
@@ -250,7 +256,6 @@ Template.map.rendered = function () {
             click: clickFeature
         });
     };
-
 
     var geoDatafunction = function (geoData) {
         geojson = L.geoJson(geoData, {
@@ -457,7 +462,6 @@ Template.map.rendered = function () {
         }
     });
 
-
     function toggleMonths(fotosDataJuly, fotosDataAugust, fotosDataSeptember) {
         nextMonth.addEventListener('click', function () {
             var juliIcons = selectors('.foto-icon-july');
@@ -502,7 +506,6 @@ Template.map.rendered = function () {
             }, 800);
             moveToNext()
         });
-
         previousMonth.addEventListener('click', function () {
             var juliIcons = selectors('.foto-icon-july');
             var augustIcons = selectors('.foto-icon-august');
@@ -546,7 +549,17 @@ Template.map.rendered = function () {
             moveToPrevious()
         });
     }
-
+    //close zoomed district
+    closeButton.addEventListener('mouseover', function () {
+        TweenMax.to(closeButton, 0.2, {
+            opacity: 0.60
+        });
+    });
+    closeButton.addEventListener('mouseout', function () {
+        TweenMax.to(closeButton, 0.2, {
+            opacity: 1
+        });
+    });
     //districts
     districts.addEventListener('mouseover', function () {
         TweenMax.to(districts, 0.2, {
