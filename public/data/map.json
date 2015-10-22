@@ -1,20 +1,20 @@
 {
-  "type": "FeatureCollection",
-  "features": [
-    {
-      "type": "Feature",
-      "properties": {
-        "stroke": "#555555",
-        "stroke-width": 2,
-        "stroke-opacity": 1,
-        "fill": "#00f992",
-        "fill-opacity": 1,
-        "name": "Westelijke eilanden",
-        "id": "we"
-      },
-      "geometry": {
-        "type": "Polygon",
-        "coordinates": [
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "properties": {
+                "stroke": "#555555",
+                "stroke-width": 2,
+                "stroke-opacity": 1,
+                "fill": "#00f992",
+                "fill-opacity": 1,
+                "name": "Westelijke eilanden",
+                "id": "we"
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
           [
             [
               4.895788,
@@ -74,22 +74,22 @@
             ]
           ]
         ]
-      }
+            }
     },
-    {
-      "type": "Feature",
-      "properties": {
-        "stroke": "#555555",
-        "stroke-width": 2,
-        "stroke-opacity": 1,
-        "fill": "#ff54c3",
-        "fill-opacity": 1,
-        "name": "Jordaan",
-        "id": "jd"
-      },
-      "geometry": {
-        "type": "Polygon",
-        "coordinates": [
+        {
+            "type": "Feature",
+            "properties": {
+                "stroke": "#555555",
+                "stroke-width": 2,
+                "stroke-opacity": 1,
+                "fill": "#ff54c3",
+                "fill-opacity": 1,
+                "name": "Jordaan",
+                "id": "jd"
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
           [
             [
               4.8818,
@@ -221,22 +221,22 @@
             ]
           ]
         ]
-      }
+            }
     },
-    {
-      "type": "Feature",
-      "properties": {
-        "stroke": "#555555",
-        "stroke-width": 2,
-        "stroke-opacity": 1,
-        "fill": "#f03300",
-        "fill-opacity": 1,
-        "name": "Grachtengordel-West",
-        "id": "gw"
-      },
-      "geometry": {
-        "type": "Polygon",
-        "coordinates": [
+        {
+            "type": "Feature",
+            "properties": {
+                "stroke": "#555555",
+                "stroke-width": 2,
+                "stroke-opacity": 1,
+                "fill": "#f03300",
+                "fill-opacity": 1,
+                "name": "Grachtengordel-West",
+                "id": "gw"
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
           [
             [
               4.888413,
@@ -356,22 +356,22 @@
             ]
           ]
         ]
-      }
+            }
     },
-    {
-      "type": "Feature",
-      "properties": {
-        "stroke": "#555555",
-        "stroke-width": 2,
-        "stroke-opacity": 1,
-        "fill": "#3f3f3f",
-        "fill-opacity": 1,
-        "name": "Burgwallen-Nieuwe Zijde",
-        "id": "bnz"
-      },
-      "geometry": {
-        "type": "Polygon",
-        "coordinates": [
+        {
+            "type": "Feature",
+            "properties": {
+                "stroke": "#555555",
+                "stroke-width": 2,
+                "stroke-opacity": 1,
+                "fill": "#3f3f3f",
+                "fill-opacity": 1,
+                "name": "Burgwallen-Nieuwe Zijde",
+                "id": "bnz"
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
           [
             [
               4.899234,
@@ -551,22 +551,22 @@
             ]
           ]
         ]
-      }
+            }
     },
-    {
-      "type": "Feature",
-      "properties": {
-        "stroke": "#555555",
-        "stroke-width": 2,
-        "stroke-opacity": 1,
-        "fill": "#eaeb00",
-        "fill-opacity": 1,
-        "name": "Grachtengordel-Zuid",
-        "id": "gz"
-      },
-      "geometry": {
-        "type": "Polygon",
-        "coordinates": [
+        {
+            "type": "Feature",
+            "properties": {
+                "stroke": "#555555",
+                "stroke-width": 2,
+                "stroke-opacity": 1,
+                "fill": "#eaeb00",
+                "fill-opacity": 1,
+                "name": "Grachtengordel-Zuid",
+                "id": "gz"
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
           [
             [
               4.889732,
@@ -674,22 +674,22 @@
             ]
           ]
         ]
-      }
+            }
     },
-    {
-      "type": "Feature",
-      "properties": {
-        "stroke": "#555555",
-        "stroke-width": 2,
-        "stroke-opacity": 1,
-        "fill": "#6a4dff",
-        "fill-opacity": 1,
-        "name": "De Weteringschans",
-        "id": "dws"
-      },
-      "geometry": {
-        "type": "Polygon",
-        "coordinates": [
+        {
+            "type": "Feature",
+            "properties": {
+                "stroke": "#555555",
+                "stroke-width": 2,
+                "stroke-opacity": 1,
+                "fill": "#6a4dff",
+                "fill-opacity": 1,
+                "name": "De Weteringschans",
+                "id": "dws"
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
           [
             [
               4.882825,
@@ -857,22 +857,22 @@
             ]
           ]
         ]
-      }
+            }
     },
-    {
-      "type": "Feature",
-      "properties": {
-        "stroke": "#555555",
-        "stroke-width": 2,
-        "stroke-opacity": 1,
-        "fill": "#00b6ed",
-        "fill-opacity": 1,
-        "name": "Weesperbuurt en Plantage",
-        "id": "wp"
-      },
-      "geometry": {
-        "type": "Polygon",
-        "coordinates": [
+        {
+            "type": "Feature",
+            "properties": {
+                "stroke": "#555555",
+                "stroke-width": 2,
+                "stroke-opacity": 1,
+                "fill": "#00b6ed",
+                "fill-opacity": 1,
+                "name": "Weesperbuurt en Plantage",
+                "id": "wp"
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
           [
             [
               4.901098,
@@ -1020,22 +1020,22 @@
             ]
           ]
         ]
-      }
+            }
     },
-    {
-      "type": "Feature",
-      "properties": {
-        "stroke": "#555555",
-        "stroke-width": 2,
-        "stroke-opacity": 1,
-        "fill": "#005fe3",
-        "fill-opacity": 1,
-        "name": "Oostelijke Eilanden en Kadijken",
-        "id": "oek"
-      },
-      "geometry": {
-        "type": "Polygon",
-        "coordinates": [
+        {
+            "type": "Feature",
+            "properties": {
+                "stroke": "#555555",
+                "stroke-width": 2,
+                "stroke-opacity": 1,
+                "fill": "#005fe3",
+                "fill-opacity": 1,
+                "name": "Oostelijke Eilanden en Kadijken",
+                "id": "oek"
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
           [
             [
               4.90983,
@@ -1199,22 +1199,22 @@
             ]
           ]
         ]
-      }
+            }
     },
-    {
-      "type": "Feature",
-      "properties": {
-        "stroke": "#555555",
-        "stroke-width": 2,
-        "stroke-opacity": 1,
-        "fill": "#008700",
-        "fill-opacity": 1,
-        "name": "Nieuwmarkt en Lastage",
-        "id": "NL"
-      },
-      "geometry": {
-        "type": "Polygon",
-        "coordinates": [
+        {
+            "type": "Feature",
+            "properties": {
+                "stroke": "#555555",
+                "stroke-width": 2,
+                "stroke-opacity": 1,
+                "fill": "#008700",
+                "fill-opacity": 1,
+                "name": "Nieuwmarkt en Lastage",
+                "id": "NL"
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
           [
             [
               4.895452,
@@ -1354,22 +1354,22 @@
             ]
           ]
         ]
-      }
+            }
     },
-    {
-      "type": "Feature",
-      "properties": {
-        "stroke": "#555555",
-        "stroke-width": 2,
-        "stroke-opacity": 1,
-        "fill": "#d28800",
-        "fill-opacity": 1,
-        "name": "Burgwallen-Oude Zijde",
-        "id": "boz"
-      },
-      "geometry": {
-        "type": "Polygon",
-        "coordinates": [
+        {
+            "type": "Feature",
+            "properties": {
+                "stroke": "#555555",
+                "stroke-width": 2,
+                "stroke-opacity": 1,
+                "fill": "#d28800",
+                "fill-opacity": 1,
+                "name": "Burgwallen-Oude Zijde",
+                "id": "boz"
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
           [
             [
               4.899046719074249,
@@ -1521,34 +1521,34 @@
             ]
           ]
         ]
-      }
+            }
     },
-    {
-      "type": "Feature",
-      "properties": {
-        "stroke": "#555555",
-        "stroke-width": 2,
-        "stroke-opacity": 1,
-        "fill": "#646599",
-        "fill-opacity": 0.5,
-        "name": "leftgone",
-        "id": "left-gone"
-      },
-      "geometry": {
-        "type": "Polygon",
-        "coordinates": [
+        {
+            "type": "Feature",
+            "properties": {
+                "stroke": "#555555",
+                "stroke-width": 2,
+                "stroke-opacity": 1,
+                "fill": "#646599",
+                "fill-opacity": 0.5,
+                "name": "leftgone",
+                "id": "left-gone"
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
           [
             [
               4.884466230869293,
               52.38833336204821
             ],
             [
-              4.883937835693359,
-              52.40430402080538
+               4.880247116088866,
+          52.434298431116346
             ],
             [
               4.807376861572266,
-              52.40367564747814
+              52.434298431116346
             ],
             [
               4.807376861572266,
@@ -1828,34 +1828,34 @@
             ]
           ]
         ]
-      }
+            }
     },
-    {
-      "type": "Feature",
-      "properties": {
-        "stroke": "#555555",
-        "stroke-width": 2,
-        "stroke-opacity": 1,
-        "fill": "#aa9383",
-        "fill-opacity": 0.5,
-        "name": "rightgone",
-        "id": "right-gone"
-      },
-      "geometry": {
-        "type": "Polygon",
-        "coordinates": [
+        {
+            "type": "Feature",
+            "properties": {
+                "stroke": "#555555",
+                "stroke-width": 2,
+                "stroke-opacity": 1,
+                "fill": "#aa9383",
+                "fill-opacity": 0.5,
+                "name": "rightgone",
+                "id": "right-gone"
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
           [
             [
               4.884474277496338,
               52.38834318386434
             ],
             [
-              4.883937835693359,
-              52.40435638484531
+               4.880247116088866,
+          52.434298431116346
             ],
             [
               4.9857330322265625,
-              52.4040945640241
+              52.434298431116346
             ],
             [
               4.986934661865234,
@@ -1975,7 +1975,7 @@
             ]
           ]
         ]
-      }
+            }
     }
   ]
 }

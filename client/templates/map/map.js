@@ -75,7 +75,7 @@ Template.map.rendered = function () {
     //create leaflet map and start coordiates
     var map = L.map('map', {
         center: [52.376956, 4.902756],
-        maxZoom: 10,
+        maxZoom: 20,
         minZoom: 14,
         zoom: 14,
         zoomControl: false,
@@ -129,13 +129,13 @@ Template.map.rendered = function () {
     //        }).addTo(map);
     //    }
 
-    //disable dragging
-    map.dragging.disable();
-    map.touchZoom.disable();
-    map.doubleClickZoom.disable();
-    map.scrollWheelZoom.disable();
-    map.boxZoom.disable();
-    map.keyboard.disable();
+//    disable dragging
+        map.dragging.disable();
+        map.touchZoom.disable();
+        map.doubleClickZoom.disable();
+        map.scrollWheelZoom.disable();
+        map.boxZoom.disable();
+        map.keyboard.disable();
 
     //    set foto's july on map
     var setFotoLocationJuly = function (fotosDataJuly) {
@@ -223,9 +223,11 @@ Template.map.rendered = function () {
         SvgMapPart.classList.add("none");
         closeButton.classList.remove("none");
         districts.classList.add("none");
-        TweenMax.to(statistics, 1, {
-            opacity: 1
-        });
+        //        TweenMax.to(statistics, 1, {
+        //            opacity: 1,
+        //        });
+        statistics.classList.remove("none");
+        map.fitBounds(e.target.getBounds());
         //If there are elements with the "overlay" class, then classes will be added to paths. Otherwise not.
         if (overlayList.length === 0) {
             //gives classes to paths, with which they can be styled
@@ -248,9 +250,14 @@ Template.map.rendered = function () {
     closeButton.addEventListener('click', function () {
         districts.classList.remove("none");
         closeButton.classList.add("none");
-        TweenMax.to(statistics, 1, {
-            opacity: 0
-        });
+        //        TweenMax.to(statistics, 1, {
+        //            opacity: 0
+        //        });
+        map.fitBounds([
+    [52.380419542018174, 4.941530227661133],
+     [52.359457601988254, 4.864282608032227]
+   ]);
+        statistics.classList.add("none");
         var i = 0;
         for (i; i < layerIDs.length; i++) {
             document.getElementById(layerIDs[i]).removeAttribute('class', 'overlay');
