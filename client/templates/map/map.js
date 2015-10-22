@@ -33,7 +33,9 @@ Template.map.rendered = function () {
         districtsP = selector('.districts p'),
         closeButton = selector('.close'),
         statistics = selector('.statistics'),
-        districtname = selector('.districtname');
+        districtname = selector('.districtname'),
+        showMore = selector('.showmore');
+
 
     //subscribe to trashesCollection
     Meteor.subscribe('trashesCollection', function () {
@@ -65,7 +67,8 @@ Template.map.rendered = function () {
         for (i; i < gData.length; i++) {
             layerIDs.push(gData[i].properties.id);
         };            
-        geoDatafunction(geoData);        
+        geoDatafunction(geoData);
+        
     });   
 
     HTTP.get(Meteor.absoluteUrl("data/schoonmaakintensiteit.json"), function (err, result) {                
@@ -179,6 +182,7 @@ Template.map.rendered = function () {
     function highlightFeature(e) {
         var layer = e.target;
         var layerName = layer.feature.properties.name,
+            layerID = layer.feature.properties.id,
             SvgMapPart = selector('.mappopup'),
             popup = selector('.popup'),
             overlayList = document.querySelectorAll(".overlay");
@@ -186,10 +190,14 @@ Template.map.rendered = function () {
         var xPosition = event.clientX;
         var yPosition = event.clientY;
 
+
+
         //If there are elements with the "overlay" class, then hover will work and shows popup. Otherwise not.
         if (overlayList.length === 0) {
             SvgMapPart.classList.remove("none");
             if (layerName !== "rightgone" && layerName !== "leftgone") {
+                showMore.setAttribute('class', 'showmore noselect ' + layerID)
+
                 popup.innerHTML = layerName;
                 SvgMapPart.style.position = "absolute";
                 SvgMapPart.style.left = xPosition + -30 + 'px';
@@ -206,9 +214,10 @@ Template.map.rendered = function () {
             } else {
                 //adds class that hides the popup
                 SvgMapPart.classList.add("none");
-            }
+            };
         };
     };
+
     //reset on mouseout
     function resetHighlight(e) {
         geojson.resetStyle(e.target);
@@ -220,14 +229,16 @@ Template.map.rendered = function () {
             layerID = layertje.feature.properties.id,
             SvgMapPart = selector('.mappopup'),
             overlayList = document.querySelectorAll(".overlay");
-
+        
         SvgMapPart.classList.add("none");
         closeButton.classList.remove("none");
         districts.classList.add("none");
+
         //        TweenMax.to(statistics, 1, {
         //            opacity: 1,
         //        });
         statistics.classList.remove("none");
+
         var getBoutdsOfDistrict = e.target.getBounds();
         var DistrictNorthEast = getBoutdsOfDistrict._northEast.lng;
         var DistrictSouthWest = getBoutdsOfDistrict._southWest.lng;
@@ -238,24 +249,44 @@ Template.map.rendered = function () {
         map.fitBounds(getBoutdsOfDistrict);
 
         districtname.innerHTML = layerName;
+
         //If there are elements with the "overlay" class, then classes will be added to paths. Otherwise not.
         if (overlayList.length === 0) {
             //gives classes to paths, with which they can be styled
             if (layerName !== "rightgone" && layerName !== "leftgone") {
-                var i = 0;
-                for (i; i < layerIDs.length; i++) {
-                    var checkingz = document.getElementById(layerIDs[i]).className;
-                    //                console.log(document.getElementById(layerIDs[i]));
-
-                    if (layerIDs[i] !== layerID) {
-                        document.getElementById(layerIDs[i]).setAttribute('class', 'overlay');
+                var j = 0;
+                for (j; j < layerIDs.length; j++) {
+                    if (layerIDs[j] !== layerID) {
+                        document.getElementById(layerIDs[j]).setAttribute('class', 'overlay');
                     } else {
-                        document.getElementById(layerIDs[i]).setAttribute('class', 'transparent');
+                        document.getElementById(layerIDs[j]).setAttribute('class', 'transparent');
                     };
                 };
             };
         };
     };
+
+
+    showMore.addEventListener('click', function (e) {
+        var j = 0,
+            SvgMapPart = selector('.mappopup'),
+            k = 0;
+        
+        SvgMapPart.classList.add("none");
+        closeButton.classList.remove("none");
+        districts.classList.add("none");
+        statistics.classList.remove("none");
+    
+        var cList = showMore.classList;
+       
+        for (j; j < layerIDs.length; j++) {
+            if (layerIDs[j] !== cList[2]) {
+                document.getElementById(layerIDs[j]).setAttribute('class', 'overlay');
+            } else {
+                document.getElementById(layerIDs[j]).setAttribute('class', 'transparent');
+            };
+            }
+    });
 
     closeButton.addEventListener('click', function () {
         districts.classList.remove("none");
