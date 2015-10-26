@@ -28,7 +28,8 @@ meteor
 Name              | Version | Description
 :---------------- | :-----  | :-------------------------------------------------------------------
 iron:router       | 1.0.7   | Routing specifically designed for Meteor.
-bevanhunt:leaflet | 1.2.1   | To provide a Meteor package to quickly build real-time cross-platform map apps.
+bevanhunt:leaflet | 1.2.1   | An open-source JavaScript library
+for mobile-friendly interactive maps.
 http              | 1.1.1   | Make HTTP calls to remote servers.
 infinitedg:gsap   | 1.16.0  | GreenSock Animation Platform : Professional-Grade HTML5 Animation.
 
