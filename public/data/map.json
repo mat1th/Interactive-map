@@ -1210,7 +1210,7 @@
                 "fill": "#008700",
                 "fill-opacity": 1,
                 "name": "Nieuwmarkt en Lastage",
-                "id": "NL"
+                "id": "nl"
             },
             "geometry": {
                 "type": "Polygon",

@@ -1,4 +1,3 @@
-// on startup run resizing event
 Meteor.startup(function () {
 
 });
@@ -34,8 +33,10 @@ Template.map.rendered = function () {
         closeButton = selector('.close'),
         statistics = selector('.statistics'),
         districtname = selector('.districtname'),
-        districtnamefooter = selector('.districtnamefooter'),
         navigationBar = selector('.navigationbar'),
+        gradeMark = selector('.grade-mark'),
+        amountTrashesMark = selector('.amount-trashes-mark'),
+        amountPhotosMark = selector('.amount-photos-mark'),
         showMore = selector('.showmore');
 
 
@@ -70,10 +71,15 @@ Template.map.rendered = function () {
         geoDatafunction(geoData);
     });   
 
-    HTTP.get(Meteor.absoluteUrl("data/schoonmaakintensiteit.json"), function (err, result) {                
-        heatmapLayer = result.data;                
-        createheatmap(heatmapLayer);        
-    });    
+    //    HTTP.get(Meteor.absoluteUrl("data/schoonmaakintensiteit.json"), function (err, result) {                
+    //        heatmapLayer = result.data;                
+    //        createheatmap(heatmapLayer);        
+    //    });    
+
+    var districtsData = null;
+    HTTP.get(Meteor.absoluteUrl("data/districtsdata.json"), function (err, result) {                
+        districtsData = result.data;
+    });  
 
     //create leaflet map and start coordiates
     var map = L.map('map', {
@@ -82,7 +88,9 @@ Template.map.rendered = function () {
         minZoom: 14,
         zoom: 14,
         zoomControl: false,
-        attributionControl: false
+        attributionControl: false,
+        maxBounds: [[52.380419542018174, 4.941530227661133],
+     [52.359457601988254, 4.864282608032227]]
     });
 
     //add bounds to map
@@ -141,17 +149,17 @@ Template.map.rendered = function () {
     //    map.keyboard.disable();
 
     //    set foto's july on map
-    //    var setFotoLocationJuly = function (fotosDataJuly) {
-    //        var Amountfotos = fotosDataJuly.length,
-    //            f = 0;
-    //        for (f; f < Amountfotos; f++) {
-    //            var longitude = fotosDataJuly[f].log;
-    //            var latitude = fotosDataJuly[f].lat;
-    //            L.marker([latitude, longitude], {
-    //                icon: fotoIconJuly,
-    //            }).addTo(map);
-    //        }
-    //    };
+    //        var setFotoLocationJuly = function (fotosDataJuly) {
+    //            var Amountfotos = fotosDataJuly.length,
+    //                f = 0;
+    //            for (f; f < Amountfotos; f++) {
+    //                var longitude = fotosDataJuly[f].log;
+    //                var latitude = fotosDataJuly[f].lat;
+    //                L.marker([latitude, longitude], {
+    //                    icon: fotoIconJuly,
+    //                }).addTo(map);
+    //            }
+    //        };
     //set trashes on map
     var setTrashes = function (trashesData) {
         var amountTrashes = trashesData.length,
@@ -242,7 +250,8 @@ Template.map.rendered = function () {
         map.fitBounds(getBoutdsOfDistrict);
 
         districtname.innerHTML = layerName;
-        districtnamefooter.innerHTML = layerName;
+
+        setDistrictData(layerID)
 
         //If there are elements with the "overlay" class, then classes will be added to paths. Otherwise not.
         if (overlayList.length === 0) {
@@ -260,6 +269,14 @@ Template.map.rendered = function () {
         };
     };
 
+    var setDistrictData = function (layerID) {
+        if (districtsData !== null) {
+            var districtData = districtsData[layerID];
+            gradeMark.innerHTML = districtData.mark;
+            amountTrashesMark.innerHTML = districtData.trashes;
+            amountPhotosMark.innerHTML = districtData.photos;
+        }
+    }
     showMore.addEventListener('click', function (e) {
         SvgMapPart.classList.add("none");
         closeButton.classList.remove("none");

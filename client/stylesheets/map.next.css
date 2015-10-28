@@ -107,10 +107,6 @@ html, body {
     z-index: 8;
 }
 
-.none {
-    display: none !important;
-}
-
 .overlay {
     fill: #ffffff;
     fill-opacity: 0.9;

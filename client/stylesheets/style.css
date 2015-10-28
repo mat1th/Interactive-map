@@ -19,6 +19,10 @@ body {
     color: #333333;
 }
 
+.none {
+    display: none !important;
+}
+
 .noselect {
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -27,42 +31,6 @@ body {
     -ms-user-select: none;
     user-select: none;
 }
-
-
-/*
-.current {
-  position: absolute;
-  left: 400px;
-  top: 150px;
-  -webkit-animation: pulse 2s infinite ease-out;
-  font-size: 20px;
-  border-radius: 50%;
-  border: 1px solid rgba(255, 0, 0, 0);
-}
-
-@-webkit-keyframes pulse {
-  0% {
-    width: 0px;
-    height: 0px;
-    left: 400px;
-    top: 150px;
-    border-color: #fff;
-  }
-  10% {
-    border-color: rgba(0, 170, 255, 0.3);
-  }
-  30% {
-    border-color: rgba(0, 170, 255, 0.7);
-  }
-  100% {
-    width: 70px;
-    height: 70px;
-    left: 365px;
-    top: 115px;
-    borer-color: white;
-  }
-}
-*/
 
 @media all and (max-width: 480px) {
     /* styles for iPhone/Android landscape (and really narrow browser windows) */

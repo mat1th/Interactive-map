@@ -1,4 +1,4 @@
-.statistics{
+.statistics {
     top: 70px;
     right: 0;
     text-transform: uppercase;
@@ -10,14 +10,30 @@
     z-index: 1;
     background: #E6E6E6;
     height: calc(100vh - 70px);
-    width: 500px;
+    width: 350px;
+}
+.statistics div {
+    padding: 30px 45px 20px 45px;
+    border-style: solid;
+    border-color: none;
+    border-width: 0px;
+    border-bottom-width: 1.5px;
+    border-bottom-color: #cccccc;
 }
 
-.districtname {
-    padding: 10px;
+.statistics h2 {
+    color: #686868;
+    text-transform: uppercase;
+    font-weight: 400;
+    font-size: 18px;
     margin: 0;
-    display: inline-block;
+    padding: 0;
 }
-.graphs{
 
+.statistics p {
+    color: #333333;
+    font-weight: 700;
+    font-size: 35px;
+    padding: 0;
+    margin: 0;
 }
