@@ -32,19 +32,44 @@
         </section>
         <section class="filters">
             <div class="crowdedness">
-                <img src="icons/triangle.svg" alt="Drukte">
-                <p>Drukte</p>
+                <input id="crowdedness" type="checkbox" value="crowdedness" checked>
+                <label for="crowdedness">
+                    <div class="noselect crowdednessdiv"></div>
+                    <p class="noselect">Drukte</p>
+                </label>
+
             </div>
             <div class="border"></div>
             <div class="trashes">
-                <img src="icons/square.svg" alt="Prullenbakken">
-                <p>Prullenbakken</p>
+                <input id="trashes" type="checkbox" value="trashes" checked>
+                <label for="trashes">
+                    <div class="noselect trashesdiv"></div>
+                    <p class="noselect">Prullenbakken</p>
+                </label>
             </div>
             <div class="border"></div>
             <div class="cleaning-intensity">
-                <img src="icons/circle.svg" alt="Schoonmaak intensiteit">
-                <p>Schoonmaak intensiteit</p>
+                <input id="cleaning-intensity" type="checkbox" value="cleaning-intensity" checked>
+                <label for="cleaning-intensity">
+                    <div class="noselect cleaningintensitydiv"></div>
+                    <p class="noselect">Schoonmaak intensiteit</p>
+                    <section class="legenda">
+                        <div>
+                            <img src="icons/circle.svg" alt="">
+                            <p>7X per week</p>
+                        </div>
+                        <div>
+                            <img src="icons/circle.svg" alt="">
+                            <p>3-7X per week</p>
+                        </div>
+                        <div>
+                            <img src="icons/circle.svg" alt="">
+                            <p>1-3X per week</p>
+                        </div>
+                    </section>
+                </label>
             </div>
+
             <div class="border"></div>
         </section>
     </section>
@@ -57,19 +82,27 @@
             <div class="popupshadow"></div>
         </div>
     </section>
-    <section class="statistics none">
-        <div>
-            <h2 class="grade">Waarderingscijfer</h2>
-            <p class="mark grade-mark">0</p>
-        </div>
-        <div>
-            <h2 class="amount-trashes">Aantal prullenbakken</h2>
-            <p class="mark amount-trashes-mark">0</p>
-        </div>
-        <div>
-            <h2 class="amount-photos">Aantal Foto uploads</h2>
-            <p class="mark amount-photos-mark">0</p>
-        </div>
+    <section class="statistic none">
+        <section class="statisticstitle">
+            <h2>Statestieken</h2>
+            <div class="togglefilter">
+                <img src="icons/close.svg" alt="closebutton" class="togglestatisticimg">
+            </div>
+        </section>
+        <section class="statistics">
+            <div>
+                <h2 class="grade">Waarderingscijfer</h2>
+                <p class="mark grade-mark">0</p>
+            </div>
+            <div>
+                <h2 class="amount-trashes">Aantal prullenbakken</h2>
+                <p class="mark amount-trashes-mark">0</p>
+            </div>
+            <div>
+                <h2 class="amount-photos">Aantal Foto uploads</h2>
+                <p class="mark amount-photos-mark">0</p>
+            </div>
+        </section>
     </section>
     <section class="navigationbar none">
         <img src="icons/previous_white.svg" alt="previous" class="previousdistrict">

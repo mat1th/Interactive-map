@@ -31,7 +31,7 @@ Template.map.rendered = function () {
         districts = selector('.districts'),
         districtsP = selector('.districts p'),
         closeButton = selector('.close'),
-        statistics = selector('.statistics'),
+        statistic = selector('.statistic'),
         districtname = selector('.districtname'),
         navigationBar = selector('.navigationbar'),
         gradeMark = selector('.grade-mark'),
@@ -230,7 +230,7 @@ Template.map.rendered = function () {
         closeButton.classList.remove("none");
         districts.classList.add("none");
         navigationBar.classList.remove("none");
-        statistics.classList.remove("none");
+        statistic.classList.remove("none");
 
         var getBoutdsOfDistrict = e.target.getBounds();
         var DistrictNorthEast = getBoutdsOfDistrict._northEast.lng;
@@ -273,7 +273,7 @@ Template.map.rendered = function () {
         SvgMapPart.classList.add("none");
         closeButton.classList.remove("none");
         districts.classList.add("none");
-        statistics.classList.remove("none");
+        statistic.classList.remove("none");
 
         var cList = showMore.classList,
             SvgMapPart = selector('.mappopup'),
@@ -292,11 +292,8 @@ Template.map.rendered = function () {
     closeButton.addEventListener('click', function () {
         districts.classList.remove("none");
         closeButton.classList.add("none");
-        statistics.classList.add("none");
+        statistic.classList.add("none");
         navigationBar.classList.add("none");
-        //        TweenMax.to(statistics, 1, {
-        //            opacity: 0
-        //        });
         map.fitBounds([
             [52.35746570026433, 4.863853454589844],
             [52.391734853683936, 4.944705963134766]
@@ -325,6 +322,23 @@ Template.map.rendered = function () {
     }
 
     var geoDatafunction = function (geoData) {
+        cleaningIntensity = L.geoJson(geoData, {
+            style: function (feature) {
+                if (feature.properties.name !== "rightgone" && feature.properties.name !== "leftgone") {
+                    return {
+                        "fillColor": "#000",
+                        "fillOpacity": 0.5
+                    };
+                } else {
+                    return {
+                        "fillColor": "#fff",
+                        "fillOpacity": 0.0,
+                        "color": "RGBA(255, 255, 255, 0)"
+                    };
+                }
+            }
+        }).addTo(map) 
+
         geojson = L.geoJson(geoData, {
             style: myStyle,
             onEachFeature: onEachFeature
@@ -333,19 +347,6 @@ Template.map.rendered = function () {
         geojson.eachLayer(function (layer) {
             layer._path.id = layer.feature.properties.id;
         });
-
-        cleaningIntensity = L.geoJson(geoData, {
-            style: function (feature) {
-                if (layerName !== "rightgone" && layerName !== "leftgone") {
-                    return {
-                        "fillColor": "#000",
-                        "fillOpacity": 0.5
-                    };
-                }
-            }
-        }).addTo(map) 
-
-
     };
 
     //filters
@@ -359,7 +360,7 @@ Template.map.rendered = function () {
             var windowWidth = window.innerHeight;
             closed = true;
             TweenMax.to(filter, 2, {
-                x: -243
+                x: -293
             });
             TweenMax.to(toggleFilterImg, 2, {
                 rotation: -45
@@ -367,7 +368,7 @@ Template.map.rendered = function () {
             TweenMax.to(informotion, 2, {
                 width: windowWidth,
                 css: {
-                    marginLeft: -243
+                    marginLeft: -293
                 }
             });
             TweenMax.to(myMap, 2, {
@@ -394,16 +395,16 @@ Template.map.rendered = function () {
         }
     });
     //crowdedness
-    crowdedness.addEventListener('mouseover', function () {
-        TweenMax.to(crowdedness, 0.2, {
-            opacity: 0.60
-        });
-    });
-    crowdedness.addEventListener('mouseout', function () {
-        TweenMax.to(crowdedness, 0.2, {
-            opacity: 1
-        });
-    });
+//    crowdedness.addEventListener('mouseover', function () {
+//        TweenMax.to(crowdedness, 0.2, {
+//            opacity: 0.60
+//        });
+//    });
+//    crowdedness.addEventListener('mouseout', function () {
+//        TweenMax.to(crowdedness, 0.2, {
+//            opacity: 1
+//        });
+//    });
     crowdedness.addEventListener('click', function () {
         crowdedness.classList.toggle('disabled');
         var fotoAugust = selectors('.foto-icon-august'),
@@ -424,16 +425,16 @@ Template.map.rendered = function () {
     });
 
     //trashes
-    trashes.addEventListener('mouseover', function () {
-        TweenMax.to(trashes, 0.2, {
-            opacity: 0.60
-        });
-    });
-    trashes.addEventListener('mouseout', function () {
-        TweenMax.to(trashes, 0.2, {
-            opacity: 1
-        });
-    });
+//    trashes.addEventListener('mouseover', function () {
+//        TweenMax.to(trashes, 0.2, {
+//            opacity: 0.60
+//        });
+//    });
+//    trashes.addEventListener('mouseout', function () {
+//        TweenMax.to(trashes, 0.2, {
+//            opacity: 1
+//        });
+//    });
     var trashesfilter = false;
     trashes.addEventListener('click', function () {
         var trashIcons = selectors('.trashicon'),
@@ -445,19 +446,19 @@ Template.map.rendered = function () {
     });
 
     //cleaningIntensity
-    cleaningIntensity.addEventListener('mouseover', function () {
-        TweenMax.to(cleaningIntensity, 0.2, {
-            opacity: 0.60
-        });
-    });
-    cleaningIntensity.addEventListener('mouseout', function () {
-        TweenMax.to(cleaningIntensity, 0.2, {
-            opacity: 1
-        });
-    });
-    cleaningIntensity.addEventListener('click', function () {
-        cleaningIntensity.classList.toggle('disabled')
-    });
+//    cleaningIntensity.addEventListener('mouseover', function () {
+//        TweenMax.to(cleaningIntensity, 0.2, {
+//            opacity: 0.60
+//        });
+//    });
+//    cleaningIntensity.addEventListener('mouseout', function () {
+//        TweenMax.to(cleaningIntensity, 0.2, {
+//            opacity: 1
+//        });
+//    });
+//    cleaningIntensity.addEventListener('click', function () {
+//        cleaningIntensity.classList.toggle('disabled')
+//    });
 
     // month controllers
     TweenMax.to(previousMonth, 0.2, {

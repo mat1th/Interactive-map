@@ -1,17 +1,60 @@
-.statistics {
+.statistic {
+    margin: 0;
+    padding: 0;
+    z-index: 2;
+    position: absolute;
     top: 70px;
     right: 0;
+    height: calc(100vh - 70px);
+}
+
+.statistics {
     text-transform: uppercase;
     font-weight: 500;
-    margin: 0;
+    margin: 0 0 0 57px;
     float: right;
     padding: 0;
     position: absolute;
     z-index: 1;
     background: #E6E6E6;
-    height: calc(100vh - 70px);
+    background: url(/img/stats_bg.jpg);
+    background-size: auto 100%;
+    height: calc(100vh - 70px - 56px);
     width: 350px;
 }
+
+.statisticstitle h2 {
+    padding: 10px;
+    margin: 0;
+    width: 100px;
+    display: inline-block;
+}
+
+.statisticstitle {
+    font-weight: 700;
+    font-size: 15px;
+    text-transform: uppercase;
+    height: auto;
+    background: #999999;
+    color: #fff;
+    width: 407px;
+    margin: 0;
+}
+
+.statisticstitle > div {
+    display: inline-block;
+    padding: 10px;
+    height: 37px;
+    width: 37px;
+    float: left;
+    background: #CCCCCC;
+}
+
+.togglestatisticimg {
+    width: 28px;
+    padding: 4px 3.5px;
+}
+
 .statistics div {
     padding: 30px 45px 20px 45px;
     border-style: solid;

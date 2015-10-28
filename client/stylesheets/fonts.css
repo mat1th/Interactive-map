@@ -46,3 +46,14 @@
   font-weight: 700;
   src: local('Fira Sans Bold Italic'), local('FiraSans-BoldItalic'), url(https://fonts.gstatic.com/s/firasans/v5/6s0YCA9oCTF6hM60YM-qTTdGNerWpg2Hn6A-BxWgZ_I.ttf) format('truetype');
 }
+
+@font-face {
+    font-family: 'icomoon';
+    src:url('fonts/icomoon.eot?75j99b');
+    src:url('fonts/icomoon.eot?75j99b#iefix') format('embedded-opentype'),
+        url('fonts/icomoon.ttf?75j99b') format('truetype'),
+        url('fonts/icomoon.woff?75j99b') format('woff'),
+        url('fonts/icomoon.svg?75j99b#icomoon') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}

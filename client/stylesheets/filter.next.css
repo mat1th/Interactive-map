@@ -19,7 +19,7 @@
     height: auto;
     background: #bd2c2c;
     color: #fff;
-    width: 300px;
+    width: 350px;
     margin: 0;
 }
 
@@ -41,7 +41,7 @@
     text-transform: uppercase;
     font-weight: 500;
     color: #ffffff;
-    width: 243px;
+    width: 293px;
     height: calc(100vh - 70px - 56px);
     margin: 0;
     padding: 0;
@@ -49,20 +49,91 @@
     border: none;
 }
 
-.filter > .filters > div > img {
+.filter > .filters > div > label > div {
     cursor: pointer;
     width: 15px;
-    margin: 22px;
+    height: 15px;
+    margin: 25px;
     display: inline-block;
     float: left;
+    background-size: 100% 100%;
 }
 
-.filter > .filters > div > p {
+.filter > .filters > div > label > p {
     font-weight: 500;
-    width: 120px;
-    margin: 20px 60px 20px 0;
+    width: 200px;
+    font-size: 20px;
+    margin: 20px 0px 20px 0;
     display: inline-block;
     float: right;
+}
+
+.filter > .filters > div > label {
+    display: inline-block;
+    cursor: pointer;
+    position: relative;
+    /*
+    padding-left: 25px;
+    margin-right: 15px;
+    */
+    font-size: 13px;
+}
+
+.filter > .filters > div > input[type=checkbox] {
+    position: absolute;
+    display: none;
+    margin: 22px 22px 22px 0px;
+}
+
+.filter > .filters > div > label:before {
+    font-family: 'icomoon';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    content: "\e900";
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin: 22px 22px 22px 250px;
+    position: absolute;
+    float: right;
+}
+
+.filter > .filters > div > input[type=checkbox]:checked + label:before {
+    font-family: 'icomoon';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    content: "\e901";
+    font-size: 15px;
+    color: rgb(189, 44, 44);
+    text-align: center;
+    line-height: 15px;
+}
+
+.filter > .filters > div > input[type=checkbox]:not(:checked) + label,
+.filter > .filters > div > input[type=checkbox]:not(:checked) + label:before {
+    opacity: 0.4;
+}
+
+.filter > .filters > .trashes > label > div {
+    background: url('/icons/square_inactive.svg');
+}
+
+.filter > .filters > .crowdedness > label > div {
+    background: url('/icons/triangle_inactive.svg');
+}
+
+.filter > .filters > div > input[type=checkbox]:checked + label > .trashesdiv {
+    background: url('/icons/square.svg');
+}
+
+.filter > .filters > div > input[type=checkbox]:checked + label > .crowdednessdiv {
+    background: url('/icons/triangle.svg');
 }
 
 .filter > .filters > div {
@@ -78,18 +149,22 @@
     clear: both;
 }
 
-.disabled > p {
-    text-decoration: line-through;
-    color: RGBA(255, 255, 255, 0.72)
+section.legenda {
+    margin: 0 0 0 70px;
+}
+section.legenda div{
+    margin: 10px 0;;
 }
 
-.disabled > img {
-    opacity: 0.60;
+section.legenda img {
+    display: inline-block;
+    width: 15px;
 }
 
-
-/*
-.filter > .filters > div {
-    margin: 10px 2em;
+section.legenda p {
+    color: #333;
+    display: inline-block;
+    width: 100px;
+    margin: 0 0 0 10px;
+    padding: 0px;
 }
-*/

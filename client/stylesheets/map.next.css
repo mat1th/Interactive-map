@@ -132,3 +132,7 @@ html, body {
     stroke-width: 2px;
     stroke-linejoin: round;
 }
+
+.cleaningIntensity{
+    z-index: -100;
+}
