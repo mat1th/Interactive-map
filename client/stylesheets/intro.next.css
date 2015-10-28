@@ -1,0 +1,5 @@
+.intro {
+    background: url(img/background_black.png);
+    width: 100vw;
+    height: calc(100vh - 70px);
+}

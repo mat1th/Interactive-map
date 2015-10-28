@@ -1,0 +1,3 @@
+Template.intro.rendered = function () {
+
+}
