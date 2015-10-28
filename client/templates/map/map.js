@@ -135,23 +135,23 @@ Template.map.rendered = function () {
     //    disable dragging
     //    map.dragging.disable();
     //    map.touchZoom.disable();
-    //    map.doubleClickZoom.disable();
+    map.doubleClickZoom.disable();
     //    map.scrollWheelZoom.disable();
     //    map.boxZoom.disable();
     //    map.keyboard.disable();
 
     //    set foto's july on map
-//    var setFotoLocationJuly = function (fotosDataJuly) {
-//        var Amountfotos = fotosDataJuly.length,
-//            f = 0;
-//        for (f; f < Amountfotos; f++) {
-//            var longitude = fotosDataJuly[f].log;
-//            var latitude = fotosDataJuly[f].lat;
-//            L.marker([latitude, longitude], {
-//                icon: fotoIconJuly,
-//            }).addTo(map);
-//        }
-//    };
+    //    var setFotoLocationJuly = function (fotosDataJuly) {
+    //        var Amountfotos = fotosDataJuly.length,
+    //            f = 0;
+    //        for (f; f < Amountfotos; f++) {
+    //            var longitude = fotosDataJuly[f].log;
+    //            var latitude = fotosDataJuly[f].lat;
+    //            L.marker([latitude, longitude], {
+    //                icon: fotoIconJuly,
+    //            }).addTo(map);
+    //        }
+    //    };
     //set trashes on map
     var setTrashes = function (trashesData) {
         var amountTrashes = trashesData.length,
@@ -194,7 +194,6 @@ Template.map.rendered = function () {
             SvgMapPart.classList.remove("none");
             if (layerName !== "rightgone" && layerName !== "leftgone") {
                 showMore.setAttribute('class', 'showmore noselect ' + layerID)
-
                 popup.innerHTML = layerName;
                 SvgMapPart.style.position = "absolute";
                 SvgMapPart.style.left = xPosition + -20 + 'px';

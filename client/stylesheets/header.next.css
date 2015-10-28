@@ -14,13 +14,12 @@ header {
 }
 
 .monthselect {
-    right: 250px;
+    right: 150px;
     position: absolute;
     padding: 25px;
     height: 30px;
     display: inline-block;
     width: 140px;
-    /*    padding: 20px 40px 10px 40px;*/
 }
 
 .month {
@@ -39,11 +38,8 @@ header {
     overflow: hidden;
 }
 
-
 /*
-
 .month {
-
     width: 100%;
     color: #333333;
     text-align: center;
@@ -95,25 +91,26 @@ header {
 .close {
     right: 0px;
     position: absolute;
-    margin: 10px 30px 10px 10px;
+    margin: 10px 5px 10px 10px;
     height: 40px;
     padding: 2px 10px;
     display: inline-block;
-    width: 150px;
+    width: 120px;
     border-style: solid;
-    border-width: 3px;
-    border-color: #333333;
+    border-color: #fff;
+    border-left-width: 1px;
+    border-left-color: #CECECE;
 }
 
 .close img {
-    height: 26px;
+    height: 14px;
     display: inline-block;
-    margin: 7px 0px 3px 0px;
+    margin: 13px 0px 3px 11px;
 }
 .close > p {
-    margin: 11px;
+    margin: 10px;
     padding: 0 0 20px 0 0;
-    font-size: 13px;
+    font-size: 15px;
     font-weight: 400;
     text-transform: uppercase;
     position: absolute;

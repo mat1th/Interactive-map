@@ -113,7 +113,7 @@ html, body {
 
 .overlay {
     fill: #ffffff;
-    fill-opacity: 0.85;
+    fill-opacity: 0.9;
     stroke: #ffffff;
     stroke-width: 2px;
     stroke-linejoin: round;
