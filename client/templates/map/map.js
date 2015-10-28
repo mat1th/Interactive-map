@@ -233,13 +233,15 @@ Template.map.rendered = function () {
         statistic.classList.remove("none");
 
         var getBoutdsOfDistrict = e.target.getBounds();
-        var DistrictNorthEast = getBoutdsOfDistrict._northEast.lng;
-        var DistrictSouthWest = getBoutdsOfDistrict._southWest.lng;
-        var newNorthEast = DistrictNorthEast + 0.008;
-        var newSouthWest = DistrictSouthWest + 0.008;
-        getBoutdsOfDistrict._northEast.lng = newNorthEast;
-        getBoutdsOfDistrict._southWest.lng = newSouthWest;
-        map.fitBounds(getBoutdsOfDistrict);
+        var DistrictNorthEastlng = getBoutdsOfDistrict._northEast.lng + 0.008;
+        var DistrictNorthEastlat = getBoutdsOfDistrict._northEast.lat;
+        var DistrictSouthWestlng = getBoutdsOfDistrict._southWest.lng + 0.008;
+        var DistrictSouthWestlat = getBoutdsOfDistrict._southWest.lat;
+
+        var southWest = L.latLng(DistrictSouthWestlat, DistrictSouthWestlng),
+            northEast = L.latLng(DistrictNorthEastlat, DistrictNorthEastlng),
+            bounds = L.latLngBounds(southWest, northEast);
+        map.fitBounds(bounds);
 
         districtname.innerHTML = layerName;
 
@@ -395,16 +397,16 @@ Template.map.rendered = function () {
         }
     });
     //crowdedness
-//    crowdedness.addEventListener('mouseover', function () {
-//        TweenMax.to(crowdedness, 0.2, {
-//            opacity: 0.60
-//        });
-//    });
-//    crowdedness.addEventListener('mouseout', function () {
-//        TweenMax.to(crowdedness, 0.2, {
-//            opacity: 1
-//        });
-//    });
+    //    crowdedness.addEventListener('mouseover', function () {
+    //        TweenMax.to(crowdedness, 0.2, {
+    //            opacity: 0.60
+    //        });
+    //    });
+    //    crowdedness.addEventListener('mouseout', function () {
+    //        TweenMax.to(crowdedness, 0.2, {
+    //            opacity: 1
+    //        });
+    //    });
     crowdedness.addEventListener('click', function () {
         crowdedness.classList.toggle('disabled');
         var fotoAugust = selectors('.foto-icon-august'),
@@ -425,16 +427,16 @@ Template.map.rendered = function () {
     });
 
     //trashes
-//    trashes.addEventListener('mouseover', function () {
-//        TweenMax.to(trashes, 0.2, {
-//            opacity: 0.60
-//        });
-//    });
-//    trashes.addEventListener('mouseout', function () {
-//        TweenMax.to(trashes, 0.2, {
-//            opacity: 1
-//        });
-//    });
+    //    trashes.addEventListener('mouseover', function () {
+    //        TweenMax.to(trashes, 0.2, {
+    //            opacity: 0.60
+    //        });
+    //    });
+    //    trashes.addEventListener('mouseout', function () {
+    //        TweenMax.to(trashes, 0.2, {
+    //            opacity: 1
+    //        });
+    //    });
     var trashesfilter = false;
     trashes.addEventListener('click', function () {
         var trashIcons = selectors('.trashicon'),
@@ -446,19 +448,19 @@ Template.map.rendered = function () {
     });
 
     //cleaningIntensity
-//    cleaningIntensity.addEventListener('mouseover', function () {
-//        TweenMax.to(cleaningIntensity, 0.2, {
-//            opacity: 0.60
-//        });
-//    });
-//    cleaningIntensity.addEventListener('mouseout', function () {
-//        TweenMax.to(cleaningIntensity, 0.2, {
-//            opacity: 1
-//        });
-//    });
-//    cleaningIntensity.addEventListener('click', function () {
-//        cleaningIntensity.classList.toggle('disabled')
-//    });
+    //    cleaningIntensity.addEventListener('mouseover', function () {
+    //        TweenMax.to(cleaningIntensity, 0.2, {
+    //            opacity: 0.60
+    //        });
+    //    });
+    //    cleaningIntensity.addEventListener('mouseout', function () {
+    //        TweenMax.to(cleaningIntensity, 0.2, {
+    //            opacity: 1
+    //        });
+    //    });
+    //    cleaningIntensity.addEventListener('click', function () {
+    //        cleaningIntensity.classList.toggle('disabled')
+    //    });
 
     // month controllers
     TweenMax.to(previousMonth, 0.2, {
