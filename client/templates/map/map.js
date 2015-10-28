@@ -39,7 +39,6 @@ Template.map.rendered = function () {
         amountPhotosMark = selector('.amount-photos-mark'),
         showMore = selector('.showmore');
 
-
     //subscribe to trashesCollection
     Meteor.subscribe('trashesCollection', function () {
         var trashesData = trashesCollection.find().fetch();
@@ -89,14 +88,14 @@ Template.map.rendered = function () {
         zoom: 14,
         zoomControl: false,
         attributionControl: false,
-        maxBounds: [[52.380419542018174, 4.941530227661133],
-     [52.359457601988254, 4.864282608032227]]
+        maxBounds: [[52.345197800248926, 4.82025146484375],
+                    [52.424825961602764, 4.967708587646484]]
     });
 
     //add bounds to map
     map.fitBounds([
-    [52.380419542018174, 4.941530227661133],
-     [52.359457601988254, 4.864282608032227]
+    [52.35746570026433, 4.863853454589844],
+     [52.391734853683936, 4.944705963134766]
    ]);
 
     var baseLayer = L.tileLayer(
@@ -175,13 +174,6 @@ Template.map.rendered = function () {
             }).addTo(map).bindPopup(street + number);
         }
     };
-
-    //Create the map of Amsterdam Centrum and add render it.
-    var myStyle = {
-        "fillColor": "#fff",
-        "fillOpacity": 0.0,
-        "color": "RGBA(255, 255, 255, 0)"
-    }
 
     var geojson;
 
@@ -306,8 +298,8 @@ Template.map.rendered = function () {
         //            opacity: 0
         //        });
         map.fitBounds([
-            [52.380419542018174, 4.941530227661133],
-            [52.359457601988254, 4.864282608032227]
+            [52.35746570026433, 4.863853454589844],
+            [52.391734853683936, 4.944705963134766]
         ]);
 
         var i = 0;
@@ -325,6 +317,13 @@ Template.map.rendered = function () {
         });
     };
 
+    //Create the map of Amsterdam Centrum and add render it.
+    var myStyle = {
+        "fillColor": "#fff",
+        "fillOpacity": 0.0,
+        "color": "RGBA(255, 255, 255, 0)"
+    }
+
     var geoDatafunction = function (geoData) {
         geojson = L.geoJson(geoData, {
             style: myStyle,
@@ -334,6 +333,19 @@ Template.map.rendered = function () {
         geojson.eachLayer(function (layer) {
             layer._path.id = layer.feature.properties.id;
         });
+
+        cleaningIntensity = L.geoJson(geoData, {
+            style: function (feature) {
+                if (layerName !== "rightgone" && layerName !== "leftgone") {
+                    return {
+                        "fillColor": "#000",
+                        "fillOpacity": 0.5
+                    };
+                }
+            }
+        }).addTo(map) 
+
+
     };
 
     //filters
