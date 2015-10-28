@@ -34,6 +34,8 @@ Template.map.rendered = function () {
         closeButton = selector('.close'),
         statistics = selector('.statistics'),
         districtname = selector('.districtname'),
+        districtnamefooter = selector('.districtnamefooter'),
+        navigationBar = selector('.navigationbar'),
         showMore = selector('.showmore');
 
 
@@ -57,8 +59,6 @@ Template.map.rendered = function () {
         });
     });
 
-
-
     var layerIDs = [];       
     HTTP.get(Meteor.absoluteUrl("data/map.json"), function (err, result) {                
         geoData = result.data;
@@ -68,7 +68,6 @@ Template.map.rendered = function () {
             layerIDs.push(gData[i].properties.id);
         };            
         geoDatafunction(geoData);
-        
     });   
 
     HTTP.get(Meteor.absoluteUrl("data/schoonmaakintensiteit.json"), function (err, result) {                
@@ -134,25 +133,25 @@ Template.map.rendered = function () {
     //    }
 
     //    disable dragging
-    map.dragging.disable();
-    map.touchZoom.disable();
-    map.doubleClickZoom.disable();
-    map.scrollWheelZoom.disable();
-    map.boxZoom.disable();
-    map.keyboard.disable();
+    //    map.dragging.disable();
+    //    map.touchZoom.disable();
+    //    map.doubleClickZoom.disable();
+    //    map.scrollWheelZoom.disable();
+    //    map.boxZoom.disable();
+    //    map.keyboard.disable();
 
     //    set foto's july on map
-    var setFotoLocationJuly = function (fotosDataJuly) {
-        var Amountfotos = fotosDataJuly.length,
-            f = 0;
-        for (f; f < Amountfotos; f++) {
-            var longitude = fotosDataJuly[f].log;
-            var latitude = fotosDataJuly[f].lat;
-            L.marker([latitude, longitude], {
-                icon: fotoIconJuly,
-            }).addTo(map);
-        }
-    };
+//    var setFotoLocationJuly = function (fotosDataJuly) {
+//        var Amountfotos = fotosDataJuly.length,
+//            f = 0;
+//        for (f; f < Amountfotos; f++) {
+//            var longitude = fotosDataJuly[f].log;
+//            var latitude = fotosDataJuly[f].lat;
+//            L.marker([latitude, longitude], {
+//                icon: fotoIconJuly,
+//            }).addTo(map);
+//        }
+//    };
     //set trashes on map
     var setTrashes = function (trashesData) {
         var amountTrashes = trashesData.length,
@@ -190,8 +189,6 @@ Template.map.rendered = function () {
         var xPosition = event.clientX;
         var yPosition = event.clientY;
 
-
-
         //If there are elements with the "overlay" class, then hover will work and shows popup. Otherwise not.
         if (overlayList.length === 0) {
             SvgMapPart.classList.remove("none");
@@ -200,8 +197,8 @@ Template.map.rendered = function () {
 
                 popup.innerHTML = layerName;
                 SvgMapPart.style.position = "absolute";
-                SvgMapPart.style.left = xPosition + -30 + 'px';
-                SvgMapPart.style.top = yPosition + -130 + 'px';
+                SvgMapPart.style.left = xPosition + -20 + 'px';
+                SvgMapPart.style.top = yPosition + -90 + 'px';
                 layer.setStyle({
                     //                weight: 5,
                     fillColor: '#D83E41',
@@ -229,14 +226,11 @@ Template.map.rendered = function () {
             layerID = layertje.feature.properties.id,
             SvgMapPart = selector('.mappopup'),
             overlayList = document.querySelectorAll(".overlay");
-        
+
         SvgMapPart.classList.add("none");
         closeButton.classList.remove("none");
         districts.classList.add("none");
-
-        //        TweenMax.to(statistics, 1, {
-        //            opacity: 1,
-        //        });
+        navigationBar.classList.remove("none");
         statistics.classList.remove("none");
 
         var getBoutdsOfDistrict = e.target.getBounds();
@@ -249,6 +243,7 @@ Template.map.rendered = function () {
         map.fitBounds(getBoutdsOfDistrict);
 
         districtname.innerHTML = layerName;
+        districtnamefooter.innerHTML = layerName;
 
         //If there are elements with the "overlay" class, then classes will be added to paths. Otherwise not.
         if (overlayList.length === 0) {
@@ -266,31 +261,31 @@ Template.map.rendered = function () {
         };
     };
 
-
     showMore.addEventListener('click', function (e) {
-        var j = 0,
-            SvgMapPart = selector('.mappopup'),
-            k = 0;
-        
         SvgMapPart.classList.add("none");
         closeButton.classList.remove("none");
         districts.classList.add("none");
         statistics.classList.remove("none");
-    
-        var cList = showMore.classList;
-       
+
+        var cList = showMore.classList,
+            SvgMapPart = selector('.mappopup'),
+            j = 0,
+            k = 0;
+
         for (j; j < layerIDs.length; j++) {
             if (layerIDs[j] !== cList[2]) {
                 document.getElementById(layerIDs[j]).setAttribute('class', 'overlay');
             } else {
                 document.getElementById(layerIDs[j]).setAttribute('class', 'transparent');
             };
-            }
+        }
     });
 
     closeButton.addEventListener('click', function () {
         districts.classList.remove("none");
         closeButton.classList.add("none");
+        statistics.classList.add("none");
+        navigationBar.classList.add("none");
         //        TweenMax.to(statistics, 1, {
         //            opacity: 0
         //        });
@@ -298,7 +293,7 @@ Template.map.rendered = function () {
             [52.380419542018174, 4.941530227661133],
             [52.359457601988254, 4.864282608032227]
         ]);
-        statistics.classList.add("none");
+
         var i = 0;
         for (i; i < layerIDs.length; i++) {
             document.getElementById(layerIDs[i]).removeAttribute('class', 'overlay');

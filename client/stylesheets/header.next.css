@@ -63,6 +63,7 @@ header {
 }
 
 .districts {
+    display: none !important;
     right: 0px;
     position: absolute;
     margin: 10px 30px 10px 10px;
@@ -98,14 +99,23 @@ header {
     height: 40px;
     padding: 2px 10px;
     display: inline-block;
-    width: 30px;
+    width: 150px;
     border-style: solid;
     border-width: 3px;
     border-color: #333333;
 }
 
 .close img {
-    height: 30px;
+    height: 26px;
     display: inline-block;
-    margin: 5px 0px 3px 0px;
+    margin: 7px 0px 3px 0px;
+}
+.close > p {
+    margin: 11px;
+    padding: 0 0 20px 0 0;
+    font-size: 13px;
+    font-weight: 400;
+    text-transform: uppercase;
+    position: absolute;
+    display: inline-block;
 }

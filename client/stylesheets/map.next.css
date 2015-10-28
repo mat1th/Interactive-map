@@ -45,6 +45,7 @@ html, body {
 /*popup*/
 
 .showmore {
+    display: none !important;
     position: relative;
     top: 5px;
     text-transform: uppercase;
@@ -57,11 +58,13 @@ html, body {
 }
 
 .showmore:hover {
+    display: none !important;
     color: #2C2C2C;
     text-decoration: underline;
 }
 
 .showmoreshadow {
+    display: none !important;
     position: relative;
     z-index: 10;
     width: 0;
@@ -110,7 +113,7 @@ html, body {
 
 .overlay {
     fill: #ffffff;
-    fill-opacity: 1;
+    fill-opacity: 0.85;
     stroke: #ffffff;
     stroke-width: 2px;
     stroke-linejoin: round;

@@ -12,6 +12,15 @@ Plugin.registerCompiler({
 }, function () {
     return new CssnextCompiler(cssnextOptions)
 });
+//App.icons({
+//  'iphone': 'icons/icon-60.png',
+//  'iphone_2x': 'icons/icon-60@2x.png'
+//});
+//
+//App.launchScreens({
+//  'iphone': 'splash/Default~iphone.png',
+//  'iphone_2x': 'splash/Default@2x~iphone.png'
+//});
 
 // CORS for Meteor app
 App.accessRule('meteor.local/*');
