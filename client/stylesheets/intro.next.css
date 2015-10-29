@@ -3,3 +3,77 @@
     width: 100vw;
     height: calc(100vh - 70px);
 }
+
+.container {
+    width: 50vw;
+    position: absolute;
+    margin: 18vh 25vw;
+}
+
+.slideshow {
+    list-style: none;
+    z-index: 10;
+    padding: 0;
+    margin: 0;
+}
+
+.slideshow li {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
+.slideshow li img {
+    display: block;
+    width: 100%;
+}
+
+.controls {
+    position: absolute;
+    width: 100%;
+}
+
+.next,
+.prev {
+    opacity: 0.8;
+}
+
+.prev > img{
+    position: relative;
+    left: -200px;
+}
+
+.next > img{
+    position: relative;
+    left: 100px;
+}
+
+
+.prev {
+    margin: 25vh 0 0 0;
+}
+
+.next {
+    margin: 25vh 0 0 0;
+}
+
+.controls span {
+    position: absolute;
+    top: 50%;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: .5em 1em;
+}
+
+.controls span.prev {
+    left: 1.875em;
+}
+
+.controls span.next {
+    right: 1.875em;
+}
