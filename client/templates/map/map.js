@@ -210,57 +210,62 @@ Template.map.rendered = function () {
     function resetHighlight(e) {
         geojson.resetStyle(e.target);
     };
+    var zoomState = false;
 
     function clickFeature(e) {
-        var layertje = e.target,
-            layerName = layertje.feature.properties.name,
-            layerID = layertje.feature.properties.id,
-            SvgMapPart = selector('.mappopup'),
-            overlayList = document.querySelectorAll(".overlay");
+        if (zoomState === false) {
+            zoomState = true;
+            var layertje = e.target,
+                layerName = layertje.feature.properties.name,
+                layerID = layertje.feature.properties.id,
+                SvgMapPart = selector('.mappopup'),
+                overlayList = document.querySelectorAll(".overlay");
 
-        SvgMapPart.classList.add("none");
-        closeButton.classList.remove("none");
-        districts.classList.add("none");
-        navigationBar.classList.remove("none");
-        statistic.classList.remove("none");
+            SvgMapPart.classList.add("none");
+            closeButton.classList.remove("none");
+            districts.classList.add("none");
+            navigationBar.classList.remove("none");
+            statistic.classList.remove("none");
 
-        var getBoutdsOfDistrict = e.target.getBounds();
-        var DistrictNorthEastlng = getBoutdsOfDistrict._northEast.lng + 0.008;
-        var DistrictNorthEastlat = getBoutdsOfDistrict._northEast.lat;
-        var DistrictSouthWestlng = getBoutdsOfDistrict._southWest.lng + 0.008;
-        var DistrictSouthWestlat = getBoutdsOfDistrict._southWest.lat;
+            var getBoutdsOfDistrict = e.target.getBounds();
+            var DistrictNorthEastlng = getBoutdsOfDistrict._northEast.lng + 0.008;
+            var DistrictNorthEastlat = getBoutdsOfDistrict._northEast.lat;
+            var DistrictSouthWestlng = getBoutdsOfDistrict._southWest.lng + 0.008;
+            var DistrictSouthWestlat = getBoutdsOfDistrict._southWest.lat;
 
-        var southWest = L.latLng(DistrictSouthWestlat, DistrictSouthWestlng),
-            northEast = L.latLng(DistrictNorthEastlat, DistrictNorthEastlng),
-            bounds = L.latLngBounds(southWest, northEast);
-        map.fitBounds(bounds);
+            var southWest = L.latLng(DistrictSouthWestlat, DistrictSouthWestlng),
+                northEast = L.latLng(DistrictNorthEastlat, DistrictNorthEastlng),
+                bounds = L.latLngBounds(southWest, northEast);
+            map.fitBounds(bounds);
 
-        districtname.innerHTML = layerName;
+            districtname.innerHTML = layerName;
 
-        setDistrictData(layerID)
+            setDistrictData(layerID)
 
-        map.dragging.disable();
-        map.touchZoom.disable();
-        map.doubleClickZoom.disable();
-        map.scrollWheelZoom.disable();
-        map.boxZoom.disable();
-        map.keyboard.disable();
+            map.dragging.disable();
+            map.touchZoom.disable();
+            map.doubleClickZoom.disable();
+            map.scrollWheelZoom.disable();
+            map.boxZoom.disable();
+            map.keyboard.disable();
 
-        //If there are elements with the "overlay" class, then classes will be added to paths. Otherwise not.
-        if (overlayList.length === 0) {
-            //gives classes to paths, with which they can be styled
-            if (layerName !== "rightgone" && layerName !== "leftgone") {
-                var j = 0;
-                for (j; j < layerIDs.length; j++) {
-                    if (layerIDs[j] !== layerID) {
-                        document.getElementById(layerIDs[j]).setAttribute('class', 'overlay');
-                    } else {
-                        document.getElementById(layerIDs[j]).setAttribute('class', 'transparent');
+            //If there are elements with the "overlay" class, then classes will be added to paths. Otherwise not.
+            if (overlayList.length === 0) {
+                //gives classes to paths, with which they can be styled
+                if (layerName !== "rightgone" && layerName !== "leftgone") {
+                    var j = 0;
+                    for (j; j < layerIDs.length; j++) {
+                        if (layerIDs[j] !== layerID) {
+                            document.getElementById(layerIDs[j]).setAttribute('class', 'overlay');
+                        } else {
+                            document.getElementById(layerIDs[j]).setAttribute('class', 'transparent');
+                        };
                     };
                 };
             };
         };
     };
+
 
     var setDistrictData = function (layerID) {
         if (districtsData !== null) {
@@ -270,27 +275,28 @@ Template.map.rendered = function () {
             amountPhotosMark.innerHTML = districtData.photos;
         }
     }
-    showMore.addEventListener('click', function (e) {
-        SvgMapPart.classList.add("none");
-        closeButton.classList.remove("none");
-        districts.classList.add("none");
-        statistic.classList.remove("none");
-
-        var cList = showMore.classList,
-            SvgMapPart = selector('.mappopup'),
-            j = 0,
-            k = 0;
-
-        for (j; j < layerIDs.length; j++) {
-            if (layerIDs[j] !== cList[2]) {
-                document.getElementById(layerIDs[j]).setAttribute('class', 'overlay');
-            } else {
-                document.getElementById(layerIDs[j]).setAttribute('class', 'transparent');
-            };
-        }
-    });
+//    showMore.addEventListener('click', function (e) {
+//        SvgMapPart.classList.add("none");
+//        closeButton.classList.remove("none");
+//        districts.classList.add("none");
+//        statistic.classList.remove("none");
+//
+//        var cList = showMore.classList,
+//            SvgMapPart = selector('.mappopup'),
+//            j = 0,
+//            k = 0;
+//
+//        for (j; j < layerIDs.length; j++) {
+//            if (layerIDs[j] !== cList[2]) {
+//                document.getElementById(layerIDs[j]).setAttribute('class', 'overlay');
+//            } else {
+//                document.getElementById(layerIDs[j]).setAttribute('class', 'transparent');
+//            };
+//        }
+//    });
 
     closeButton.addEventListener('click', function () {
+        zoomState = false;
         districts.classList.remove("none");
         closeButton.classList.add("none");
         statistic.classList.add("none");
