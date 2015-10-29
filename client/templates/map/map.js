@@ -147,32 +147,43 @@ Template.map.rendered = function () {
     //    map.boxZoom.disable();
     //    map.keyboard.disable();
 
-    //    set foto's july on map
-    //        var setFotoLocationJuly = function (fotosDataJuly) {
-    //            var Amountfotos = fotosDataJuly.length,
-    //                f = 0;
-    //            for (f; f < Amountfotos; f++) {
-    //                var longitude = fotosDataJuly[f].log;
-    //                var latitude = fotosDataJuly[f].lat;
-    //                L.marker([latitude, longitude], {
-    //                    icon: fotoIconJuly,
-    //                }).addTo(map);
-    //            }
-    //        };
+    //        set foto's july on map
+    //    var setFotoLocationJuly = function (fotosDataJuly) {
+    //        var Amountfotos = fotosDataJuly.length,
+    //            f = 0;
+    //        for (f; f < Amountfotos; f++) {
+    //            var longitude = fotosDataJuly[f].log;
+    //            var latitude = fotosDataJuly[f].lat;
+    //            L.marker([latitude, longitude], {
+    //                icon: fotoIconJuly,
+    //            }).addTo(map);
+    //        }
+    //    };
     //set trashes on map
     var setTrashes = function (trashesData) {
-        var amountTrashes = trashesData.length,
-            i = 0;
-        for (i; i < amountTrashes; i++) {
-            var longitude = trashesData[i].log;
-            var latitude = trashesData[i].lat;
-            var street = trashesData[i].street;
-            var number = trashesData[i].houseNumber;
-            L.marker([latitude, longitude], {
-                icon: trashIcon,
-                riseOnHover: true,
-            }).addTo(map).bindPopup(street + number);
+        var markers = new L.FeatureGroup(),
+            trashnumber = 0;
+
+        function getLatLng(map) {
+            var lngSpan = trashesData[trashnumber].log,
+                latSpan = trashesData[trashnumber].lat;
+            trashnumber++;
+            return new L.LatLng(
+                latSpan,
+                lngSpan);
         }
+
+        function trashes() {
+            for (var i = 0; i < trashesData.length; i++) {
+                var marker = L.marker(getLatLng(map), {
+                    icon: trashIcon
+                });
+                markers.addLayer(marker);
+            }
+            return false;
+        }
+        map.addLayer(markers);
+        trashes();
     };
 
     var geojson;
