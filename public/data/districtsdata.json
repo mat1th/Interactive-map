@@ -1,72 +1,82 @@
 {
     "we": {
         "name": "Westelijke eilanden",
+        "sqmeters": 842151.87,
         "mark": 6.3,
-        "trashes": 34,
-        "cleaningintensity":"Laag",
+        "trashes": 134,
+        "cleaningintensity": "Laag",
         "photos": 234
     },
     "jd": {
         "name": "Jordaan",
-        "mark": 234,
-        "trashes": 34,
-        "cleaningintensity":"Gemiddeld",
+        "sqmeters": 964666.37,
+        "mark": 7.4,
+        "trashes": 134,
+        "cleaningintensity": "Gemiddeld",
         "photos": 3423
     },
     "gw": {
         "name": "Grachtengordel-West",
-        "mark": 23,
-        "trashes": 234,
-        "cleaningintensity":"Gemiddeld",
+        "sqmeters": 635099.20,
+        "mark": 8.3,
+        "trashes": 1234,
+        "cleaningintensity": "Gemiddeld",
         "photos": 32
     },
     "bnz": {
         "name": "Burgwallen-Nieuwe Zijde",
-        "mark": 43,
-        "trashes": 234,
-        "cleaningintensity":"Hoog",
+        "sqmeters": 678248.77,
+        "mark": 7.3,
+        "trashes": 1234,
+        "cleaningintensity": "Hoog",
         "photos": 234
     },
     "gz": {
         "name": "Grachtengordel-Zuid",
-        "mark": 234,
-        "trashes": 234,
-        "cleaningintensity":"Gemiddeld",
+        "sqmeters": 568111.44,
+        "mark": 7.6,
+        "trashes": 1234,
+        "cleaningintensity": "Gemiddeld",
         "photos": 234
     },
     "dws": {
         "name": "De Weteringschans",
-        "mark": 234,
-        "trashes": 43,
-        "cleaningintensity":"Laag",
+        "sqmeters": 640664.21,
+        "mark": 8.2,
+        "trashes": 1243,
+        "cleaningintensity": "Laag",
         "photos": 23
     },
     "wp": {
         "name": "Weesperbuurt en Plantage",
-        "mark": 43,
-        "trashes": 34,
-        "cleaningintensity":"Laag",
+        "sqmeters": 859717.91,
+        "mark": 2.3,
+        "trashes": 334,
+        "cleaningintensity": "Laag",
         "photos": 23
     },
     "oek": {
         "name": "Oostelijke Eilanden en Kadijken",
-        "mark": 234,
+        "sqmeters": 1429313.76,
+        "mark": 5.2,
         "trashes": 432,
-        "cleaningintensity":"Laag",
+        "cleaningintensity": "Laag",
         "photos": 432
     },
     "nl": {
         "name": "Nieuwmarkt en Lastage",
-        "mark": 432,
-        "trashes": 43,
-        "cleaningintensity":"Gemiddeld",
+        "sqmeters": 1062643.51,
+        "mark": 8.9,
+        "trashes": 443,
+        "cleaningintensity": "Gemiddeld",
         "photos": 23
     },
     "boz": {
         "name": "Burgwallen-Oude Zijde",
-        "mark": 432,
-        "trashes": 43,
-        "cleaningintensity":"Hoog",
+        "sqmeters": 426842.59,
+        "mark": 7.2,
+        "trashes": 443,
+        "cleaningintensity": "Hoog",
         "photos": 234
     }
 }
