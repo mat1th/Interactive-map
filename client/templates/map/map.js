@@ -121,31 +121,12 @@ Template.map.rendered = function () {
         className: 'foto-icon-september'
     });
 
-
-    //    var createheatmap = function (heatmapLayer) {
-    //        var heat = L.heatLayer(heatmapLayer, {
-    //            radius: 18,
-    //            blur: 20,
-    //            max: 1.5,
-    //            gradient: {
-    //                0: '#FFB700',
-    //                0.5: '#FFB700',
-    //                0.75: '#21B532',
-    //                0.80: '#941E64',
-    ////                0.50: '#C45D9A',
-    ////                0.60: '#B13B80',
-    //                1: '#941E64'
-    //            }
-    //        }).addTo(map);
-    //    }
-
-    //    disable dragging
-    //    map.dragging.disable();
-    //    map.touchZoom.disable();
+    map.dragging.enable();
+    map.touchZoom.enable();
     map.doubleClickZoom.disable();
-    //    map.scrollWheelZoom.disable();
-    //    map.boxZoom.disable();
-    //    map.keyboard.disable();
+    map.scrollWheelZoom.enable();
+    map.boxZoom.enable();
+    map.keyboard.enable();
 
     //        set foto's july on map
     //    var setFotoLocationJuly = function (fotosDataJuly) {
@@ -258,6 +239,13 @@ Template.map.rendered = function () {
 
         setDistrictData(layerID)
 
+        map.dragging.disable();
+        map.touchZoom.disable();
+        map.doubleClickZoom.disable();
+        map.scrollWheelZoom.disable();
+        map.boxZoom.disable();
+        map.keyboard.disable();
+
         //If there are elements with the "overlay" class, then classes will be added to paths. Otherwise not.
         if (overlayList.length === 0) {
             //gives classes to paths, with which they can be styled
@@ -311,6 +299,13 @@ Template.map.rendered = function () {
             [52.35746570026433, 4.863853454589844],
             [52.391734853683936, 4.944705963134766]
         ]);
+
+        map.dragging.enable();
+        map.touchZoom.enable();
+        map.doubleClickZoom.disable();
+        map.scrollWheelZoom.enable();
+        map.boxZoom.enable();
+        map.keyboard.enable();
 
         var i = 0;
         for (i; i < layerIDs.length; i++) {
@@ -407,17 +402,6 @@ Template.map.rendered = function () {
             });
         }
     });
-    //crowdedness
-    //    crowdedness.addEventListener('mouseover', function () {
-    //        TweenMax.to(crowdedness, 0.2, {
-    //            opacity: 0.60
-    //        });
-    //    });
-    //    crowdedness.addEventListener('mouseout', function () {
-    //        TweenMax.to(crowdedness, 0.2, {
-    //            opacity: 1
-    //        });
-    //    });
     crowdedness.addEventListener('click', function () {
         crowdedness.classList.toggle('disabled');
         var fotoAugust = selectors('.foto-icon-august'),
@@ -520,7 +504,6 @@ Template.map.rendered = function () {
                 });
             }
         } else {
-            console.log(currentImageCount)
             TweenMax.to(previousMonth, 0.2, {
                 opacity: 0.3
             });
@@ -588,7 +571,6 @@ Template.map.rendered = function () {
                     //set foto's september on map
                     var AmountfotosSeptember = fotosDataSeptember.length,
                         sf = 0;
-                    console.log(AmountfotosSeptember)
                     for (sf; sf < AmountfotosSeptember; sf++) {
                         var longitude = fotosDataSeptember[sf].log;
                         var latitude = fotosDataSeptember[sf].lat;
@@ -670,7 +652,6 @@ Template.map.rendered = function () {
             districtsP.innerHTML = "Toon wijken"
             var i = 0;
             for (i; i < layerIDs.length; i++) {
-                console.log(layerIDs[i])
                 if (layerIDs[i] !== "left-gone" && layerIDs[i] !== "right-gone") {
                     document.getElementById(layerIDs[i]).removeAttribute('class');
                 }
