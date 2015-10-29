@@ -36,8 +36,10 @@ Template.map.rendered = function () {
         navigationBar = selector('.navigationbar'),
         gradeMark = selector('.grade-mark'),
         amountTrashesMark = selector('.amount-trashes-mark'),
-        amountPhotosMark = selector('.amount-photos-mark'),
-        showMore = selector('.showmore');
+        cleaningintensity = selector('.cleaningintensity-label'),
+        showMore = selector('.showmore'),
+        previousDistrict = selector('.previousdistrict'),
+        nextDistrict = selector('.nextdistrict');
 
     //subscribe to trashesCollection
     Meteor.subscribe('trashesCollection', function () {
@@ -227,19 +229,18 @@ Template.map.rendered = function () {
             navigationBar.classList.remove("none");
             statistic.classList.remove("none");
 
-            var getBoutdsOfDistrict = e.target.getBounds();
-            var DistrictNorthEastlng = getBoutdsOfDistrict._northEast.lng + 0.008;
-            var DistrictNorthEastlat = getBoutdsOfDistrict._northEast.lat;
-            var DistrictSouthWestlng = getBoutdsOfDistrict._southWest.lng + 0.008;
-            var DistrictSouthWestlat = getBoutdsOfDistrict._southWest.lat;
-
-            var southWest = L.latLng(DistrictSouthWestlat, DistrictSouthWestlng),
+            console.log(e.target)
+            var getBoutdsOfDistrict = e.target.getBounds(),
+                DistrictNorthEastlng = getBoutdsOfDistrict._northEast.lng + 0.008,
+                DistrictNorthEastlat = getBoutdsOfDistrict._northEast.lat,
+                DistrictSouthWestlng = getBoutdsOfDistrict._southWest.lng + 0.008,
+                DistrictSouthWestlat = getBoutdsOfDistrict._southWest.lat,
+                southWest = L.latLng(DistrictSouthWestlat, DistrictSouthWestlng),
                 northEast = L.latLng(DistrictNorthEastlat, DistrictNorthEastlng),
                 bounds = L.latLngBounds(southWest, northEast);
+
             map.fitBounds(bounds);
-
             districtname.innerHTML = layerName;
-
             setDistrictData(layerID)
 
             map.dragging.disable();
@@ -268,32 +269,61 @@ Template.map.rendered = function () {
 
 
     var setDistrictData = function (layerID) {
-        if (districtsData !== null) {
-            var districtData = districtsData[layerID];
+        if (districtsData !== null && districtsData !== undefined) {
+            var indexLayer = layerIDs.indexOf(layerID),
+                districtData = districtsData[layerID],
+                previousNumber = indexLayer - 1,
+                nextNumber = indexLayer + 1,
+                previousID, nextID;
+            //funtion to give id to naviation buttons
             gradeMark.innerHTML = districtData.mark;
             amountTrashesMark.innerHTML = districtData.trashes;
-            amountPhotosMark.innerHTML = districtData.photos;
+            cleaningintensity.innerHTML = districtData.cleaningintensity;
+            if (indexLayer === 0) {
+                previousID = layerIDs[layerIDs.length - 3];
+                nextID = layerIDs[nextNumber];
+            }
+            if (indexLayer === layerIDs.length - 3) {
+                previousID = layerIDs[previousNumber];
+                nextID = layerIDs[0];
+            }
+            if (indexLayer !== 0 && indexLayer !== layerIDs.length - 3) {
+                previousID = layerIDs[previousNumber];
+                nextID = layerIDs[nextNumber];
+            }
+            nextDistrict.setAttribute('id', nextID + "2");
+            previousDistrict.setAttribute('id', previousID + "2");
         }
-    }
-//    showMore.addEventListener('click', function (e) {
-//        SvgMapPart.classList.add("none");
-//        closeButton.classList.remove("none");
-//        districts.classList.add("none");
-//        statistic.classList.remove("none");
-//
-//        var cList = showMore.classList,
-//            SvgMapPart = selector('.mappopup'),
-//            j = 0,
-//            k = 0;
-//
-//        for (j; j < layerIDs.length; j++) {
-//            if (layerIDs[j] !== cList[2]) {
-//                document.getElementById(layerIDs[j]).setAttribute('class', 'overlay');
-//            } else {
-//                document.getElementById(layerIDs[j]).setAttribute('class', 'transparent');
-//            };
-//        }
-//    });
+    };
+    previousDistrict.addEventListener('click', function (e) {
+        pDID = previousDistrict.getAttribute('id');
+        var previousDistrictID = pDID.replace('2', '');
+        var j = 0;
+        for (j; j < layerIDs.length; j++) {
+            if (layerIDs[j] !== previousDistrictID) {
+                document.getElementById(layerIDs[j]).setAttribute('class', 'overlay');
+                setDistrictData(previousDistrictID)
+            } else {
+                document.getElementById(layerIDs[j]).setAttribute('class', 'transparent');
+                setDistrictData(previousDistrictID)
+            };
+        }
+    });
+    nextDistrict.addEventListener('click', function (e) {
+        nDID = nextDistrict.getAttribute('id');
+        var nextDistrictID = nDID.replace('2', '');
+        var j = 0;
+        for (j; j < layerIDs.length; j++) {
+            if (layerIDs[j] !== nextDistrictID) {
+                document.getElementById(layerIDs[j]).setAttribute('class', 'overlay');
+                setDistrictData(nextDistrictID)
+            } else {
+                document.getElementById(layerIDs[j]).setAttribute('class', 'transparent');
+                setDistrictData(nextDistrictID)
+            };
+        }
+    });
+
 
     closeButton.addEventListener('click', function () {
         zoomState = false;
@@ -328,7 +358,7 @@ Template.map.rendered = function () {
         });
     };
 
-    //Create the map of Amsterdam Centrum and add render it.
+    //Create the map of Amsterdam Centrum and render it.
     var myStyle = {
         "fillColor": "#fff",
         "fillOpacity": 0.0,
@@ -428,40 +458,14 @@ Template.map.rendered = function () {
     });
 
     //trashes
-    //    trashes.addEventListener('mouseover', function () {
-    //        TweenMax.to(trashes, 0.2, {
-    //            opacity: 0.60
-    //        });
-    //    });
-    //    trashes.addEventListener('mouseout', function () {
-    //        TweenMax.to(trashes, 0.2, {
-    //            opacity: 1
-    //        });
-    //    });
     var trashesfilter = false;
     trashes.addEventListener('click', function () {
         var trashIcons = selectors('.trashicon'),
             t = 0;
-        trashes.classList.toggle('disabled');
         for (t; t < trashIcons.length; t++) {
             trashIcons[t].classList.toggle("none");
         }
     });
-
-    //cleaningIntensity
-    //    cleaningIntensity.addEventListener('mouseover', function () {
-    //        TweenMax.to(cleaningIntensity, 0.2, {
-    //            opacity: 0.60
-    //        });
-    //    });
-    //    cleaningIntensity.addEventListener('mouseout', function () {
-    //        TweenMax.to(cleaningIntensity, 0.2, {
-    //            opacity: 1
-    //        });
-    //    });
-    //    cleaningIntensity.addEventListener('click', function () {
-    //        cleaningIntensity.classList.toggle('disabled')
-    //    });
 
     // month controllers
     TweenMax.to(previousMonth, 0.2, {
@@ -672,4 +676,8 @@ Template.map.rendered = function () {
             };
         }
     });
+
+
+
+
 };
