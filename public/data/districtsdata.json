@@ -3,21 +3,21 @@
         "name": "Westelijke eilanden",
         "mark": 6.3,
         "trashes": 34,
-        "cleaningintensity":"Hoog",
+        "cleaningintensity":"Laag",
         "photos": 234
     },
     "jd": {
         "name": "Jordaan",
         "mark": 234,
         "trashes": 34,
-        "cleaningintensity":"Hoog",
+        "cleaningintensity":"Gemiddeld",
         "photos": 3423
     },
     "gw": {
         "name": "Grachtengordel-West",
         "mark": 23,
         "trashes": 234,
-        "cleaningintensity":"Hoog",
+        "cleaningintensity":"Gemiddeld",
         "photos": 32
     },
     "bnz": {
@@ -31,35 +31,35 @@
         "name": "Grachtengordel-Zuid",
         "mark": 234,
         "trashes": 234,
-        "cleaningintensity":"Hoog",
+        "cleaningintensity":"Gemiddeld",
         "photos": 234
     },
     "dws": {
         "name": "De Weteringschans",
         "mark": 234,
         "trashes": 43,
-        "cleaningintensity":"Hoog",
+        "cleaningintensity":"Laag",
         "photos": 23
     },
     "wp": {
         "name": "Weesperbuurt en Plantage",
         "mark": 43,
         "trashes": 34,
-        "cleaningintensity":"Hoog",
+        "cleaningintensity":"Laag",
         "photos": 23
     },
     "oek": {
         "name": "Oostelijke Eilanden en Kadijken",
         "mark": 234,
         "trashes": 432,
-        "cleaningintensity":"Hoog",
+        "cleaningintensity":"Laag",
         "photos": 432
     },
     "nl": {
         "name": "Nieuwmarkt en Lastage",
         "mark": 432,
         "trashes": 43,
-        "cleaningintensity":"Hoog",
+        "cleaningintensity":"Gemiddeld",
         "photos": 23
     },
     "boz": {

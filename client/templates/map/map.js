@@ -368,18 +368,11 @@ Template.map.rendered = function () {
     var geoDatafunction = function (geoData) {
         cleaningIntensity = L.geoJson(geoData, {
             style: function (feature) {
-                if (feature.properties.name !== "rightgone" && feature.properties.name !== "leftgone") {
                     return {
-                        "fillColor": "#000",
-                        "fillOpacity": 0.5
+                        "fillColor": feature.properties.fill,
+                        "fillOpacity": 0.6,
+                        "weight": 0
                     };
-                } else {
-                    return {
-                        "fillColor": "#fff",
-                        "fillOpacity": 0.0,
-                        "color": "RGBA(255, 255, 255, 0)"
-                    };
-                }
             }
         }).addTo(map) 
 
