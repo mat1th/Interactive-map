@@ -1,7 +1,3 @@
-Meteor.startup(function () {
-
-});
-
 //create Collections
 var trashesCollection = new Meteor.Collection('trashesCollection');
 var fotoLocationsCollection = new Meteor.Collection('fotoLocationsCollection');
@@ -10,13 +6,15 @@ var fotoLocationsAugustCollection = new Meteor.Collection('fotoLocationsAugustCo
 
 //if template "map" is renderd
 Template.map.rendered = function () {
+
+    //create funtion for easy selection of id's and classes
     var selector = function (selector) {
             return document.querySelector(selector);
         },
         selectors = function (selector) {
             return document.querySelectorAll(selector);
         };
-
+    //set all locat vars
     var toggleFilterImg = selector('.togglefilterimg'),
         toggleFilter = selector('.togglefilter'),
         filter = selector('.filter'),
@@ -60,7 +58,7 @@ Template.map.rendered = function () {
             });
         });
     });
-
+    //create var with all layer ids
     var layerIDs = [];       
     HTTP.get(Meteor.absoluteUrl("data/map.json"), function (err, result) {                
         geoData = result.data;
@@ -71,11 +69,6 @@ Template.map.rendered = function () {
         };            
         geoDatafunction(geoData);
     });   
-
-    //    HTTP.get(Meteor.absoluteUrl("data/schoonmaakintensiteit.json"), function (err, result) {                
-    //        heatmapLayer = result.data;                
-    //        createheatmap(heatmapLayer);        
-    //    });    
 
     var districtsData = null;
     HTTP.get(Meteor.absoluteUrl("data/districtsdata.json"), function (err, result) {                
@@ -94,7 +87,7 @@ Template.map.rendered = function () {
                     [52.424825961602764, 4.967708587646484]]
     });
 
-    //add bounds to map
+    //begin state of map
     map.fitBounds([
     [52.35746570026433, 4.863853454589844],
      [52.391734853683936, 4.944705963134766]
@@ -122,13 +115,8 @@ Template.map.rendered = function () {
     var fotoIconSeptember = L.divIcon({
         className: 'foto-icon-september'
     });
-
-    map.dragging.enable();
-    map.touchZoom.enable();
+    //diable double Click Zoomiing
     map.doubleClickZoom.disable();
-    map.scrollWheelZoom.enable();
-    map.boxZoom.enable();
-    map.keyboard.enable();
 
     //        set foto's july on map
     //    var setFotoLocationJuly = function (fotosDataJuly) {
@@ -142,7 +130,8 @@ Template.map.rendered = function () {
     //            }).addTo(map);
     //        }
     //    };
-    //set trashes on map
+
+    //set trashes on map in layer
     var setTrashes = function (trashesData) {
         var markers = new L.FeatureGroup(),
             trashnumber = 0;
@@ -168,7 +157,7 @@ Template.map.rendered = function () {
         map.addLayer(markers);
         trashes();
     };
-
+    //create var geoJson
     var geojson;
 
     //What happens on mouseover
@@ -178,10 +167,9 @@ Template.map.rendered = function () {
             layerID = layer.feature.properties.id,
             SvgMapPart = selector('.mappopup'),
             popup = selector('.popup'),
-            overlayList = document.querySelectorAll(".overlay");
-
-        var xPosition = event.clientX;
-        var yPosition = event.clientY;
+            overlayList = document.querySelectorAll(".overlay"),
+            xPosition = event.clientX,
+            yPosition = event.clientY;
 
         //If there are elements with the "overlay" class, then hover will work and shows popup. Otherwise not.
         if (overlayList.length === 0) {
@@ -193,7 +181,6 @@ Template.map.rendered = function () {
                 SvgMapPart.style.left = xPosition + -20 + 'px';
                 SvgMapPart.style.top = yPosition + -90 + 'px';
                 layer.setStyle({
-                    //                weight: 5,
                     fillColor: '#D83E41',
                     dashArray: '',
                     fillOpacity: 1
@@ -212,61 +199,67 @@ Template.map.rendered = function () {
     function resetHighlight(e) {
         geojson.resetStyle(e.target);
     };
+    //create zoomstate
     var zoomState = false;
 
     function clickFeature(e) {
+        //check of the map isn't in the zoom state
         if (zoomState === false) {
             zoomState = true;
-            var layertje = e.target,
-                layerName = layertje.feature.properties.name,
-                layerID = layertje.feature.properties.id,
+            var clickedLayer = e.target,
+                layerName = clickedLayer.feature.properties.name,
+                layerID = clickedLayer.feature.properties.id,
                 SvgMapPart = selector('.mappopup'),
                 overlayList = document.querySelectorAll(".overlay");
 
-            SvgMapPart.classList.add("none");
-            closeButton.classList.remove("none");
-            districts.classList.add("none");
-            navigationBar.classList.remove("none");
-            statistic.classList.remove("none");
+            if (layerName !== "rightgone" && layerName !== "leftgone") {
 
-            console.log(e.target)
-            var getBoutdsOfDistrict = e.target.getBounds(),
-                DistrictNorthEastlng = getBoutdsOfDistrict._northEast.lng + 0.008,
-                DistrictNorthEastlat = getBoutdsOfDistrict._northEast.lat,
-                DistrictSouthWestlng = getBoutdsOfDistrict._southWest.lng + 0.008,
-                DistrictSouthWestlat = getBoutdsOfDistrict._southWest.lat,
-                southWest = L.latLng(DistrictSouthWestlat, DistrictSouthWestlng),
-                northEast = L.latLng(DistrictNorthEastlat, DistrictNorthEastlng),
-                bounds = L.latLngBounds(southWest, northEast);
+                //display and hide elements
+                SvgMapPart.classList.add("none");
+                closeButton.classList.remove("none");
+                districts.classList.add("none");
+                navigationBar.classList.remove("none");
+                statistic.classList.remove("none");
 
-            map.fitBounds(bounds);
-            districtname.innerHTML = layerName;
-            setDistrictData(layerID)
+                //zoom in to district
+                var getBoutdsOfDistrict = e.target.getBounds(),
+                    DistrictNorthEastlng = getBoutdsOfDistrict._northEast.lng + 0.008,
+                    DistrictNorthEastlat = getBoutdsOfDistrict._northEast.lat,
+                    DistrictSouthWestlng = getBoutdsOfDistrict._southWest.lng + 0.008,
+                    DistrictSouthWestlat = getBoutdsOfDistrict._southWest.lat,
+                    southWest = L.latLng(DistrictSouthWestlat, DistrictSouthWestlng),
+                    northEast = L.latLng(DistrictNorthEastlat, DistrictNorthEastlng),
+                    bounds = L.latLngBounds(southWest, northEast);
+                //zoom in on map
+                map.fitBounds(bounds);
+                districtname.innerHTML = layerName;
+                setDistrictData(layerID)
 
-            map.dragging.disable();
-            map.touchZoom.disable();
-            map.doubleClickZoom.disable();
-            map.scrollWheelZoom.disable();
-            map.boxZoom.disable();
-            map.keyboard.disable();
+                //disable dragging
+                map.dragging.disable();
+                map.touchZoom.disable();
+                map.doubleClickZoom.disable();
+                map.scrollWheelZoom.disable();
+                map.boxZoom.disable();
+                map.keyboard.disable();
 
-            //If there are elements with the "overlay" class, then classes will be added to paths. Otherwise not.
-            if (overlayList.length === 0) {
-                //gives classes to paths, with which they can be styled
-                if (layerName !== "rightgone" && layerName !== "leftgone") {
-                    var j = 0;
-                    for (j; j < layerIDs.length; j++) {
-                        if (layerIDs[j] !== layerID) {
-                            document.getElementById(layerIDs[j]).setAttribute('class', 'overlay');
-                        } else {
-                            document.getElementById(layerIDs[j]).setAttribute('class', 'transparent');
+                //If there are elements with the "overlay" class, then classes will be added to paths. Otherwise not.
+                if (overlayList.length === 0) {
+                    //gives classes to paths, with which they can be styled
+                    if (layerName !== "rightgone" && layerName !== "leftgone") {
+                        var j = 0;
+                        for (j; j < layerIDs.length; j++) {
+                            if (layerIDs[j] !== layerID) {
+                                document.getElementById(layerIDs[j]).setAttribute('class', 'overlay');
+                            } else {
+                                document.getElementById(layerIDs[j]).setAttribute('class', 'transparent');
+                            };
                         };
                     };
                 };
-            };
+            }
         };
     };
-
 
     var setDistrictData = function (layerID) {
         if (districtsData !== null && districtsData !== undefined) {
@@ -275,10 +268,11 @@ Template.map.rendered = function () {
                 previousNumber = indexLayer - 1,
                 nextNumber = indexLayer + 1,
                 previousID, nextID;
-            //funtion to give id to naviation buttons
+
             gradeMark.innerHTML = districtData.mark;
             amountTrashesMark.innerHTML = districtData.trashes;
             cleaningintensity.innerHTML = districtData.cleaningintensity;
+            //funtion to give id to naviation buttons
             if (indexLayer === 0) {
                 previousID = layerIDs[layerIDs.length - 3];
                 nextID = layerIDs[nextNumber];
@@ -295,6 +289,7 @@ Template.map.rendered = function () {
             previousDistrict.setAttribute('id', previousID + "2");
         }
     };
+    //add funtionality to previousDistrict button, so you can go to the previous district
     previousDistrict.addEventListener('click', function (e) {
         pDID = previousDistrict.getAttribute('id');
         var previousDistrictID = pDID.replace('2', '');
@@ -309,6 +304,7 @@ Template.map.rendered = function () {
             };
         }
     });
+    //add funtionality to nextDistrict button, so you can go to the next district
     nextDistrict.addEventListener('click', function (e) {
         nDID = nextDistrict.getAttribute('id');
         var nextDistrictID = nDID.replace('2', '');
@@ -324,18 +320,19 @@ Template.map.rendered = function () {
         }
     });
 
-
+    //close the zommed in state
     closeButton.addEventListener('click', function () {
         zoomState = false;
         districts.classList.remove("none");
         closeButton.classList.add("none");
         statistic.classList.add("none");
         navigationBar.classList.add("none");
+        //zoom out
         map.fitBounds([
             [52.35746570026433, 4.863853454589844],
             [52.391734853683936, 4.944705963134766]
         ]);
-
+        //enable dragging
         map.dragging.enable();
         map.touchZoom.enable();
         map.doubleClickZoom.disable();
@@ -349,7 +346,7 @@ Template.map.rendered = function () {
             document.getElementById(layerIDs[i]).removeAttribute('class', 'transparent');
         };
     });
-
+    //add click and mouse functions to layers
     function onEachFeature(feature, layer) {
         layer.on({
             mouseover: highlightFeature,
@@ -368,11 +365,11 @@ Template.map.rendered = function () {
     var geoDatafunction = function (geoData) {
         cleaningIntensity = L.geoJson(geoData, {
             style: function (feature) {
-                    return {
-                        "fillColor": feature.properties.fill,
-                        "fillOpacity": 0.6,
-                        "weight": 0
-                    };
+                return {
+                    "fillColor": feature.properties.fill,
+                    "fillOpacity": 0.6,
+                    "weight": 0
+                };
             }
         }).addTo(map) 
 
@@ -471,6 +468,7 @@ Template.map.rendered = function () {
     var width2 = [0, 0, -90, -185];
     var currentImageCount = 1;
 
+    //move month text to next
     var moveToNext = function () {
         if (currentImageCount !== 3) {
             currentImageCount++;
@@ -491,7 +489,7 @@ Template.map.rendered = function () {
             });
         }
     };
-
+    //move month text to previous
     var moveToPrevious = function () {
         if (currentImageCount !== 1) {
             currentImageCount--;
@@ -512,6 +510,7 @@ Template.map.rendered = function () {
             });
         }
     };
+    //add events to buttons
     nextMonth.addEventListener('mouseover', function () {
         if (currentImageCount !== 3) {
             TweenMax.to(nextMonth, 0.2, {
@@ -542,6 +541,7 @@ Template.map.rendered = function () {
         }
     });
 
+    //toggle through months
     function toggleMonths(fotosDataJuly, fotosDataAugust, fotosDataSeptember) {
         nextMonth.addEventListener('click', function () {
             var juliIcons = selectors('.foto-icon-july');
@@ -669,8 +669,4 @@ Template.map.rendered = function () {
             };
         }
     });
-
-
-
-
 };
