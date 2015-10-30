@@ -48,7 +48,6 @@ Template.map.rendered = function () {
         gradeMark = selector('.grade-mark'),
         amountTrashesMark = selector('.amount-trashes-mark'),
         cleaningintensity = selector('.cleaningintensity-label'),
-        showMore = selector('.showmore'),
         previousDistrict = selector('.previousdistrict'),
         nextDistrict = selector('.nextdistrict'),
         layers = [],
@@ -263,7 +262,6 @@ Template.map.rendered = function () {
         if (overlayList.length === 0) {
             SvgMapPart.classList.remove("none");
             if (layerName !== "rightgone" && layerName !== "leftgone") {
-                showMore.setAttribute('class', 'showmore noselect ' + layerID)
                 popup.innerHTML = layerName;
                 SvgMapPart.style.position = "absolute";
                 SvgMapPart.style.left = xPosition + -20 + 'px';
@@ -316,7 +314,7 @@ Template.map.rendered = function () {
                         cleaningIntensityDiv.classList.add("none");
                     }
                 });
-                TweenLite.to(monthSelect, 1.2, {
+                TweenMax.to(monthSelect, 1.2, {
                     ease: Back.easeIn.config(1),
                     right: 150
                 });
@@ -473,9 +471,12 @@ Template.map.rendered = function () {
 
     //close the zoomed in state
     closeButton.addEventListener('click', function () {
+        closeZoomState()
+    });
+
+    var closeZoomState = function () {
         hideCleaningsIntensityLayer()
         zoomState = false;
-
         TweenMax.to(monthSelect, 1.2, {
             ease: Back.easeIn.config(1),
             right: 0
@@ -530,7 +531,7 @@ Template.map.rendered = function () {
             document.getElementById(layerIDs[i]).removeAttribute('class', 'overlay');
             document.getElementById(layerIDs[i]).removeAttribute('class', 'transparent');
         };
-    });
+    };
 
     /*
     _____________________________________________________________
@@ -542,6 +543,15 @@ Template.map.rendered = function () {
 
     //add funtionality to previousDistrict button, so you can go to the previous district
     previousDistrict.addEventListener('click', function (e) {
+        GoToPreviousDistrict()
+    });
+
+    //add funtionality to nextDistrict button, so you can go to the next district
+    nextDistrict.addEventListener('click', function (e) {
+        GoToNextDistrict()
+    });
+
+    var GoToPreviousDistrict = function () {
         pDID = previousDistrict.getAttribute('id');
         var previousDistrictID = pDID.replace('2', '');
         var j = 0;
@@ -555,10 +565,8 @@ Template.map.rendered = function () {
             };
         }
         getBoundsOfDistrict(previousDistrictID)
-    });
-
-    //add funtionality to nextDistrict button, so you can go to the next district
-    nextDistrict.addEventListener('click', function (e) {
+    }
+    var GoToNextDistrict = function () {
         nDID = nextDistrict.getAttribute('id');
         var nextDistrictID = nDID.replace('2', '');
         var j = 0;
@@ -572,7 +580,9 @@ Template.map.rendered = function () {
             };
         }
         getBoundsOfDistrict(nextDistrictID);
-    });
+
+    }
+
 
     /*
     _____________________________________________________________
@@ -592,36 +602,43 @@ Template.map.rendered = function () {
     toggleFilter.addEventListener('click', function () {
         if (filterClosed === false) {
             TweenMax.to(filter, 2, {
+                ease: Power2.easeInOut,
                 x: -293
             });
             TweenMax.to(toggleFilterImg, 2, {
+                ease: Power2.easeInOut,
                 rotation: -45
             });
 
             if (statisticsClosed === true) {
                 TweenMax.to(myMap, 2, {
+                    ease: Power2.easeInOut,
                     left: -100
                 });
             } else {
                 TweenMax.to(myMap, 2, {
+                    ease: Power2.easeInOut,
                     left: -250
                 });
             }
             filterClosed = true;
         } else {
             TweenMax.to(filter, 2, {
+                ease: Power2.easeInOut,
                 x: 0
             });
             TweenMax.to(toggleFilterImg, 2, {
+                ease: Power2.easeInOut,
                 rotation: 0
             });
-
             if (statisticsClosed === true) {
                 TweenMax.to(myMap, 2, {
+                    ease: Power2.easeInOut,
                     left: 100
                 });
             } else {
                 TweenMax.to(myMap, 2, {
+                    ease: Power2.easeInOut,
                     left: 1
                 });
             }
@@ -632,37 +649,46 @@ Template.map.rendered = function () {
     toggleStatistics.addEventListener('click', function () {
         if (statisticsClosed === false) {
             TweenMax.to(statistic, 2, {
+                ease: Power2.easeInOut,
                 x: 650
             });
             TweenMax.to(toggleStatisticsImg, 2, {
+                ease: Power2.easeInOut,
                 rotation: 45
             });
             if (filterClosed === true) {
                 TweenMax.to(myMap, 2, {
+                    ease: Power2.easeInOut,
                     left: -150
                 });
             } else {
                 TweenMax.to(myMap, 2, {
+                    ease: Power2.easeInOut,
                     left: 100
                 });
             }
             TweenMax.to(statistic, 2, {
+                ease: Power2.easeInOut,
                 right: "300px"
             });
             statisticsClosed = true;
         } else {
             TweenMax.to(statistic, 2, {
+                ease: Power2.easeInOut,
                 x: 293
             });
             TweenMax.to(toggleStatisticsImg, 2, {
+                ease: Power2.easeInOut,
                 rotation: 0
             });
             if (filterClosed === true) {
                 TweenMax.to(myMap, 2, {
+                    ease: Power2.easeInOut,
                     left: -250
                 });
             } else {
                 TweenMax.to(myMap, 2, {
+                    ease: Power2.easeInOut,
                     left: 0
                 });
             }
@@ -674,10 +700,7 @@ Template.map.rendered = function () {
     /*
     _____________________________________________________________
     |***********************************************************|
-    |***********************************************************|
     |*********************Filter functions**********************|
-    |***********************************************************|
-    |***********************************************************|
     |***********************************************************|
     -------------------------------------------------------------
     */
@@ -721,10 +744,7 @@ Template.map.rendered = function () {
     /*
     _____________________________________________________________
     |***********************************************************|
-    |***********************************************************|
     |******************Toggle trought months********************|
-    |***********************************************************|
-    |***********************************************************|
     |***********************************************************|
     -------------------------------------------------------------
     */
@@ -894,5 +914,33 @@ Template.map.rendered = function () {
             }, 800);
             moveToPrevious()
         });
+    }
+
+
+    /*
+    _____________________________________________________________
+    |***********************************************************|
+    |************************shortcuts**************************|
+    |***********************************************************|
+    -------------------------------------------------------------
+    */
+
+    window.addEventListener("keydown", keysPressed, false);
+
+    function keysPressed(e) {
+        if (zoomState === true) {
+            //arrow key ->
+            if (e.keyCode === 39) {
+                GoToNextDistrict()
+            }
+            //arrow key <-
+            if (e.keyCode === 37) {
+                GoToPreviousDistrict()
+            }
+            // esc key
+            if (e.keyCode === 27) {
+                closeZoomState()
+            }
+        }
     }
 };

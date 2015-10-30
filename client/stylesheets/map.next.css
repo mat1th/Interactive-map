@@ -3,9 +3,7 @@ html, body {
 }
 
 .map {
-/*    margin-left: 80px;*/
     height: calc(100vh - 70px);
-/*    width: calc(100vw - 243px);*/
     width: 120%;
 }
 
@@ -43,7 +41,6 @@ html, body {
 }
 
 /*popup*/
-
 .showmore {
     display: none !important;
     position: relative;
