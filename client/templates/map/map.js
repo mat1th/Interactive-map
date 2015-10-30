@@ -33,7 +33,9 @@ Template.map.rendered = function () {
         trashes = selector('.trashes'),
         trashesInput = selector('#trashes'),
         cleaningIntensity = selector('.cleaning-intensity'),
+        cleaningIntensityDiv = selector('.cleaning-intensity-div'),
         cleaningIntensityInput = selector('#cleaning-intensity'),
+        cleaningBorder = selector('.cleaningBorder'),
         nextMonth = selector('.nextmonth'),
         monthSelect = selector('.monthselect'),
         previousMonth = selector('.previousmonth'),
@@ -147,7 +149,6 @@ Template.map.rendered = function () {
     var fotoIconSeptember = L.divIcon({
         className: 'foto-icon-september'
     });
-
 
     /*
     _____________________________________________________________
@@ -307,15 +308,23 @@ Template.map.rendered = function () {
                 navigationBar.classList.remove("none");
                 statistic.classList.remove("none");
 
-                TweenLite.to(monthSelect, 1.5, {
+                TweenMax.to([cleaningIntensityDiv, cleaningBorder], 1, {
+                    ease: Power1.easeOut,
+                    opacity: 0,
+                    y: -20,
+                    onComplete: function (response) {
+                        cleaningIntensityDiv.classList.add("none");
+                    }
+                });
+                TweenLite.to(monthSelect, 1.2, {
                     ease: Back.easeIn.config(1),
                     right: 150
                 });
-                TweenMax.to(closeButton, 1.5, {
+                TweenMax.to(closeButton, 1.2, {
                     ease: Back.easeIn.config(1),
                     right: 0
                 });
-                TweenMax.to(navigationBar, 1.5, {
+                TweenMax.to(navigationBar, 1.2, {
                     ease: Back.easeOut.config(1),
                     bottom: -20
                 });
@@ -337,6 +346,7 @@ Template.map.rendered = function () {
                 } else {
                     DistrictSouthWestlat = getBoutdsOfDistrict._southWest.lat - 0.002;
                 }
+
 
                 var southWest = L.latLng(DistrictSouthWestlat, DistrictSouthWestlng),
                     northEast = L.latLng(DistrictNorthEastlat, DistrictNorthEastlng),
@@ -392,8 +402,8 @@ Template.map.rendered = function () {
                 nextNumber = indexLayer + 1,
                 previousID, nextID;
 
-            gradeMark.innerHTML = districtData.mark;
-            amountTrashesMark.innerHTML = JSON.stringify(Math.round(districtData.trashes / districtData.sqmeters * 1000 * 100) / 100) + " per km²"
+            gradeMark.innerHTML = JSON.stringify(districtData.mark).replace('.', ',');
+            amountTrashesMark.innerHTML = JSON.stringify(Math.round(districtData.trashes / districtData.sqmeters * 1000 * 100) / 100).replace('.', ',') + " per km²"
             cleaningintensity.innerHTML = districtData.cleaningintensity;
             districtname.innerHTML = districtData.name;
             //funtion to give id to naviation buttons
@@ -442,7 +452,7 @@ Template.map.rendered = function () {
     /*
     _____________________________________________________________
     |***********************************************************|
-    |*********Close zoomed state and go to overvieuw************|
+    |*********Close zoomed state and go to overview*************|
     |***********************************************************|
     -------------------------------------------------------------
     */
@@ -450,11 +460,13 @@ Template.map.rendered = function () {
     //hover actions close button
     closeButton.addEventListener('mouseover', function () {
         TweenMax.to(closeButton, 0.2, {
+            ease: Back.easeIn.config(1),
             opacity: 0.60
         });
     });
     closeButton.addEventListener('mouseout', function () {
         TweenMax.to(closeButton, 0.2, {
+            ease: Back.easeIn.config(1),
             opacity: 1
         });
     });
@@ -464,18 +476,18 @@ Template.map.rendered = function () {
         hideCleaningsIntensityLayer()
         zoomState = false;
 
-        TweenLite.to(monthSelect, 1.5, {
+        TweenMax.to(monthSelect, 1.2, {
             ease: Back.easeIn.config(1),
             right: 0
         });
-        TweenMax.to(closeButton, 1.5, {
+        TweenMax.to(closeButton, 1.2, {
             ease: Back.easeIn.config(1),
             right: -150,
             onComplete: function (response) {
                 closeButton.classList.add("none");
             }
         });
-        TweenMax.to(navigationBar, 1.5, {
+        TweenMax.to(navigationBar, 1.2, {
             ease: Back.easeIn.config(1),
             bottom: -100,
             onComplete: function (response) {
@@ -489,6 +501,13 @@ Template.map.rendered = function () {
         //                statistic.classList.add("none");
         //            },
         //        });
+        cleaningIntensityDiv.classList.remove("none");
+
+        TweenMax.to([cleaningIntensityDiv, cleaningBorder], 1.5, {
+            ease: Power1.easeOut,
+            opacity: 1,
+            y: 0
+        });
 
         statistic.classList.add("none");
 
@@ -627,7 +646,6 @@ Template.map.rendered = function () {
                     left: 100
                 });
             }
-
             TweenMax.to(statistic, 2, {
                 right: "300px"
             });
@@ -657,7 +675,7 @@ Template.map.rendered = function () {
     _____________________________________________________________
     |***********************************************************|
     |***********************************************************|
-    |*********************Filter funtions***********************|
+    |*********************Filter functions**********************|
     |***********************************************************|
     |***********************************************************|
     |***********************************************************|
@@ -838,7 +856,7 @@ Template.map.rendered = function () {
             var juliIcons = selectors('.foto-icon-july');
             var augustIcons = selectors('.foto-icon-august');
             var sepemberIcons = selectors('.foto-icon-september');
-            //            fotosDataJuly
+
             setTimeout(function () {
                 crowdedness.classList.remove('disabled');
                 if (currentImageCount === 1) {
