@@ -14,7 +14,14 @@ Template.map.rendered = function () {
         selectors = function (selector) {
             return document.querySelectorAll(selector);
         };
-    //set all locat vars
+
+    /*
+    _____________________________________________________________
+    |***********************************************************|
+    |************************Local vars*************************|
+    |***********************************************************|
+    -------------------------------------------------------------
+    */
     var toggleFilterImg = selector('.togglefilterimg'),
         toggleFilter = selector('.togglefilter'),
         toggleStatistics = selector('.togglestatistics'),
@@ -32,8 +39,6 @@ Template.map.rendered = function () {
         previousMonth = selector('.previousmonth'),
         months = selector('.months'),
         month = selector('.month'),
-        districts = selector('.districts'),
-        districtsP = selector('.districts p'),
         closeButton = selector('.close'),
         statistic = selector('.statistic'),
         districtname = selector('.districtname'),
@@ -48,6 +53,14 @@ Template.map.rendered = function () {
         layerIDs = [],
         districtsData = null,
         geojson;
+
+    /*
+    _____________________________________________________________
+    |***********************************************************|
+    |***************Collections and get all data****************|
+    |***********************************************************|
+    -------------------------------------------------------------
+    */
 
     //subscribe to trashesCollection
     Meteor.subscribe('trashesCollection', function () {
@@ -68,8 +81,7 @@ Template.map.rendered = function () {
             });
         });
     });
-    //create var with all layer ids
-     
+
     HTTP.get(Meteor.absoluteUrl("data/map.json"), function (err, result) {                
         geoData = result.data;
         var gData = geoData.features;
@@ -80,10 +92,17 @@ Template.map.rendered = function () {
         geoDatafunction(geoData);
     });   
 
-
     HTTP.get(Meteor.absoluteUrl("data/districtsdata.json"), function (err, result) {                
         districtsData = result.data;
     });  
+
+    /*
+    _____________________________________________________________
+    |***********************************************************|
+    |************************Create map*************************|
+    |***********************************************************|
+    -------------------------------------------------------------
+    */
 
     //create leaflet map and start coordiates
     var map = L.map('map', {
@@ -99,9 +118,9 @@ Template.map.rendered = function () {
 
     //begin state of map
     map.fitBounds([
-    [52.35746570026433, 4.863853454589844],
-     [52.391734853683936, 4.944705963134766]
-   ]);
+        [52.35746570026433, 4.863853454589844],
+        [52.391734853683936, 4.944705963134766]
+    ]);
 
     var baseLayer = L.tileLayer(
         'http://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png', {
@@ -111,6 +130,9 @@ Template.map.rendered = function () {
         });
 
     L.tileLayer.provider('CartoDB.PositronNoLabels').addTo(map);
+
+    //diable double Click Zooming
+    map.doubleClickZoom.disable();
 
     //create div icon with class trash
     var trashIcon = L.divIcon({
@@ -125,8 +147,15 @@ Template.map.rendered = function () {
     var fotoIconSeptember = L.divIcon({
         className: 'foto-icon-september'
     });
-    //diable double Click Zoomiing
-    map.doubleClickZoom.disable();
+
+
+    /*
+    _____________________________________________________________
+    |***********************************************************|
+    |************************plot on map************************|
+    |***********************************************************|
+    -------------------------------------------------------------
+    */
 
     // set foto's july on map
     //    var setFotoLocationJuly = function (fotosDataJuly) {
@@ -168,16 +197,55 @@ Template.map.rendered = function () {
         trashes();
     };
 
-    var hideCleaningsIntensityLayer = function () {
-            var cleaningIntensityLayer = selectors('.cleaningIntensityLayer'),
-                t = 0;
+    //add click and mouse functions to layers
+    function onEachFeature(feature, layer) {
+        layers.push(layer)
+        layer.on({
+            mouseover: highlightFeature,
+            mouseout: resetHighlight,
+            click: clickFeature
+        });
+    };
 
-            for (t; t < cleaningIntensityLayer.length; t++) {
-                cleaningIntensityLayer[t].classList.toggle("none");
+    //Create the map of Amsterdam Centrum and render it.
+    var transparentStyle = {
+        "fillColor": "#fff",
+        "fillOpacity": 0.0,
+        "color": "RGBA(255, 255, 255, 0)"
+    }
+
+    var geoDatafunction = function (geoData) {
+        cleaningIntensity = L.geoJson(geoData, {
+            style: function (feature) {
+                return {
+                    "fillColor": feature.properties.fill,
+                    "fillOpacity": 0.6,
+                    "weight": 0
+                };
             }
-        }
-        //create var geoJson
+        }).addTo(map)
 
+        cleaningIntensity.eachLayer(function (layer) {
+            layer._path.classList.add("cleaningIntensityLayer")
+        });
+
+        geojson = L.geoJson(geoData, {
+            style: transparentStyle,
+            onEachFeature: onEachFeature
+        }).addTo(map) 
+
+        geojson.eachLayer(function (layer) {
+            layer._path.id = layer.feature.properties.id;
+        });
+    };
+
+    /*
+    _____________________________________________________________
+    |***********************************************************|
+    |**********************Actions on map***********************|
+    |***********************************************************|
+    -------------------------------------------------------------
+    */
 
     //What happens on mouseover
     function highlightFeature(e) {
@@ -236,7 +304,6 @@ Template.map.rendered = function () {
                 //display and hide elements
                 SvgMapPart.classList.add("none");
                 closeButton.classList.remove("none");
-                districts.classList.add("none");
                 navigationBar.classList.remove("none");
                 statistic.classList.remove("none");
 
@@ -256,7 +323,6 @@ Template.map.rendered = function () {
                 //                    ease: Back.easeIn.config(1),
                 //                    right: 0
                 //                });
-
 
                 //zoom in to district
                 var district = e.target,
@@ -306,6 +372,16 @@ Template.map.rendered = function () {
                 };
             }
         };
+    };
+
+    //hide cleaning intensity layer used by filter and zooming funtion
+    var hideCleaningsIntensityLayer = function () {
+        var cleaningIntensityLayer = selectors('.cleaningIntensityLayer'),
+            t = 0;
+
+        for (t; t < cleaningIntensityLayer.length; t++) {
+            cleaningIntensityLayer[t].classList.toggle("none");
+        }
     };
 
     var setDistrictData = function (layerID) {
@@ -363,6 +439,88 @@ Template.map.rendered = function () {
         }
     }
 
+    /*
+    _____________________________________________________________
+    |***********************************************************|
+    |*********Close zoomed state and go to overvieuw************|
+    |***********************************************************|
+    -------------------------------------------------------------
+    */
+
+    //hover actions close button
+    closeButton.addEventListener('mouseover', function () {
+        TweenMax.to(closeButton, 0.2, {
+            opacity: 0.60
+        });
+    });
+    closeButton.addEventListener('mouseout', function () {
+        TweenMax.to(closeButton, 0.2, {
+            opacity: 1
+        });
+    });
+
+    //close the zoomed in state
+    closeButton.addEventListener('click', function () {
+        hideCleaningsIntensityLayer()
+        zoomState = false;
+
+        TweenLite.to(monthSelect, 1.5, {
+            ease: Back.easeIn.config(1),
+            right: 0
+        });
+        TweenMax.to(closeButton, 1.5, {
+            ease: Back.easeIn.config(1),
+            right: -150,
+            onComplete: function (response) {
+                closeButton.classList.add("none");
+            }
+        });
+        TweenMax.to(navigationBar, 1.5, {
+            ease: Back.easeIn.config(1),
+            bottom: -100,
+            onComplete: function (response) {
+                navigationBar.classList.add("none");
+            },
+        });
+        //        TweenMax.to(statistic, 1.5, {
+        //            ease: Back.easeOut.config(1),
+        //            right: -350,
+        //            onComplete: function (response) {
+        //                statistic.classList.add("none");
+        //            },
+        //        });
+
+        statistic.classList.add("none");
+
+        //zoom out
+        map.fitBounds([
+            [52.35746570026433, 4.863853454589844],
+            [52.391734853683936, 4.944705963134766]
+        ]);
+
+        //enable dragging
+        map.dragging.enable();
+        map.touchZoom.enable();
+        map.doubleClickZoom.disable();
+        map.scrollWheelZoom.enable();
+        map.boxZoom.enable();
+        map.keyboard.enable();
+
+        var i = 0;
+        for (i; i < layerIDs.length; i++) {
+            document.getElementById(layerIDs[i]).removeAttribute('class', 'overlay');
+            document.getElementById(layerIDs[i]).removeAttribute('class', 'transparent');
+        };
+    });
+
+    /*
+    _____________________________________________________________
+    |***********************************************************|
+    |*****************Mouse actions districts*******************|
+    |***********************************************************|
+    -------------------------------------------------------------
+    */
+
     //add funtionality to previousDistrict button, so you can go to the previous district
     previousDistrict.addEventListener('click', function (e) {
         pDID = previousDistrict.getAttribute('id');
@@ -397,113 +555,10 @@ Template.map.rendered = function () {
         getBoundsOfDistrict(nextDistrictID);
     });
 
-    //close the zommed in state
-    closeButton.addEventListener('click', function () {
-        hideCleaningsIntensityLayer()
-        zoomState = false;
-
-        TweenLite.to(monthSelect, 1.5, {
-            ease: Back.easeIn.config(1),
-            right: 0
-        });
-        TweenMax.to(closeButton, 1.5, {
-            ease: Back.easeIn.config(1),
-            right: -150,
-            onComplete: function (response) {
-                closeButton.classList.add("none");
-            }
-        });
-        TweenMax.to(navigationBar, 1.5, {
-            ease: Back.easeIn.config(1),
-            bottom: -100,
-            onComplete: function (response) {
-                navigationBar.classList.add("none");
-            },
-        });
-        //        TweenMax.to(statistic, 1.5, {
-        //            ease: Back.easeOut.config(1),
-        //            right: -350,
-        //            onComplete: function (response) {
-        //                statistic.classList.add("none");
-        //            },
-        //        });
-        districts.classList.remove("none");
-        TweenMax.from(districts, 1.5, {
-            ease: Back.easeIn.config(1),
-            opacity: 1
-        });
-
-        statistic.classList.add("none");
-
-        //zoom out
-        map.fitBounds([
-            [52.35746570026433, 4.863853454589844],
-            [52.391734853683936, 4.944705963134766]
-        ]);
-
-        //enable dragging
-        map.dragging.enable();
-        map.touchZoom.enable();
-        map.doubleClickZoom.disable();
-        map.scrollWheelZoom.enable();
-        map.boxZoom.enable();
-        map.keyboard.enable();
-
-        var i = 0;
-        for (i; i < layerIDs.length; i++) {
-            document.getElementById(layerIDs[i]).removeAttribute('class', 'overlay');
-            document.getElementById(layerIDs[i]).removeAttribute('class', 'transparent');
-        };
-    });
-    //add click and mouse functions to layers
-    function onEachFeature(feature, layer) {
-        layers.push(layer)
-        layer.on({
-            mouseover: highlightFeature,
-            mouseout: resetHighlight,
-            click: clickFeature
-        });
-    };
-
-    //Create the map of Amsterdam Centrum and render it.
-    var myStyle = {
-        "fillColor": "#fff",
-        "fillOpacity": 0.0,
-        "color": "RGBA(255, 255, 255, 0)"
-    }
-
-    var geoDatafunction = function (geoData) {
-        cleaningIntensity = L.geoJson(geoData, {
-            style: function (feature) {
-                return {
-                    "fillColor": feature.properties.fill,
-                    "fillOpacity": 0.6,
-                    "weight": 0
-                };
-            }
-        }).addTo(map)
-
-        cleaningIntensity.eachLayer(function (layer) {
-            layer._path.classList.add("cleaningIntensityLayer")
-        });
-
-        geojson = L.geoJson(geoData, {
-            style: myStyle,
-            onEachFeature: onEachFeature
-        }).addTo(map) 
-
-        geojson.eachLayer(function (layer) {
-            layer._path.id = layer.feature.properties.id;
-        });
-    };
-
     /*
     _____________________________________________________________
     |***********************************************************|
-    |***********************************************************|
-    |********************Animaties&filters**********************|
-    |***********************************************************|
-    |***********************************************************|
+    |***********************toggle panes************************|
     |***********************************************************|
     -------------------------------------------------------------
     */
@@ -513,11 +568,10 @@ Template.map.rendered = function () {
     var statisticsClosed = false;
     var myMap = document.getElementById("map");
     var windowWidth = window.innerWidth; 
-    var informotionWidth = windowWidth - 243 + "px";
 
+    //open and close filter
     toggleFilter.addEventListener('click', function () {
         if (filterClosed === false) {
-
             TweenMax.to(filter, 2, {
                 x: -293
             });
@@ -536,8 +590,6 @@ Template.map.rendered = function () {
             }
             filterClosed = true;
         } else {
-            var informotionWidth = informotion.offsetWidth;
-
             TweenMax.to(filter, 2, {
                 x: 0
             });
@@ -557,11 +609,9 @@ Template.map.rendered = function () {
             filterClosed = false;
         }
     });
-
-
+    //open and close statistics
     toggleStatistics.addEventListener('click', function () {
         if (statisticsClosed === false) {
-
             TweenMax.to(statistic, 2, {
                 x: 650
             });
@@ -583,8 +633,6 @@ Template.map.rendered = function () {
             });
             statisticsClosed = true;
         } else {
-            var informotionWidth = informotion.offsetWidth;
-
             TweenMax.to(statistic, 2, {
                 x: 293
             });
@@ -604,6 +652,18 @@ Template.map.rendered = function () {
         }
 
     });
+
+    /*
+    _____________________________________________________________
+    |***********************************************************|
+    |***********************************************************|
+    |*********************Filter funtions***********************|
+    |***********************************************************|
+    |***********************************************************|
+    |***********************************************************|
+    -------------------------------------------------------------
+    */
+
     crowdednessInput.addEventListener('click', function () {
         var fotoAugust = selectors('.foto-icon-august'),
             fotoJuly = selectors('.foto-icon-july'),
@@ -638,6 +698,18 @@ Template.map.rendered = function () {
     TweenMax.to(previousMonth, 0.2, {
         opacity: 0.3
     });
+
+
+    /*
+    _____________________________________________________________
+    |***********************************************************|
+    |***********************************************************|
+    |******************Toggle trought months********************|
+    |***********************************************************|
+    |***********************************************************|
+    |***********************************************************|
+    -------------------------------------------------------------
+    */
 
     var slides = $('.slides');
     var $slideWrapper = $('.months');
@@ -805,45 +877,4 @@ Template.map.rendered = function () {
             moveToPrevious()
         });
     }
-    //close zoomed district
-    closeButton.addEventListener('mouseover', function () {
-        TweenMax.to(closeButton, 0.2, {
-            opacity: 0.60
-        });
-    });
-    closeButton.addEventListener('mouseout', function () {
-        TweenMax.to(closeButton, 0.2, {
-            opacity: 1
-        });
-    });
-    //districts
-    districts.addEventListener('mouseover', function () {
-        TweenMax.to(districts, 0.2, {
-            opacity: 0.60
-        });
-    });
-    districts.addEventListener('mouseout', function () {
-        TweenMax.to(districts, 0.2, {
-            opacity: 1
-        });
-    });
-    districts.addEventListener('click', function () {
-        if (districtsP.innerHTML === "Verberg wijken") {
-            districtsP.innerHTML = "Toon wijken"
-            var i = 0;
-            for (i; i < layerIDs.length; i++) {
-                if (layerIDs[i] !== "left-gone" && layerIDs[i] !== "right-gone") {
-                    document.getElementById(layerIDs[i]).removeAttribute('class');
-                }
-            };
-        } else {
-            districtsP.innerHTML = "Verberg wijken"
-            var i = 0;
-            for (i; i < layerIDs.length; i++) {
-                if (layerIDs[i] !== "left-gone" && layerIDs[i] !== "right-gone") {
-                    document.getElementById(layerIDs[i]).setAttribute('class', 'showdistrict');
-                }
-            };
-        }
-    });
 };
