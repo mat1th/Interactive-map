@@ -256,14 +256,28 @@ Template.map.rendered = function () {
 
 
                 //zoom in to district
-                var getBoutdsOfDistrict = e.target.getBounds(),
+                var district = e.target,
+                    districtId = district.feature.properties.id,
+                    getBoutdsOfDistrict = district.getBounds();
                     DistrictNorthEastlng = getBoutdsOfDistrict._northEast.lng + 0.008,
                     DistrictNorthEastlat = getBoutdsOfDistrict._northEast.lat,
-                    DistrictSouthWestlng = getBoutdsOfDistrict._southWest.lng + 0.008,
-                    DistrictSouthWestlat = getBoutdsOfDistrict._southWest.lat,
-                    southWest = L.latLng(DistrictSouthWestlat, DistrictSouthWestlng),
+                    DistrictSouthWestlng = getBoutdsOfDistrict._southWest.lng + 0.004;
+                
+                if(districtId === "dws"){
+                    DistrictSouthWestlat = getBoutdsOfDistrict._southWest.lat - 0.003;
+                    
+                } else {
+                    DistrictSouthWestlat = getBoutdsOfDistrict._southWest.lat - 0.002;
+                }
+                    
+                var southWest = L.latLng(DistrictSouthWestlat, DistrictSouthWestlng),
                     northEast = L.latLng(DistrictNorthEastlat, DistrictNorthEastlng),
                     bounds = L.latLngBounds(southWest, northEast);
+                    
+                
+                console.log(DistrictSouthWestlat);
+                console.log(districtId);
+                                
                 //zoom in on map
                 map.fitBounds(bounds);
                 districtname.innerHTML = layerName;
@@ -329,13 +343,22 @@ Template.map.rendered = function () {
         for (j; j < layers.length; j++) {
             if (layers[j]._path.id === DistrictID) {
                 var getBoutdsOfDistrict = layers[j]._bounds,
+                    districtId = layers[j].feature.properties.id,
                     DistrictNorthEastlng = getBoutdsOfDistrict._northEast.lng + 0.008,
                     DistrictNorthEastlat = getBoutdsOfDistrict._northEast.lat,
-                    DistrictSouthWestlng = getBoutdsOfDistrict._southWest.lng + 0.008,
-                    DistrictSouthWestlat = getBoutdsOfDistrict._southWest.lat,
-                    southWest = L.latLng(DistrictSouthWestlat, DistrictSouthWestlng),
+                    DistrictSouthWestlng = getBoutdsOfDistrict._southWest.lng + 0.004;
+                
+                if(districtId === "dws"){
+                    DistrictSouthWestlat = getBoutdsOfDistrict._southWest.lat - 0.003;
+                    
+                } else {
+                    DistrictSouthWestlat = getBoutdsOfDistrict._southWest.lat - 0.002;
+                }
+                    
+                var southWest = L.latLng(DistrictSouthWestlat, DistrictSouthWestlng),
                     northEast = L.latLng(DistrictNorthEastlat, DistrictNorthEastlng),
                     bounds = L.latLngBounds(southWest, northEast);
+                
                 map.fitBounds(bounds)
             }
         }
