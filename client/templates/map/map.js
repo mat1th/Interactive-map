@@ -125,17 +125,17 @@ Template.map.rendered = function () {
     map.doubleClickZoom.disable();
 
     // set foto's july on map
-    var setFotoLocationJuly = function (fotosDataJuly) {
-        var Amountfotos = fotosDataJuly.length,
-            f = 0;
-        for (f; f < Amountfotos; f++) {
-            var longitude = fotosDataJuly[f].log;
-            var latitude = fotosDataJuly[f].lat;
-            L.marker([latitude, longitude], {
-                icon: fotoIconJuly,
-            }).addTo(map);
-        }
-    };
+//    var setFotoLocationJuly = function (fotosDataJuly) {
+//        var Amountfotos = fotosDataJuly.length,
+//            f = 0;
+//        for (f; f < Amountfotos; f++) {
+//            var longitude = fotosDataJuly[f].log;
+//            var latitude = fotosDataJuly[f].lat;
+//            L.marker([latitude, longitude], {
+//                icon: fotoIconJuly,
+//            }).addTo(map);
+//        }
+//    };
 
     //set trashes on map in layer
     var setTrashes = function (trashesData) {
@@ -285,7 +285,7 @@ Template.map.rendered = function () {
                 previousID, nextID;
 
             gradeMark.innerHTML = districtData.mark;
-            amountTrashesMark.innerHTML = districtData.trashes;
+            amountTrashesMark.innerHTML = JSON.stringify(Math.round(districtData.trashes / districtData.sqmeters * 1000 * 100) / 100) + " per km²"
             cleaningintensity.innerHTML = districtData.cleaningintensity;
             //funtion to give id to naviation buttons
             if (indexLayer === 0) {
@@ -355,7 +355,6 @@ Template.map.rendered = function () {
         }
         getBoundsOfDistrict(nextDistrictID);
     });
-
 
     //close the zommed in state
     closeButton.addEventListener('click', function () {
@@ -435,7 +434,7 @@ Template.map.rendered = function () {
 
     toggleFilter.addEventListener('click', function () {
         if (filterClosed === false) {
-            
+
             TweenMax.to(filter, 2, {
                 x: -293
             });
@@ -448,7 +447,7 @@ Template.map.rendered = function () {
 //                    marginLeft: -293
 //                }
 //            });
-            
+
             if (statisticsClosed === true) {
                 TweenMax.to(myMap, 2, {
                     left: -100
@@ -458,21 +457,21 @@ Template.map.rendered = function () {
                     left: -250
                 });
             }
-            
+
 //            TweenMax.to(myMap, 2, {
 //                left: "100px"
 //            });
             filterClosed = true;
         } else {
             var informotionWidth = informotion.offsetWidth;
-            
+
             TweenMax.to(filter, 2, {
                 x: 0
             });
             TweenMax.to(toggleFilterImg, 2, {
                 rotation: 0
             });
-            
+
             if (statisticsClosed === true) {
                 TweenMax.to(myMap, 2, {
                     left: 100
@@ -498,7 +497,7 @@ Template.map.rendered = function () {
 
     toggleStatistics.addEventListener('click', function () {
         if (statisticsClosed === false) {
-            
+
             TweenMax.to(statistic, 2, {
                 x: 650
             });
@@ -528,7 +527,7 @@ Template.map.rendered = function () {
             statisticsClosed = true;
         } else {
             var informotionWidth = informotion.offsetWidth;
-           
+
             TweenMax.to(statistic, 2, {
                 x: 293
             });
@@ -541,7 +540,7 @@ Template.map.rendered = function () {
             //                    marginLeft: 0
             //                }
             //            });
-            
+
             if (filterClosed === true) {
                 TweenMax.to(myMap, 2, {
                     left: -250
@@ -551,7 +550,7 @@ Template.map.rendered = function () {
                     left: 0
                 });
             }
-            
+
 //            TweenMax.to(myMap, 2, {
 //                left: 0
 //            });
