@@ -44,7 +44,10 @@ Template.map.rendered = function () {
         showMore = selector('.showmore'),
         previousDistrict = selector('.previousdistrict'),
         nextDistrict = selector('.nextdistrict'),
-        layers = [];
+        layers = [],
+        layerIDs = [],
+        districtsData = null,
+        geojson;
 
     //subscribe to trashesCollection
     Meteor.subscribe('trashesCollection', function () {
@@ -66,7 +69,7 @@ Template.map.rendered = function () {
         });
     });
     //create var with all layer ids
-    var layerIDs = [];       
+     
     HTTP.get(Meteor.absoluteUrl("data/map.json"), function (err, result) {                
         geoData = result.data;
         var gData = geoData.features;
@@ -77,7 +80,7 @@ Template.map.rendered = function () {
         geoDatafunction(geoData);
     });   
 
-    var districtsData = null;
+
     HTTP.get(Meteor.absoluteUrl("data/districtsdata.json"), function (err, result) {                
         districtsData = result.data;
     });  
@@ -174,7 +177,7 @@ Template.map.rendered = function () {
             }
         }
         //create var geoJson
-    var geojson;
+
 
     //What happens on mouseover
     function highlightFeature(e) {
@@ -259,31 +262,27 @@ Template.map.rendered = function () {
                 var district = e.target,
                     districtId = district.feature.properties.id,
                     getBoutdsOfDistrict = district.getBounds();
-                    DistrictNorthEastlng = getBoutdsOfDistrict._northEast.lng + 0.008,
+                DistrictNorthEastlng = getBoutdsOfDistrict._northEast.lng + 0.008,
                     DistrictNorthEastlat = getBoutdsOfDistrict._northEast.lat,
                     DistrictSouthWestlng = getBoutdsOfDistrict._southWest.lng + 0.004;
-                
-                if(districtId === "dws"){
+
+                if (districtId === "dws") {
                     DistrictSouthWestlat = getBoutdsOfDistrict._southWest.lat - 0.003;
-                    
                 } else {
                     DistrictSouthWestlat = getBoutdsOfDistrict._southWest.lat - 0.002;
                 }
-                    
+
                 var southWest = L.latLng(DistrictSouthWestlat, DistrictSouthWestlng),
                     northEast = L.latLng(DistrictNorthEastlat, DistrictNorthEastlng),
                     bounds = L.latLngBounds(southWest, northEast);
-                    
-                
-                console.log(DistrictSouthWestlat);
-                console.log(districtId);
-                                
+
                 //zoom in on map
                 map.fitBounds(bounds);
                 districtname.innerHTML = layerName;
                 setDistrictData(layerID)
                 hideCleaningsIntensityLayer()
-                    //disable dragging
+
+                //disable dragging
                 map.dragging.disable();
                 map.touchZoom.disable();
                 map.doubleClickZoom.disable();
@@ -320,6 +319,7 @@ Template.map.rendered = function () {
             gradeMark.innerHTML = districtData.mark;
             amountTrashesMark.innerHTML = JSON.stringify(Math.round(districtData.trashes / districtData.sqmeters * 1000 * 100) / 100) + " per km²"
             cleaningintensity.innerHTML = districtData.cleaningintensity;
+            districtname.innerHTML = districtData.name;
             //funtion to give id to naviation buttons
             if (indexLayer === 0) {
                 previousID = layerIDs[layerIDs.length - 3];
@@ -347,18 +347,17 @@ Template.map.rendered = function () {
                     DistrictNorthEastlng = getBoutdsOfDistrict._northEast.lng + 0.008,
                     DistrictNorthEastlat = getBoutdsOfDistrict._northEast.lat,
                     DistrictSouthWestlng = getBoutdsOfDistrict._southWest.lng + 0.004;
-                
-                if(districtId === "dws"){
+
+                if (districtId === "dws") {
                     DistrictSouthWestlat = getBoutdsOfDistrict._southWest.lat - 0.003;
-                    
                 } else {
                     DistrictSouthWestlat = getBoutdsOfDistrict._southWest.lat - 0.002;
                 }
-                    
+
                 var southWest = L.latLng(DistrictSouthWestlat, DistrictSouthWestlng),
                     northEast = L.latLng(DistrictNorthEastlat, DistrictNorthEastlng),
                     bounds = L.latLngBounds(southWest, northEast);
-                
+
                 map.fitBounds(bounds)
             }
         }
@@ -434,16 +433,14 @@ Template.map.rendered = function () {
             opacity: 1
         });
 
-
         statistic.classList.add("none");
-
-
 
         //zoom out
         map.fitBounds([
             [52.35746570026433, 4.863853454589844],
             [52.391734853683936, 4.944705963134766]
         ]);
+
         //enable dragging
         map.dragging.enable();
         map.touchZoom.enable();
@@ -527,12 +524,6 @@ Template.map.rendered = function () {
             TweenMax.to(toggleFilterImg, 2, {
                 rotation: -45
             });
-            //            TweenMax.to(informotion, 2, {
-            //                width: windowWidth,
-            //                css: {
-            //                    marginLeft: -293
-            //                }
-            //            });
 
             if (statisticsClosed === true) {
                 TweenMax.to(myMap, 2, {
@@ -543,10 +534,6 @@ Template.map.rendered = function () {
                     left: -250
                 });
             }
-
-            //            TweenMax.to(myMap, 2, {
-            //                left: "100px"
-            //            });
             filterClosed = true;
         } else {
             var informotionWidth = informotion.offsetWidth;
@@ -567,15 +554,6 @@ Template.map.rendered = function () {
                     left: 1
                 });
             }
-            //            TweenMax.to(informotion, 2, {
-            //                width: informotionWidth,
-            //                css: {
-            //                    marginLeft: -0
-            //                }
-            //            });
-            //            TweenMax.to(myMap, 2, {
-            //                left: 0
-            //            });
             filterClosed = false;
         }
     });
@@ -590,13 +568,6 @@ Template.map.rendered = function () {
             TweenMax.to(toggleStatisticsImg, 2, {
                 rotation: 45
             });
-            //            TweenMax.to(informotion, 2, {
-            //                width: windowWidth,
-            //                css: {
-            //                    marginLeft: 293
-            //                }
-            //            });
-
             if (filterClosed === true) {
                 TweenMax.to(myMap, 2, {
                     left: -150
@@ -620,13 +591,6 @@ Template.map.rendered = function () {
             TweenMax.to(toggleStatisticsImg, 2, {
                 rotation: 0
             });
-            //            TweenMax.to(informotion, 2, {
-            //                width: informotionWidth,
-            //                css: {
-            //                    marginLeft: 0
-            //                }
-            //            });
-
             if (filterClosed === true) {
                 TweenMax.to(myMap, 2, {
                     left: -250
@@ -636,10 +600,6 @@ Template.map.rendered = function () {
                     left: 0
                 });
             }
-
-            //            TweenMax.to(myMap, 2, {
-            //                left: 0
-            //            });
             statisticsClosed = false;
         }
 
