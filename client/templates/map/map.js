@@ -17,6 +17,8 @@ Template.map.rendered = function () {
     //set all locat vars
     var toggleFilterImg = selector('.togglefilterimg'),
         toggleFilter = selector('.togglefilter'),
+        toggleStatistics = selector('.togglestatistics'),
+        toggleStatisticsImg = selector('.togglestatisticimg'),
         filter = selector('.filter'),
         informotion = selector('.informotion'),
         crowdedness = selector('.crowdedness'),
@@ -425,49 +427,137 @@ Template.map.rendered = function () {
     };
 
     //filters
-    var closed = false;
+    var filterClosed = false;
+    var statisticsClosed = false;
     var myMap = document.getElementById("map");
     var windowWidth = window.innerWidth; 
     var informotionWidth = windowWidth - 243 + "px";
 
     toggleFilter.addEventListener('click', function () {
-        if (closed === false) {
-            var windowWidth = window.innerHeight;
-            closed = true;
+        if (filterClosed === false) {
+            
             TweenMax.to(filter, 2, {
                 x: -293
             });
             TweenMax.to(toggleFilterImg, 2, {
                 rotation: -45
             });
-            TweenMax.to(informotion, 2, {
-                width: windowWidth,
-                css: {
-                    marginLeft: -293
-                }
-            });
-            TweenMax.to(myMap, 2, {
-                left: "100px"
-            });
+//            TweenMax.to(informotion, 2, {
+//                width: windowWidth,
+//                css: {
+//                    marginLeft: -293
+//                }
+//            });
+            
+            if (statisticsClosed === true) {
+                TweenMax.to(myMap, 2, {
+                    left: -100
+                });
+            } else {
+                TweenMax.to(myMap, 2, {
+                    left: -250
+                });
+            }
+            
+//            TweenMax.to(myMap, 2, {
+//                left: "100px"
+//            });
+            filterClosed = true;
         } else {
             var informotionWidth = informotion.offsetWidth;
-            closed = false;
+            
             TweenMax.to(filter, 2, {
                 x: 0
             });
             TweenMax.to(toggleFilterImg, 2, {
                 rotation: 0
             });
-            TweenMax.to(informotion, 2, {
-                width: informotionWidth,
-                css: {
-                    marginLeft: -0
-                }
-            });
-            TweenMax.to(myMap, 2, {
-                left: 0
-            });
+            
+            if (statisticsClosed === true) {
+                TweenMax.to(myMap, 2, {
+                    left: 100
+                });
+            } else {
+                TweenMax.to(myMap, 2, {
+                    left: 1
+                });
+            }
+//            TweenMax.to(informotion, 2, {
+//                width: informotionWidth,
+//                css: {
+//                    marginLeft: -0
+//                }
+//            });
+//            TweenMax.to(myMap, 2, {
+//                left: 0
+//            });
+            filterClosed = false;
         }
+    });
+
+
+    toggleStatistics.addEventListener('click', function () {
+        if (statisticsClosed === false) {
+            
+            TweenMax.to(statistic, 2, {
+                x: 650
+            });
+            TweenMax.to(toggleStatisticsImg, 2, {
+                rotation: 45
+            });
+            //            TweenMax.to(informotion, 2, {
+            //                width: windowWidth,
+            //                css: {
+            //                    marginLeft: 293
+            //                }
+            //            });
+
+            if (filterClosed === true) {
+                TweenMax.to(myMap, 2, {
+                    left: -150
+                });
+            } else {
+                TweenMax.to(myMap, 2, {
+                    left: 100
+                });
+            }
+
+            TweenMax.to(statistic, 2, {
+                right: "300px"
+            });
+            statisticsClosed = true;
+        } else {
+            var informotionWidth = informotion.offsetWidth;
+           
+            TweenMax.to(statistic, 2, {
+                x: 293
+            });
+            TweenMax.to(toggleStatisticsImg, 2, {
+                rotation: 0
+            });
+            //            TweenMax.to(informotion, 2, {
+            //                width: informotionWidth,
+            //                css: {
+            //                    marginLeft: 0
+            //                }
+            //            });
+            
+            if (filterClosed === true) {
+                TweenMax.to(myMap, 2, {
+                    left: -250
+                });
+            } else {
+                TweenMax.to(myMap, 2, {
+                    left: 0
+                });
+            }
+            
+//            TweenMax.to(myMap, 2, {
+//                left: 0
+//            });
+             statisticsClosed = false;
+        }
+
     });
     crowdednessInput.addEventListener('click', function () {
         var fotoAugust = selectors('.foto-icon-august'),

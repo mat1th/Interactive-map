@@ -3,10 +3,10 @@ html, body {
 }
 
 .map {
-    margin-left: 130px;
+/*    margin-left: 80px;*/
     height: calc(100vh - 70px);
 /*    width: calc(100vw - 243px);*/
-    width: 100%;
+    width: 120%;
 }
 
 .amsterdammap {
