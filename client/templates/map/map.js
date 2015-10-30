@@ -28,6 +28,7 @@ Template.map.rendered = function () {
         cleaningIntensity = selector('.cleaning-intensity'),
         cleaningIntensityInput = selector('#cleaning-intensity'),
         nextMonth = selector('.nextmonth'),
+        monthSelect = selector('.monthselect'),
         previousMonth = selector('.previousmonth'),
         months = selector('.months'),
         month = selector('.month'),
@@ -125,17 +126,17 @@ Template.map.rendered = function () {
     map.doubleClickZoom.disable();
 
     // set foto's july on map
-//    var setFotoLocationJuly = function (fotosDataJuly) {
-//        var Amountfotos = fotosDataJuly.length,
-//            f = 0;
-//        for (f; f < Amountfotos; f++) {
-//            var longitude = fotosDataJuly[f].log;
-//            var latitude = fotosDataJuly[f].lat;
-//            L.marker([latitude, longitude], {
-//                icon: fotoIconJuly,
-//            }).addTo(map);
-//        }
-//    };
+    //    var setFotoLocationJuly = function (fotosDataJuly) {
+    //        var Amountfotos = fotosDataJuly.length,
+    //            f = 0;
+    //        for (f; f < Amountfotos; f++) {
+    //            var longitude = fotosDataJuly[f].log;
+    //            var latitude = fotosDataJuly[f].lat;
+    //            L.marker([latitude, longitude], {
+    //                icon: fotoIconJuly,
+    //            }).addTo(map);
+    //        }
+    //    };
 
     //set trashes on map in layer
     var setTrashes = function (trashesData) {
@@ -236,6 +237,24 @@ Template.map.rendered = function () {
                 navigationBar.classList.remove("none");
                 statistic.classList.remove("none");
 
+                TweenLite.to(monthSelect, 1.5, {
+                    ease: Back.easeIn.config(1),
+                    right: 150
+                });
+                TweenMax.to(closeButton, 1.5, {
+                    ease: Back.easeIn.config(1),
+                    right: 0
+                });
+                TweenMax.to(navigationBar, 1.5, {
+                    ease: Back.easeOut.config(1),
+                    bottom: -20
+                });
+                //                TweenMax.to(statistic, 1.5, {
+                //                    ease: Back.easeIn.config(1),
+                //                    right: 0
+                //                });
+
+
                 //zoom in to district
                 var getBoutdsOfDistrict = e.target.getBounds(),
                     DistrictNorthEastlng = getBoutdsOfDistrict._northEast.lng + 0.008,
@@ -250,7 +269,7 @@ Template.map.rendered = function () {
                 districtname.innerHTML = layerName;
                 setDistrictData(layerID)
                 hideCleaningsIntensityLayer()
-                //disable dragging
+                    //disable dragging
                 map.dragging.disable();
                 map.touchZoom.disable();
                 map.doubleClickZoom.disable();
@@ -360,10 +379,43 @@ Template.map.rendered = function () {
     closeButton.addEventListener('click', function () {
         hideCleaningsIntensityLayer()
         zoomState = false;
+
+        TweenLite.to(monthSelect, 1.5, {
+            ease: Back.easeIn.config(1),
+            right: 0
+        });
+        TweenMax.to(closeButton, 1.5, {
+            ease: Back.easeIn.config(1),
+            right: -150,
+            onComplete: function (response) {
+                closeButton.classList.add("none");
+            }
+        });
+        TweenMax.to(navigationBar, 1.5, {
+            ease: Back.easeIn.config(1),
+            bottom: -100,
+            onComplete: function (response) {
+                navigationBar.classList.add("none");
+            },
+        });
+        //        TweenMax.to(statistic, 1.5, {
+        //            ease: Back.easeOut.config(1),
+        //            right: -350,
+        //            onComplete: function (response) {
+        //                statistic.classList.add("none");
+        //            },
+        //        });
         districts.classList.remove("none");
-        closeButton.classList.add("none");
+        TweenMax.from(districts, 1.5, {
+            ease: Back.easeIn.config(1),
+            opacity: 1
+        });
+
+
         statistic.classList.add("none");
-        navigationBar.classList.add("none");
+
+
+
         //zoom out
         map.fitBounds([
             [52.35746570026433, 4.863853454589844],
@@ -425,6 +477,17 @@ Template.map.rendered = function () {
         });
     };
 
+    /*
+    _____________________________________________________________
+    |***********************************************************|
+    |***********************************************************|
+    |********************Animaties&filters**********************|
+    |***********************************************************|
+    |***********************************************************|
+    |***********************************************************|
+    -------------------------------------------------------------
+    */
+
     //filters
     var filterClosed = false;
     var statisticsClosed = false;
@@ -441,12 +504,12 @@ Template.map.rendered = function () {
             TweenMax.to(toggleFilterImg, 2, {
                 rotation: -45
             });
-//            TweenMax.to(informotion, 2, {
-//                width: windowWidth,
-//                css: {
-//                    marginLeft: -293
-//                }
-//            });
+            //            TweenMax.to(informotion, 2, {
+            //                width: windowWidth,
+            //                css: {
+            //                    marginLeft: -293
+            //                }
+            //            });
 
             if (statisticsClosed === true) {
                 TweenMax.to(myMap, 2, {
@@ -458,9 +521,9 @@ Template.map.rendered = function () {
                 });
             }
 
-//            TweenMax.to(myMap, 2, {
-//                left: "100px"
-//            });
+            //            TweenMax.to(myMap, 2, {
+            //                left: "100px"
+            //            });
             filterClosed = true;
         } else {
             var informotionWidth = informotion.offsetWidth;
@@ -481,15 +544,15 @@ Template.map.rendered = function () {
                     left: 1
                 });
             }
-//            TweenMax.to(informotion, 2, {
-//                width: informotionWidth,
-//                css: {
-//                    marginLeft: -0
-//                }
-//            });
-//            TweenMax.to(myMap, 2, {
-//                left: 0
-//            });
+            //            TweenMax.to(informotion, 2, {
+            //                width: informotionWidth,
+            //                css: {
+            //                    marginLeft: -0
+            //                }
+            //            });
+            //            TweenMax.to(myMap, 2, {
+            //                left: 0
+            //            });
             filterClosed = false;
         }
     });
@@ -551,10 +614,10 @@ Template.map.rendered = function () {
                 });
             }
 
-//            TweenMax.to(myMap, 2, {
-//                left: 0
-//            });
-             statisticsClosed = false;
+            //            TweenMax.to(myMap, 2, {
+            //                left: 0
+            //            });
+            statisticsClosed = false;
         }
 
     });

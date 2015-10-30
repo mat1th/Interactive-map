@@ -14,7 +14,7 @@ header {
 }
 
 .monthselect {
-    right: 150px;
+    right: 0px;
     position: absolute;
     padding: 25px;
     height: 30px;
@@ -89,7 +89,7 @@ header {
 }
 
 .close {
-    right: 0px;
+    right: -150px;
     position: absolute;
     margin: 10px 5px 10px 10px;
     height: 40px;
