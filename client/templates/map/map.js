@@ -37,7 +37,8 @@ Template.map.rendered = function () {
         cleaningintensity = selector('.cleaningintensity-label'),
         showMore = selector('.showmore'),
         previousDistrict = selector('.previousdistrict'),
-        nextDistrict = selector('.nextdistrict');
+        nextDistrict = selector('.nextdistrict'),
+        layers = [];
 
     //subscribe to trashesCollection
     Meteor.subscribe('trashesCollection', function () {
@@ -289,6 +290,23 @@ Template.map.rendered = function () {
             previousDistrict.setAttribute('id', previousID + "2");
         }
     };
+
+    function getBoundsOfDistrict(DistrictID) {
+        var j = 0;
+        for (j; j < layers.length; j++) {
+            if (layers[j]._path.id === DistrictID) {
+                var getBoutdsOfDistrict = layers[j]._bounds,
+                    DistrictNorthEastlng = getBoutdsOfDistrict._northEast.lng + 0.008,
+                    DistrictNorthEastlat = getBoutdsOfDistrict._northEast.lat,
+                    DistrictSouthWestlng = getBoutdsOfDistrict._southWest.lng + 0.008,
+                    DistrictSouthWestlat = getBoutdsOfDistrict._southWest.lat,
+                    southWest = L.latLng(DistrictSouthWestlat, DistrictSouthWestlng),
+                    northEast = L.latLng(DistrictNorthEastlat, DistrictNorthEastlng),
+                    bounds = L.latLngBounds(southWest, northEast);
+                map.fitBounds(bounds)
+            }
+        }
+    }
     //add funtionality to previousDistrict button, so you can go to the previous district
     previousDistrict.addEventListener('click', function (e) {
         pDID = previousDistrict.getAttribute('id');
@@ -303,6 +321,7 @@ Template.map.rendered = function () {
                 setDistrictData(previousDistrictID)
             };
         }
+        getBoundsOfDistrict(previousDistrictID)
     });
     //add funtionality to nextDistrict button, so you can go to the next district
     nextDistrict.addEventListener('click', function (e) {
@@ -318,7 +337,9 @@ Template.map.rendered = function () {
                 setDistrictData(nextDistrictID)
             };
         }
+        getBoundsOfDistrict(nextDistrictID);
     });
+
 
     //close the zommed in state
     closeButton.addEventListener('click', function () {
@@ -348,6 +369,7 @@ Template.map.rendered = function () {
     });
     //add click and mouse functions to layers
     function onEachFeature(feature, layer) {
+        layers.push(layer)
         layer.on({
             mouseover: highlightFeature,
             mouseout: resetHighlight,
