@@ -7,9 +7,9 @@ html, body {
     padding: 0;
     z-index: 2;
     position: absolute;
-    top: 70px;
+    top: 90px;
     right: 0;
-    height: calc(100vh - 70px);
+    height: calc(100vh - 90px);
     display: none;
 }
 
@@ -24,16 +24,18 @@ html, body {
     background: #E6E6E6;
     background: url(/img/stats_bg.jpg);
     background-size: auto 100%;
-    height: calc(100vh - 70px - 56px);
+    height: calc(100vh - 90px - 56px);
     width: 350px;
 }
 
 .statisticstitle h2 {
-    padding: 10px;
+    padding: 10px 10px 10px 40px;
     height: 37px;
     margin: 0;
     width: 100px;
     display: inline-block;
+    letter-spacing: 3px;
+    line-height: 40px;
 }
 
 .statisticstitle {
@@ -57,8 +59,8 @@ html, body {
 }
 
 .togglestatisticimg {
-    width: 28px;
-    padding: 4px 3.5px;
+    width: 20px;
+    padding: 9px 8.5px;
 }
 
 .statistics div {
@@ -74,18 +76,20 @@ html, body {
     color: #686868;
     text-transform: uppercase;
     font-weight: 400;
-    font-size: 18px;
+    font-size: 15px;
     margin: 0;
     padding: 0;
+    letter-spacing: 1px;
 }
 
 .statistics p {
     display: inline-block;
     color: #333333;
     font-weight: 700;
-    font-size: 35px;
+    font-size: 30px;
     padding: 0;
     margin: 0;
+    letter-spacing: 2px;
 }
 
 .statsubscript {

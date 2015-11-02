@@ -10,7 +10,8 @@
     margin: 0;
     width: 100px;
     display: inline-block;
-    letter-spacing: 2px;
+    letter-spacing: 3px;
+    line-height: 40px;
 }
 
 .filtertitle {
@@ -35,8 +36,8 @@
 }
 
 .togglefilterimg {
-    width: 28px;
-    padding: 4px 3.5px;
+    width: 20px;
+    padding: 9px 8.5px;
 }
 
 .filter > .filters {
@@ -118,7 +119,6 @@
     text-transform: none;
     content: "\e901";
     font-size: 15px;
-/*    color: rgb(189, 44, 44);*/
     text-align: center;
     line-height: 23px;
 }
@@ -160,8 +160,9 @@
 section.legenda {
     margin: 0 0 0 70px;
 }
-section.legenda div{
-    margin: 10px 0;;
+
+section.legenda div {
+    margin: 10px 0;
 }
 
 section.legenda img {
@@ -170,7 +171,7 @@ section.legenda img {
 }
 
 section.legenda p {
-    color: #333;
+    color: #7D1F1F;
     display: inline-block;
     width: 100px;
     margin: 0 0 0 10px;
