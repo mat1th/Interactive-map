@@ -105,6 +105,8 @@
     float: right;
     line-height: 23px;
     font-size: 15px;
+    color: #000;
+    opacity: 0.3;
 }
 
 .filter > .filters > div > input[type=checkbox]:checked + label:before {
@@ -116,7 +118,7 @@
     text-transform: none;
     content: "\e901";
     font-size: 15px;
-    color: rgb(189, 44, 44);
+/*    color: rgb(189, 44, 44);*/
     text-align: center;
     line-height: 23px;
 }
@@ -173,4 +175,11 @@ section.legenda p {
     width: 100px;
     margin: 0 0 0 10px;
     padding: 0px;
+}
+
+.subscript {
+    display: block;
+    margin-left: 28px;
+    color: #000;
+    opacity: 0.5;
 }

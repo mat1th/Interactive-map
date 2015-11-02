@@ -35,6 +35,7 @@ Template.map.rendered = function () {
         cleaningIntensity = selector('.cleaning-intensity'),
         cleaningIntensityDiv = selector('.cleaning-intensity-div'),
         cleaningIntensityInput = selector('#cleaning-intensity'),
+        statisticSubscript = selector('.statsubscript'),
         cleaningBorder = selector('.cleaningBorder'),
         nextMonth = selector('.nextmonth'),
         monthSelect = selector('.monthselect'),
@@ -416,6 +417,8 @@ Template.map.rendered = function () {
             gradeMark.innerHTML = JSON.stringify(districtData.mark).replace('.', ',');
             amountTrashesMark.innerHTML = JSON.stringify(Math.round(districtData.trashes / districtData.sqmeters * 1000 * 100) / 100).replace('.', ',') + " per m²"
             cleaningintensity.innerHTML = districtData.cleaningintensity;
+            statisticSubscript.innerHTML = districtData.subscript;
+            
             districtname.innerHTML = districtData.name;
             //funtion to give id to naviation buttons
             if (indexLayer === 0) {

@@ -80,9 +80,16 @@ html, body {
 }
 
 .statistics p {
+    display: inline-block;
     color: #333333;
     font-weight: 700;
     font-size: 35px;
     padding: 0;
     margin: 0;
+}
+
+.statsubscript {
+    display: inline-block;
+    top: -15px;
+    position: relative;
 }

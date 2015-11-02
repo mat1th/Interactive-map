@@ -5,6 +5,7 @@
         "mark": 8.5,
         "trashes": 108,
         "cleaningintensity": "Laag",
+        "subscript": "(1-3X per week)",
         "photos": 0
     },
     "jd": {
@@ -13,6 +14,7 @@
         "mark": 8.4,
         "trashes": 142,
         "cleaningintensity": "Gemiddeld",
+        "subscript": "(3-7X per week)",
         "photos": 0
     },
     "gw": {
@@ -21,6 +23,7 @@
         "mark": 8.4,
         "trashes": 76,
         "cleaningintensity": "Gemiddeld",
+        "subscript": "(3-7X per week)",
         "photos": 0
     },
     "bnz": {
@@ -29,6 +32,7 @@
         "mark": 7.8,
         "trashes": 223.5,
         "cleaningintensity": "Hoog",
+        "subscript": "(7X per week)",
         "photos": 0
     },
     "gz": {
@@ -37,6 +41,7 @@
         "mark": 8.5,
         "trashes": 110,
         "cleaningintensity": "Gemiddeld",
+        "subscript": "(3-7X per week)",
         "photos": 0
     },
     "dws": {
@@ -45,6 +50,7 @@
         "mark": 8.0,
         "trashes": 129.5,
         "cleaningintensity": "Laag",
+        "subscript": "(1-3X per week)",
         "photos": 0
     },
     "wp": {
@@ -53,6 +59,7 @@
         "mark": 9.0,
         "trashes": 160,
         "cleaningintensity": "Laag",
+        "subscript": "(1-3X per week)",
         "photos": 0
     },
     "oek": {
@@ -61,6 +68,7 @@
         "mark": 9.0,
         "trashes": 92,
         "cleaningintensity": "Laag",
+        "subscript": "(1-3X per week)",
         "photos": 0
     },
     "nl": {
@@ -69,6 +77,7 @@
         "mark": 8.5,
         "trashes": 102,
         "cleaningintensity": "Gemiddeld",
+        "subscript": "(3-7X per week)",
         "photos": 0
     },
     "boz": {
@@ -77,6 +86,7 @@
         "mark": 6.4,
         "trashes": 118,
         "cleaningintensity": "Hoog",
+        "subscript": "(7X per week)",
         "photos": 0
     }
 }
