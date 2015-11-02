@@ -10,6 +10,7 @@ html, body {
     top: 70px;
     right: 0;
     height: calc(100vh - 70px);
+    display: none;
 }
 
 .statistics {

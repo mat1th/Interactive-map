@@ -289,7 +289,7 @@ Template.map.rendered = function () {
     var zoomState = false;
 
     function clickFeature(e) {
-        //check of the map isn't in the zoom state
+        //check if the map isn't in the zoom state
         if (zoomState === false) {
             zoomState = true;
             var clickedLayer = e.target,
@@ -304,7 +304,18 @@ Template.map.rendered = function () {
                 SvgMapPart.classList.add("none");
                 closeButton.classList.remove("none");
                 navigationBar.classList.remove("none");
-                statistic.classList.remove("none");
+
+                //                statistic.classList.remove("none");
+
+                TweenMax.to(statistic, 2, {
+                    display: "block"
+                }, "start");
+                TweenMax.fromTo(statistic, 2, {
+                    x: 500
+                }, {
+                    x: 0,
+                    ease: Power4.easeOut
+                }, "start");
 
                 TweenMax.to([cleaningIntensityDiv, cleaningBorder], 1, {
                     ease: Power1.easeOut,
@@ -326,10 +337,10 @@ Template.map.rendered = function () {
                     ease: Back.easeOut.config(1),
                     bottom: -20
                 });
-                //                TweenMax.to(statistic, 1.5, {
-                //                    ease: Back.easeIn.config(1),
-                //                    right: 0
-                //                });
+                TweenMax.to(statistic, 1.5, {
+                    ease: Back.easeIn.config(1),
+                    right: 0
+                });
 
                 //zoom in to district
                 var district = e.target,
@@ -339,8 +350,10 @@ Template.map.rendered = function () {
                     DistrictNorthEastlat = getBoutdsOfDistrict._northEast.lat,
                     DistrictSouthWestlng = getBoutdsOfDistrict._southWest.lng + 0.004;
 
-                if (districtId === "dws") {
-                    DistrictSouthWestlat = getBoutdsOfDistrict._southWest.lat - 0.003;
+                if (districtId === "wp") {
+                    DistrictSouthWestlat = getBoutdsOfDistrict._southWest.lat - 0.005;
+                } else if (districtId === "dws") {
+                    DistrictSouthWestlat = getBoutdsOfDistrict._southWest.lat - 0.005;
                 } else {
                     DistrictSouthWestlat = getBoutdsOfDistrict._southWest.lat - 0.002;
                 }
@@ -432,8 +445,10 @@ Template.map.rendered = function () {
                     DistrictNorthEastlat = getBoutdsOfDistrict._northEast.lat,
                     DistrictSouthWestlng = getBoutdsOfDistrict._southWest.lng + 0.004;
 
-                if (districtId === "dws") {
-                    DistrictSouthWestlat = getBoutdsOfDistrict._southWest.lat - 0.003;
+                if (districtId === "wp") {
+                    DistrictSouthWestlat = getBoutdsOfDistrict._southWest.lat - 0.005;
+                } else if (districtId === "dws") {
+                    DistrictSouthWestlat = getBoutdsOfDistrict._southWest.lat - 0.005;
                 } else {
                     DistrictSouthWestlat = getBoutdsOfDistrict._southWest.lat - 0.002;
                 }
@@ -510,7 +525,17 @@ Template.map.rendered = function () {
             y: 0
         });
 
-        statistic.classList.add("none");
+        //        statistic.classList.add("none");
+
+        TweenMax.to(statistic, 1.3, {
+            x: 500,
+            ease: Power4.easeIn,
+            display: "none"
+        }, "statsaway");
+        //        statistic.classList.add("none");
+        TweenMax.to(statistic, 2, {
+            display: "none"
+        }, "statsaway");
 
         //zoom out
         map.fitBounds([
@@ -650,7 +675,7 @@ Template.map.rendered = function () {
         if (statisticsClosed === false) {
             TweenMax.to(statistic, 2, {
                 ease: Power2.easeInOut,
-                x: 650
+                x: 350
             });
             TweenMax.to(toggleStatisticsImg, 2, {
                 ease: Power2.easeInOut,
@@ -669,13 +694,12 @@ Template.map.rendered = function () {
             }
             TweenMax.to(statistic, 2, {
                 ease: Power2.easeInOut,
-                right: "300px"
+                right: 0
             });
             statisticsClosed = true;
         } else {
             TweenMax.to(statistic, 2, {
-                ease: Power2.easeInOut,
-                x: 293
+                x: 0
             });
             TweenMax.to(toggleStatisticsImg, 2, {
                 ease: Power2.easeInOut,
