@@ -6,10 +6,11 @@
 }
 
 .filter h2 {
-    padding: 10px;
+    padding: 10px 10px 10px 25px;
     margin: 0;
     width: 100px;
     display: inline-block;
+    letter-spacing: 2px;
 }
 
 .filtertitle {
@@ -30,6 +31,7 @@
     width: 37px;
     float: right;
     background: #de3a3a;
+    cursor: pointer;
 }
 
 .togglefilterimg {
@@ -62,10 +64,11 @@
 .filter > .filters > div > label > p {
     font-weight: 500;
     width: 200px;
-    font-size: 20px;
+    font-size: 18px;
     margin: 20px 0px 20px 0;
     display: inline-block;
     float: right;
+    letter-spacing: 2px;
 }
 
 .filter > .filters > div > label {
@@ -77,6 +80,7 @@
     margin-right: 15px;
     */
     font-size: 13px;
+    float: left;
 }
 
 .filter > .filters > div > input[type=checkbox] {
@@ -99,6 +103,8 @@
     margin: 22px 22px 22px 250px;
     position: absolute;
     float: right;
+    line-height: 23px;
+    font-size: 15px;
 }
 
 .filter > .filters > div > input[type=checkbox]:checked + label:before {
@@ -112,7 +118,7 @@
     font-size: 15px;
     color: rgb(189, 44, 44);
     text-align: center;
-    line-height: 15px;
+    line-height: 23px;
 }
 
 .filter > .filters > div > input[type=checkbox]:not(:checked) + label,
