@@ -514,13 +514,7 @@ Template.map.rendered = function () {
                 navigationBar.classList.add("none");
             },
         });
-        //        TweenMax.to(statistic, 1.5, {
-        //            ease: Back.easeOut.config(1),
-        //            right: -350,
-        //            onComplete: function (response) {
-        //                statistic.classList.add("none");
-        //            },
-        //        });
+
         cleaningIntensityDiv.classList.remove("none");
 
         TweenMax.to([cleaningIntensityDiv, cleaningBorder], 1.5, {
@@ -529,14 +523,11 @@ Template.map.rendered = function () {
             y: 0
         });
 
-        //        statistic.classList.add("none");
-
         TweenMax.to(statistic, 1.3, {
             x: 500,
             ease: Power4.easeIn,
             display: "none"
         }, "statsaway");
-        //        statistic.classList.add("none");
         TweenMax.to(statistic, 2, {
             display: "none"
         }, "statsaway");

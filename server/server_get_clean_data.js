@@ -86,8 +86,6 @@ var getCleanData = function (rawDataUrl, mapQuestUrl) {
         } else {
             console.log('amountDataStrings === database')
         }
-
-
     }
 };
 
