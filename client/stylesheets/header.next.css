@@ -6,6 +6,7 @@ header {
 
 .logo {
     display: inline-block;
+    cursor: pointer;
 }
 
 .logo > img {
@@ -39,15 +40,6 @@ header {
     white-space: nowrap;
     overflow: hidden;
 }
-
-
-/*
-.month {
-    width: 100%;
-    color: #333333;
-    text-align: center;
-}
-*/
 
 .previousmonth {
     display: inline-block;

@@ -89,7 +89,6 @@ var getGeoFlickrPhotos = function (flickrGetPlaceIdUrl, flickrGetPhotosUrl, flic
         }
     });
 
-
     //Get foto's of a month July
     var getAllFotosJuly = function (page, pagesJuly, totalPhotosJuly, month) {
         if (fotoLocationsJulyCollection.find().fetch()[0] === undefined) {
@@ -119,10 +118,11 @@ var getGeoFlickrPhotos = function (flickrGetPlaceIdUrl, flickrGetPhotosUrl, flic
             }
             //get geolocation of foto's
             var getGeoLoctionOfPhotoIdsJuly = function (photosJuly) {
-                //loop to get gps location
 
+                //loop to get gps location
                 var amountPhotos = photosJuly.length,
                     f = 0;
+
                 console.log(amountPhotos);
                 for (f; f < amountPhotos; f++) {
                     var id = photosJuly[f],
@@ -140,14 +140,14 @@ var getGeoFlickrPhotos = function (flickrGetPlaceIdUrl, flickrGetPhotosUrl, flic
                     console.log(fotoLocationsJulyCollection.find().fetch().length);
                 }
             };
-        }
-        //    if you want to clean the fotoLocationsJulyCollection uncomment the folowing rules
-        else {
-            console.log("collection of july is not empty");
-            //  var deletelength = fotoLocationsJulyCollection.find().fetch().length;
-            //  var deletedata = fotoLocationsJulyCollection.find().fetch();
-            //   var a = 0
-            //
+        } else {
+            console.log("collection of july has " + JSON.stringify(fotoLocationsJulyCollection.find().fetch().length) + " foto's");
+
+            var deletelength = fotoLocationsJulyCollection.find().fetch().length,
+                deletedata = fotoLocationsJulyCollection.find().fetch(),
+                a = 0
+
+            // uncommend this code if you want to delete the fotoLocationsJulyCollection
             //  for (0; a < deletelength; a++) {
             //    fotoLocationsJulyCollection.remove(deletedata[a]._id)
             //     console.log(fotoLocationsJulyCollection.find().fetch().length)
@@ -208,15 +208,16 @@ var getGeoFlickrPhotos = function (flickrGetPlaceIdUrl, flickrGetPhotosUrl, flic
         }
         //    if you want to clean the fotoLocationsAugustCollection uncomment the folowing rules
         else {
-            console.log("collection of augustus is not empty")
-                // var deletelength = fotoLocationsAugustCollection.find().fetch().length;
-                // var deletedata = fotoLocationsAugustCollection.find().fetch();
-                // var a = 0
-                //
-                // for (0; a < deletelength; a++) {
-                //     fotoLocationsAugustCollection.remove(deletedata[a]._id)
-                //     console.log(fotoLocationsAugustCollection.find().fetch().length)
-                // }
+            console.log("collection of augustus has " + JSON.stringify(fotoLocationsAugustCollection.find().fetch().length) + " foto's")
+            var deletelength = fotoLocationsAugustCollection.find().fetch().length,
+                deletedata = fotoLocationsAugustCollection.find().fetch(),
+                a = 0;
+
+            // uncommend this code if you want to delete the fotoLocationsAugustCollection
+            // for (0; a < deletelength; a++) {
+            //     fotoLocationsAugustCollection.remove(deletedata[a]._id)
+            //     console.log(fotoLocationsAugustCollection.find().fetch().length)
+            // }
         };
     };
 
@@ -272,15 +273,16 @@ var getGeoFlickrPhotos = function (flickrGetPlaceIdUrl, flickrGetPhotosUrl, flic
         }
         //    if you want to clean the fotoLocationsCollection uncomment the folowing rules
         else {
-            console.log("collection of september is not empty");
-                //var deletelength = fotoLocationsCollection.find().fetch().length;
-                //var deletedata = fotoLocationsCollection.find().fetch();
-                //var a = 0
-                //
-                //for (0; a < deletelength; a++) {
-                //    fotoLocationsCollection.remove(deletedata[a]._id)
-                //    console.log(fotoLocationsCollection.find().fetch().length)
-                //                }
+            console.log("collection of september has " + JSON.stringify(fotoLocationsCollection.find().fetch().length) + " foto's");
+            var deletelength = fotoLocationsCollection.find().fetch().length,
+                deletedata = fotoLocationsCollection.find().fetch(),
+                a = 0;
+
+            // uncommend this code if you want to delete the fotoLocationsCollection
+            //for (0; a < deletelength; a++) {
+            //    fotoLocationsCollection.remove(deletedata[a]._id)
+            //    console.log(fotoLocationsCollection.find().fetch().length)
+            //                }
         }
 
     };

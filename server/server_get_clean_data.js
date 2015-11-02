@@ -4,8 +4,8 @@ Meteor.publish("trashesCollection", function () {
     return trashesCollection.find();
 });
 
-//var rawDataUrl,
-//    mapQuestUrl;
+var rawDataUrl,
+    mapQuestUrl;
 
 Meteor.startup(function () {
     HTTP.get(Meteor.absoluteUrl("data/url.json"), function (err, result) {
