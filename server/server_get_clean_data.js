@@ -4,8 +4,8 @@ Meteor.publish("trashesCollection", function () {
     return trashesCollection.find();
 });
 
-var rawDataUrl,
-    mapQuestUrl;
+//var rawDataUrl,
+//    mapQuestUrl;
 
 Meteor.startup(function () {
     HTTP.get(Meteor.absoluteUrl("data/url.json"), function (err, result) {
@@ -23,15 +23,10 @@ Meteor.startup(function () {
 //get geo data of trashes
 var getCleanData = function (rawDataUrl, mapQuestUrl) {
     var rawData = HTTP.get(rawDataUrl).data,
-        //create cleanData array
-        //get amount of data strings
-        amountDataStrings = rawData.feed.entry.length,
-        i = 0;
-
-    //loop through data
-    if (amountDataStrings !== trashesCollection.find().fetch().length) {
-        //starts with looping at ending point
-        var i = trashesCollection.find().fetch().length;
+        //        //create cleanData array
+        //        //get amount of data strings
+        amountDataStrings = rawData.feed.entry.length;
+    loopfuntion = function (i) {
         for (i; i < amountDataStrings; i++) {
             var AllTrashData = rawData.feed.entry[i].content.$t,
                 SplicedTrashData = AllTrashData.split(','),
@@ -56,19 +51,37 @@ var getCleanData = function (rawDataUrl, mapQuestUrl) {
                 }
             }
         }
-    }
+    };
 
-    //if you want to clean the trashesCollection.
-    //         else {
-    //            var deletelength = trashesCollection.find().fetch().length;
-    //            var deletedata = trashesCollection.find().fetch();
-    //            var a = 0
-    //
-    //            for (0; i < deletelength; i++) {
-    //                trashesCollection.remove(deletedata[i]._id)
-    //                console.log(trashesCollection.find().fetch().length)
-    //            }
-    //        }
+    //loop through data
+    if (amountDataStrings > trashesCollection.find().fetch().length) {
+        //starts with looping at ending point
+        var i = trashesCollection.find().fetch().length;
+        console.log('amountDataStrings > database')
+        loopfuntion(i)
+
+    }
+    if (amountDataStrings < trashesCollection.find().fetch().length) {
+        console.log('amountDataStrings < database')
+            //if you want to clean the trashesCollection.
+
+        var deletelength = trashesCollection.find().fetch().length,
+            deletedata = trashesCollection.find().fetch(),
+            a = 0,
+            i = 0;
+        loopfuntion(i)
+
+        for (0; i < deletelength; i++) {
+            trashesCollection.remove(deletedata[i]._id)
+            console.log(trashesCollection.find().fetch().length)
+            if (deletelength === 0) {
+                loopfuntion(i)
+            }
+        }
+    }
+    if (amountDataStrings === trashesCollection.find().fetch().length) {
+        console.log('amountDataStrings === database')
+    }
 };
 
 // Listen to incoming HTTP requests, can only be used on the server
