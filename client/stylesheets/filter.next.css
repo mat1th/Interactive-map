@@ -163,6 +163,7 @@ section.legenda {
 
 section.legenda div {
     margin: 10px 0;
+    top: 20px;
 }
 
 section.legenda img {
@@ -183,4 +184,9 @@ section.legenda p {
     margin-left: 28px;
     color: #000;
     opacity: 0.5;
+}
+
+.intensity {
+    position: relative;
+    bottom: 2px;
 }
