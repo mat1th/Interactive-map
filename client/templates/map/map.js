@@ -350,11 +350,12 @@ Template.map.rendered = function () {
                     DistrictNorthEastlat = getBoutdsOfDistrict._northEast.lat,
                     DistrictSouthWestlng = getBoutdsOfDistrict._southWest.lng + 0.004;
 
-                if (districtId === "dws" || "wp") {
+                if (districtId === "wp") {
                     DistrictSouthWestlat = getBoutdsOfDistrict._southWest.lat - 0.005;
-                    district._animateToZoom = 17;
+                } else if (districtId === "dws") {
+                    DistrictSouthWestlat = getBoutdsOfDistrict._southWest.lat - 0.005;
                 } else {
-                    DistrictSouthWestlat = getBoutdsOfDistrict._southWest.lat - 0.003;
+                    DistrictSouthWestlat = getBoutdsOfDistrict._southWest.lat - 0.002;
                 }
 
 
@@ -364,7 +365,6 @@ Template.map.rendered = function () {
 
                 //zoom in on map
                 map.fitBounds(bounds);
-                console.log(map);
                 districtname.innerHTML = layerName;
                 setDistrictData(layerID)
                 hideCleaningsIntensityLayer()
@@ -445,12 +445,14 @@ Template.map.rendered = function () {
                     DistrictNorthEastlat = getBoutdsOfDistrict._northEast.lat,
                     DistrictSouthWestlng = getBoutdsOfDistrict._southWest.lng + 0.004;
 
-                if (districtId === "dws") {
-                    DistrictSouthWestlat = getBoutdsOfDistrict._southWest.lat - 0.003;
+                if (districtId === "wp") {
+                    DistrictSouthWestlat = getBoutdsOfDistrict._southWest.lat - 0.005;
+                } else if (districtId === "dws") {
+                    DistrictSouthWestlat = getBoutdsOfDistrict._southWest.lat - 0.005;
                 } else {
                     DistrictSouthWestlat = getBoutdsOfDistrict._southWest.lat - 0.002;
                 }
-
+                
                 var southWest = L.latLng(DistrictSouthWestlat, DistrictSouthWestlng),
                     northEast = L.latLng(DistrictNorthEastlat, DistrictNorthEastlng),
                     bounds = L.latLngBounds(southWest, northEast);
@@ -523,7 +525,7 @@ Template.map.rendered = function () {
             y: 0
         });
 
-//        statistic.classList.add("none");
+        //        statistic.classList.add("none");
 
         TweenMax.to(statistic, 1.3, {
             x: 500,
