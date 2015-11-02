@@ -59,7 +59,6 @@ var getCleanData = function (rawDataUrl, mapQuestUrl) {
         var i = trashesCollection.find().fetch().length;
         console.log('amountDataStrings > database')
         loopfuntion(i)
-
     }
     if (amountDataStrings < trashesCollection.find().fetch().length) {
         console.log('amountDataStrings < database')
@@ -80,7 +79,15 @@ var getCleanData = function (rawDataUrl, mapQuestUrl) {
         }
     }
     if (amountDataStrings === trashesCollection.find().fetch().length) {
-        console.log('amountDataStrings === database')
+        if (trashesCollection.find().fetch()[0] === undefined) {
+            var i = 0;
+            loopfuntion(i)
+             console.log('database = 0')
+        } else {
+            console.log('amountDataStrings === database')
+        }
+
+
     }
 };
 
