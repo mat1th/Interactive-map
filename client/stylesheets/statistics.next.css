@@ -83,7 +83,6 @@ html, body {
 }
 
 .statistics p {
-    display: inline-block;
     color: #333333;
     font-weight: 700;
     font-size: 30px;
@@ -93,7 +92,6 @@ html, body {
 }
 
 .statsubscript {
-    display: inline-block;
     top: -15px;
     position: relative;
 }
