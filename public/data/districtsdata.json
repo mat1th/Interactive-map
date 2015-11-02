@@ -2,7 +2,7 @@
     "we": {
         "name": "Westelijke eilanden",
         "sqmeters": 842151.87,
-        "mark": 8.48,
+        "mark": 8.5,
         "trashes": 108,
         "cleaningintensity": "Laag",
         "photos": 0
@@ -10,7 +10,7 @@
     "jd": {
         "name": "Jordaan",
         "sqmeters": 964666.37,
-        "mark": 8.36,
+        "mark": 8.4,
         "trashes": 142,
         "cleaningintensity": "Gemiddeld",
         "photos": 0
@@ -18,7 +18,7 @@
     "gw": {
         "name": "Grachtengordel-West",
         "sqmeters": 635099.20,
-        "mark": 8.44,
+        "mark": 8.4,
         "trashes": 76,
         "cleaningintensity": "Gemiddeld",
         "photos": 0
@@ -26,7 +26,7 @@
     "bnz": {
         "name": "Burgwallen-Nieuwe Zijde",
         "sqmeters": 678248.77,
-        "mark": 7.78,
+        "mark": 7.8,
         "trashes": 223.5,
         "cleaningintensity": "Hoog",
         "photos": 0
@@ -34,7 +34,7 @@
     "gz": {
         "name": "Grachtengordel-Zuid",
         "sqmeters": 568111.44,
-        "mark": 8.45,
+        "mark": 8.5,
         "trashes": 110,
         "cleaningintensity": "Gemiddeld",
         "photos": 0
@@ -42,7 +42,7 @@
     "dws": {
         "name": "De Weteringschans",
         "sqmeters": 640664.21,
-        "mark": 7.95,
+        "mark": 8.0,
         "trashes": 129.5,
         "cleaningintensity": "Laag",
         "photos": 0
@@ -50,7 +50,7 @@
     "wp": {
         "name": "Weesperbuurt en Plantage",
         "sqmeters": 859717.91,
-        "mark": 8.95,
+        "mark": 9.0,
         "trashes": 160,
         "cleaningintensity": "Laag",
         "photos": 0
@@ -58,7 +58,7 @@
     "oek": {
         "name": "Oostelijke Eilanden en Kadijken",
         "sqmeters": 1429313.76,
-        "mark": 9.025,
+        "mark": 9.0,
         "trashes": 92,
         "cleaningintensity": "Laag",
         "photos": 0
@@ -66,7 +66,7 @@
     "nl": {
         "name": "Nieuwmarkt en Lastage",
         "sqmeters": 1062643.51,
-        "mark": 8.46,
+        "mark": 8.5,
         "trashes": 102,
         "cleaningintensity": "Gemiddeld",
         "photos": 0

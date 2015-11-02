@@ -158,17 +158,17 @@ Template.map.rendered = function () {
     */
 
     // set foto's july on map
-    //    var setFotoLocationJuly = function (fotosDataJuly) {
-    //        var Amountfotos = fotosDataJuly.length,
-    //            f = 0;
-    //        for (f; f < Amountfotos; f++) {
-    //            var longitude = fotosDataJuly[f].log;
-    //            var latitude = fotosDataJuly[f].lat;
-    //            L.marker([latitude, longitude], {
-    //                icon: fotoIconJuly,
-    //            }).addTo(map);
-    //        }
-    //    };
+        var setFotoLocationJuly = function (fotosDataJuly) {
+            var Amountfotos = fotosDataJuly.length,
+                f = 0;
+            for (f; f < Amountfotos; f++) {
+                var longitude = fotosDataJuly[f].log;
+                var latitude = fotosDataJuly[f].lat;
+                L.marker([latitude, longitude], {
+                    icon: fotoIconJuly,
+                }).addTo(map);
+            }
+        };
 
     //set trashes on map in layer
     var setTrashes = function (trashesData) {
@@ -401,7 +401,7 @@ Template.map.rendered = function () {
                 previousID, nextID;
 
             gradeMark.innerHTML = JSON.stringify(districtData.mark).replace('.', ',');
-            amountTrashesMark.innerHTML = JSON.stringify(Math.round(districtData.trashes / districtData.sqmeters * 1000 * 100) / 100).replace('.', ',') + " per km²"
+            amountTrashesMark.innerHTML = JSON.stringify(Math.round(districtData.trashes / districtData.sqmeters * 1000 * 100) / 100).replace('.', ',') + " per m²"
             cleaningintensity.innerHTML = districtData.cleaningintensity;
             districtname.innerHTML = districtData.name;
             //funtion to give id to naviation buttons
@@ -915,7 +915,6 @@ Template.map.rendered = function () {
             moveToPrevious()
         });
     }
-
 
     /*
     _____________________________________________________________

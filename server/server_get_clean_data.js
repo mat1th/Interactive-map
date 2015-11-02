@@ -26,20 +26,20 @@ var getCleanData = function (rawDataUrl, mapQuestUrl) {
         //create cleanData array
         //get amount of data strings
         amountDataStrings = rawData.feed.entry.length,
-        //        amountDataStrings = 210,
-        i = 210;
+        i = 0;
 
     //loop through data
-    if (trashesCollection.find().fetch()[0] === undefined) {
+    if (amountDataStrings !== trashesCollection.find().fetch().length) {
+        //starts with looping at ending point
+        var i = trashesCollection.find().fetch().length;
         for (i; i < amountDataStrings; i++) {
             var AllTrashData = rawData.feed.entry[i].content.$t,
                 SplicedTrashData = AllTrashData.split(','),
                 city = "Amsterdam",
                 street = SplicedTrashData[3].split(':')[1],
                 houseNumber = SplicedTrashData[4].split(':')[1],
-                //    var fulness = array[11].split(':')[1];
-                url = mapQuestUrl[0] + "\"" + street.replace(" ", "%20") + houseNumber.replace(" ", "%20") + "," + city + "\"" + mapQuestUrl[1];
-            var gps = HTTP.get(url).data;
+                url = mapQuestUrl[0] + "\"" + street.replace(" ", "%20") + houseNumber.replace(" ", "%20") + "," + city + "\"" + mapQuestUrl[1],
+                gps = HTTP.get(url).data;
 
             if (gps !== undefined) {
                 if (gps.results[0].locations[0].latLng !== undefined) {
@@ -57,6 +57,7 @@ var getCleanData = function (rawDataUrl, mapQuestUrl) {
             }
         }
     }
+
     //if you want to clean the trashesCollection.
     //         else {
     //            var deletelength = trashesCollection.find().fetch().length;
