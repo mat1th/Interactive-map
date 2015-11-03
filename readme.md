@@ -31,6 +31,7 @@ run meteor:
 ```bash
 meteor
 ```
+
 ## Meteor packages
 Name              | Version | Description
 :---------------- | :-----  | :-------------------------------------------------------------------
@@ -41,6 +42,16 @@ http              | 1.1.1   | Make HTTP calls to remote servers.
 infinitedg:gsap   | 1.16.0  | GreenSock Animation Platform : Professional-Grade HTML5 Animation.
 kit:cssnext       | 1.0.2   | Transpile CSS4 to CSS3
 
+
+## change data
+In the file public/data/url.json you can find all te urls we are using to get the data.
+- RawData is the data from the trashes
+- mapQuest is used to convert the street adresses to gps locations
+- flickrGetPlaceId is the request url to the flickr API to get all photo's of a place id
+- flickrGetPhotos is the request url to the flickr API to get all the photo id's
+- flickrGetGeoPhoto is the request url to the flickr API to get the geo data from every photo.
+
+
 ## Contributors
  - [Avia]() for motion
  - [Niels](http://cremind.nl) for design
@@ -49,5 +60,5 @@ kit:cssnext       | 1.0.2   | Transpile CSS4 to CSS3
  - [Shanice](http://www.shanicedesign.com) for interaction
 
 ## License
-Licensed under the  Apache License  see [LICENSE](https://github.com/matth96/Interactive-map/blob/master/LICENSE.md) 
+Licensed under the  Apache License  see [LICENSE](https://github.com/matth96/Interactive-map/blob/master/LICENSE.md)
 
