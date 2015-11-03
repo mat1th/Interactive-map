@@ -1,4 +1,4 @@
-# Interactive map with Meteor and Leaflet library
+# Interactive map with Meteor and the Leaflet library
 [![forthebadge](http://forthebadge.com/images/badges/built-with-love.svg)](http://informotion.meteor.com)
 [![forthebadge](http://forthebadge.com/images/badges/uses-html.svg)](http://informotion.meteor.com)
 [![forthebadge](http://forthebadge.com/images/badges/uses-js.svg)](http://informotion.meteor.com)
@@ -32,6 +32,7 @@ run meteor:
 meteor
 ```
 
+
 ## Meteor packages
 Name              | Version | Description
 :---------------- | :-----  | :-------------------------------------------------------------------
@@ -43,8 +44,9 @@ infinitedg:gsap   | 1.16.0  | GreenSock Animation Platform : Professional-Grade 
 kit:cssnext       | 1.0.2   | Transpile CSS4 to CSS3
 
 
-## change data
-In the file public/data/url.json you can find all te urls we are using to get the data.
+## Change data
+In the file [public/data/url.json](https://github.com/matth96/Interactive-map/blob/master/public/data/url.json) you can find all te urls we are using to get the data.
+
 - RawData is the data from the trashes
 - mapQuest is used to convert the street adresses to gps locations
 - flickrGetPlaceId is the request url to the flickr API to get all photo's of a place id
