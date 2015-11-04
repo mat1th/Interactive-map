@@ -4,12 +4,10 @@ Meteor.publish("trashesCollection", function () {
     return trashesCollection.find();
 });
 
-
-
-
 var rawDataUrl,
     mapQuestUrl;
 
+//Loads data from url.json
 Meteor.startup(function () {
     HTTP.get(Meteor.absoluteUrl("data/url.json"), function (err, result) {
         if (err) {
@@ -26,10 +24,9 @@ Meteor.startup(function () {
 //get geo data of trashes
 var getCleanData = function (rawDataUrl, mapQuestUrl) {
     var rawData = HTTP.get(rawDataUrl).data,
-        //        //create cleanData array
-        //        //get amount of data strings
+        //get amount of data strings
         amountDataStrings = rawData.feed.entry.length;
-    loopfuntion = function (i) {
+    loopfunction = function (i) {
         for (i; i < amountDataStrings; i++) {
             var AllTrashData = rawData.feed.entry[i].content.$t,
                 SplicedTrashData = AllTrashData.split(','),
@@ -58,34 +55,33 @@ var getCleanData = function (rawDataUrl, mapQuestUrl) {
 
     //loop through data
     if (amountDataStrings > trashesCollection.find().fetch().length) {
-        //starts with looping at ending point
+        //starts with looping from the last point, and adds the the new points
         var i = trashesCollection.find().fetch().length;
         console.log('amountDataStrings > database')
-        loopfuntion(i)
+        loopfunction(i)
     }
+    //If there are fewer points in the collection than in amountDataStrings, it will delete everything and start over
     if (amountDataStrings < trashesCollection.find().fetch().length) {
         console.log('amountDataStrings < database')
-            //if you want to clean the trashesCollection.
 
         var deletelength = trashesCollection.find().fetch().length,
             deletedata = trashesCollection.find().fetch(),
             a = 0,
             i = 0;
-        loopfuntion(i)
 
         for (0; i < deletelength; i++) {
             trashesCollection.remove(deletedata[i]._id)
             console.log(trashesCollection.find().fetch().length)
             if (deletelength === 0) {
-                loopfuntion(i)
+                loopfunction(i)
             }
         }
     }
     if (amountDataStrings === trashesCollection.find().fetch().length) {
         if (trashesCollection.find().fetch()[0] === undefined) {
             var i = 0;
-            loopfuntion(i)
-             console.log('database = 0')
+            loopfunction(i)
+            console.log('database = 0')
         } else {
             console.log('amountDataStrings === database')
         }

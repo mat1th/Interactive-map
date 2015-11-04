@@ -4,7 +4,7 @@ var fotoLocationsCollection = new Meteor.Collection('fotoLocationsCollection');
 var fotoLocationsJulyCollection = new Meteor.Collection('fotoLocationsJulyCollection');
 var fotoLocationsAugustCollection = new Meteor.Collection('fotoLocationsAugustCollection');
 
-//if template "map" is renderd
+//if template "map" is rendered
 Template.map.rendered = function () {
 
     //create funtion for easy selection of id's and classes
@@ -55,7 +55,8 @@ Template.map.rendered = function () {
         layers = [],
         layerIDs = [],
         districtsData = null,
-        geojson;
+        geojson,
+        zoomState = false;
 
     /*
     _____________________________________________________________
@@ -72,7 +73,7 @@ Template.map.rendered = function () {
         setTrashes(trashesData)
     });
 
-    //subscribe to fotoLocationsCollection
+    //subscribe to fotoLocationsCollection, subscribes to Meteor.publish in server_get_clean_data.js
     Meteor.subscribe('fotoLocationsJulyCollection', function () {
         var fotosDataJuly = fotoLocationsJulyCollection.find().fetch();
         setFotoLocationJuly(fotosDataJuly);
@@ -85,8 +86,9 @@ Template.map.rendered = function () {
         });
     });
 
+    //Gets data from map.json and sends it as a parameter to geoDatafunction
     HTTP.get(Meteor.absoluteUrl("data/map.json"), function (err, result) {                
-        geoData = result.data;
+        var geoData = result.data;
         var gData = geoData.features;
         var i = 0;
         for (i; i < gData.length; i++) {
@@ -107,7 +109,7 @@ Template.map.rendered = function () {
     -------------------------------------------------------------
     */
 
-    //create leaflet map and start coordiates
+    //create leaflet map and start coordinates
     var map = L.map('map', {
         center: [52.376956, 4.902756],
         maxZoom: 20,
@@ -125,6 +127,7 @@ Template.map.rendered = function () {
         [52.391734853683936, 4.944705963134766]
     ]);
 
+    //Creates a tilelayer representing the streets on top of the map
     var baseLayer = L.tileLayer(
         'http://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png', {
             attribution: 'Informotion',
@@ -132,12 +135,13 @@ Template.map.rendered = function () {
             maxZoom: 19
         });
 
+    //Chose the tilelayer provider and adds tilelayer to map
     L.tileLayer.provider('CartoDB.PositronNoLabels').addTo(map);
 
     //diable double Click Zooming
     map.doubleClickZoom.disable();
 
-    //create div icon with class trash
+    //create divs containing the icons for photos and trash
     var trashIcon = L.divIcon({
         className: 'trashicon'
     });
@@ -172,7 +176,7 @@ Template.map.rendered = function () {
         }
     };
 
-    //set trashes on map in layer
+    //set trashes on map in a new layer
     var setTrashes = function (trashesData) {
         var markers = new L.FeatureGroup(),
             trashnumber = 0;
@@ -209,14 +213,16 @@ Template.map.rendered = function () {
         });
     };
 
-    //Create the map of Amsterdam Centrum and render it.
+    //Styling for the map
     var transparentStyle = {
         "fillColor": "#fff",
         "fillOpacity": 0.0,
         "color": "RGBA(255, 255, 255, 0)"
-    }
+    };
 
+    //Creates the map of Amsterdam Centrum and renders it with a cleaningintensity beneath it
     var geoDatafunction = function (geoData) {
+        //Creates the cleaningintensity layer
         cleaningIntensity = L.geoJson(geoData, {
             style: function (feature) {
                 return {
@@ -225,17 +231,20 @@ Template.map.rendered = function () {
                     "weight": 0
                 };
             }
-        }).addTo(map)
+        }).addTo(map);
 
+        //Adds class to path of each layer
         cleaningIntensity.eachLayer(function (layer) {
             layer._path.classList.add("cleaningIntensityLayer")
         });
 
+        //Creates layer containing geoData, this creates the map of Amsterdam Centrum
         geojson = L.geoJson(geoData, {
             style: transparentStyle,
             onEachFeature: onEachFeature
-        }).addTo(map) 
+        }).addTo(map);
 
+        //Get id's from layers
         geojson.eachLayer(function (layer) {
             layer._path.id = layer.feature.properties.id;
         });
@@ -251,8 +260,8 @@ Template.map.rendered = function () {
 
     //What happens on mouseover
     function highlightFeature(e) {
-        var layer = e.target;
-        var layerName = layer.feature.properties.name,
+        var layer = e.target,
+            layerName = layer.feature.properties.name,
             layerID = layer.feature.properties.id,
             SvgMapPart = selector('.mappopup'),
             popup = selector('.popup'),
@@ -283,15 +292,14 @@ Template.map.rendered = function () {
         };
     };
 
-    //reset on mouseout
+    //reset style on mouseout
     function resetHighlight(e) {
         geojson.resetStyle(e.target);
     };
-    //create zoomstate
-    var zoomState = false;
 
+    //What happens when a layer is clicked
     function clickFeature(e) {
-        //check if the map isn't in the zoom state
+        //check if the map isn't in the zoom state, if it is in zoomstate, clickfeature doesn't work
         if (zoomState === false) {
             zoomState = true;
             var clickedLayer = e.target,
@@ -300,6 +308,7 @@ Template.map.rendered = function () {
                 SvgMapPart = selector('.mappopup'),
                 overlayList = document.querySelectorAll(".overlay");
 
+            //rightgone and leftgone are the surrounding areas, they are not relevant
             if (layerName !== "rightgone" && layerName !== "leftgone") {
 
                 //display and hide elements
@@ -307,11 +316,11 @@ Template.map.rendered = function () {
                 closeButton.classList.remove("none");
                 navigationBar.classList.remove("none");
 
-                //                statistic.classList.remove("none");
-
+                //Added animations to elements
                 TweenMax.to(statistic, 2, {
                     display: "block"
                 }, "start");
+
                 TweenMax.fromTo(statistic, 2, {
                     x: 500
                 }, {
@@ -347,19 +356,19 @@ Template.map.rendered = function () {
                 //zoom in to district
                 var district = e.target,
                     districtId = district.feature.properties.id,
-                    getBoutdsOfDistrict = district.getBounds();
-                DistrictNorthEastlng = getBoutdsOfDistrict._northEast.lng + 0.008,
-                    DistrictNorthEastlat = getBoutdsOfDistrict._northEast.lat,
-                    DistrictSouthWestlng = getBoutdsOfDistrict._southWest.lng + 0.004;
+                    getBoundsOfDistrict = district.getBounds();
+                DistrictNorthEastlng = getBoundsOfDistrict._northEast.lng + 0.008,
+                    DistrictNorthEastlat = getBoundsOfDistrict._northEast.lat,
+                    DistrictSouthWestlng = getBoundsOfDistrict._southWest.lng + 0.004;
 
+                //Exceptions for bigger districts so they get different values to fit in the window
                 if (districtId === "wp") {
-                    DistrictSouthWestlat = getBoutdsOfDistrict._southWest.lat - 0.005;
+                    DistrictSouthWestlat = getBoundsOfDistrict._southWest.lat - 0.005;
                 } else if (districtId === "dws") {
-                    DistrictSouthWestlat = getBoutdsOfDistrict._southWest.lat - 0.005;
+                    DistrictSouthWestlat = getBoundsOfDistrict._southWest.lat - 0.005;
                 } else {
-                    DistrictSouthWestlat = getBoutdsOfDistrict._southWest.lat - 0.002;
-                }
-
+                    DistrictSouthWestlat = getBoundsOfDistrict._southWest.lat - 0.002;
+                };
 
                 var southWest = L.latLng(DistrictSouthWestlat, DistrictSouthWestlng),
                     northEast = L.latLng(DistrictNorthEastlat, DistrictNorthEastlng),
@@ -368,10 +377,10 @@ Template.map.rendered = function () {
                 //zoom in on map
                 map.fitBounds(bounds);
                 districtname.innerHTML = layerName;
-                setDistrictData(layerID)
-                hideCleaningsIntensityLayer()
+                setDistrictData(layerID);
+                hideCleaningsIntensityLayer();
 
-                //disable dragging
+                //disable dragging and zooming when in zoom state
                 map.dragging.disable();
                 map.touchZoom.disable();
                 map.doubleClickZoom.disable();
@@ -407,6 +416,7 @@ Template.map.rendered = function () {
         }
     };
 
+    //Shows data in statistics pane when in zoom state
     var setDistrictData = function (layerID) {
         if (districtsData !== null && districtsData !== undefined) {
             var indexLayer = layerIDs.indexOf(layerID),
@@ -416,11 +426,12 @@ Template.map.rendered = function () {
                 previousID, nextID;
 
             gradeMark.innerHTML = JSON.stringify(districtData.mark).replace('.', ',');
+            //Rounds the number with two numbers after the comma
             amountTrashesMark.innerHTML = JSON.stringify(Math.round(districtData.trashes / districtData.sqmeters * 1000 * 100) / 100).replace('.', ',') + " per m²"
             cleaningintensity.innerHTML = districtData.cleaningintensity;
             statisticSubscript.innerHTML = districtData.subscript;
-
             districtname.innerHTML = districtData.name;
+
             //funtion to give id to naviation buttons
             if (indexLayer === 0) {
                 previousID = layerIDs[layerIDs.length - 3];
@@ -439,22 +450,23 @@ Template.map.rendered = function () {
         }
     };
 
+    //Get bounds of districts for scrolling through districts with nav bar
     function getBoundsOfDistrict(DistrictID) {
         var j = 0;
         for (j; j < layers.length; j++) {
             if (layers[j]._path.id === DistrictID) {
-                var getBoutdsOfDistrict = layers[j]._bounds,
+                var getBoundsOfDistrict = layers[j]._bounds,
                     districtId = layers[j].feature.properties.id,
-                    DistrictNorthEastlng = getBoutdsOfDistrict._northEast.lng + 0.008,
-                    DistrictNorthEastlat = getBoutdsOfDistrict._northEast.lat,
-                    DistrictSouthWestlng = getBoutdsOfDistrict._southWest.lng + 0.004;
+                    DistrictNorthEastlng = getBoundsOfDistrict._northEast.lng + 0.008,
+                    DistrictNorthEastlat = getBoundsOfDistrict._northEast.lat,
+                    DistrictSouthWestlng = getBoundsOfDistrict._southWest.lng + 0.004;
 
                 if (districtId === "wp") {
-                    DistrictSouthWestlat = getBoutdsOfDistrict._southWest.lat - 0.005;
+                    DistrictSouthWestlat = getBoundsOfDistrict._southWest.lat - 0.005;
                 } else if (districtId === "dws") {
-                    DistrictSouthWestlat = getBoutdsOfDistrict._southWest.lat - 0.005;
+                    DistrictSouthWestlat = getBoundsOfDistrict._southWest.lat - 0.005;
                 } else {
-                    DistrictSouthWestlat = getBoutdsOfDistrict._southWest.lat - 0.002;
+                    DistrictSouthWestlat = getBoundsOfDistrict._southWest.lat - 0.002;
                 }
 
                 var southWest = L.latLng(DistrictSouthWestlat, DistrictSouthWestlng),
@@ -514,7 +526,6 @@ Template.map.rendered = function () {
                 navigationBar.classList.add("none");
             },
         });
-
         cleaningIntensityDiv.classList.remove("none");
 
         TweenMax.to([cleaningIntensityDiv, cleaningBorder], 1.5, {
@@ -538,7 +549,7 @@ Template.map.rendered = function () {
             [52.391734853683936, 4.944705963134766]
         ]);
 
-        //enable dragging
+        //enable dragging and zooming
         map.dragging.enable();
         map.touchZoom.enable();
         map.doubleClickZoom.disable();
@@ -561,12 +572,12 @@ Template.map.rendered = function () {
     -------------------------------------------------------------
     */
 
-    //add funtionality to previousDistrict button, so you can go to the previous district
+    //add functionality to previousDistrict button, so you can go to the previous district
     previousDistrict.addEventListener('click', function (e) {
         GoToPreviousDistrict()
     });
 
-    //add funtionality to nextDistrict button, so you can go to the next district
+    //add functionality to nextDistrict button, so you can go to the next district
     nextDistrict.addEventListener('click', function (e) {
         GoToNextDistrict()
     });
@@ -586,6 +597,7 @@ Template.map.rendered = function () {
         }
         getBoundsOfDistrict(previousDistrictID)
     }
+
     var GoToNextDistrict = function () {
         nDID = nextDistrict.getAttribute('id');
         var nextDistrictID = nDID.replace('2', '');
@@ -600,9 +612,7 @@ Template.map.rendered = function () {
             };
         }
         getBoundsOfDistrict(nextDistrictID);
-
     }
-
 
     /*
     _____________________________________________________________
@@ -713,7 +723,6 @@ Template.map.rendered = function () {
             }
             statisticsClosed = false;
         }
-
     });
 
     /*
@@ -724,6 +733,7 @@ Template.map.rendered = function () {
     -------------------------------------------------------------
     */
 
+    //toggle crowdedness filter on or off
     crowdednessInput.addEventListener('click', function () {
         var fotoAugust = selectors('.foto-icon-august'),
             fotoJuly = selectors('.foto-icon-july'),
@@ -742,7 +752,7 @@ Template.map.rendered = function () {
         }
     });
 
-    //trashes
+    //toggle trashes filter on or off
     trashesInput.addEventListener('click', function () {
         var trashIcons = selectors('.trashicon'),
             t = 0;
@@ -750,6 +760,7 @@ Template.map.rendered = function () {
             trashIcons[t].classList.toggle("none");
         }
     });
+    //toggle cleaningintensity layer on or off
     cleaningIntensityInput.addEventListener('click', function () {
         hideCleaningsIntensityLayer()
     });
@@ -759,11 +770,10 @@ Template.map.rendered = function () {
         opacity: 0.3
     });
 
-
     /*
     _____________________________________________________________
     |***********************************************************|
-    |******************Toggle trought months********************|
+    |******************Toggle through months********************|
     |***********************************************************|
     -------------------------------------------------------------
     */
@@ -772,19 +782,19 @@ Template.map.rendered = function () {
     var $slideWrapper = $('.months');
     var width = [0, -44, -90, -185];
     var width2 = [0, 0, -90, -185];
-    var currentImageCount = 1;
+    var currentMonthCount = 1;
 
     //move month text to next
     var moveToNext = function () {
-        if (currentImageCount !== 3) {
-            currentImageCount++;
+        if (currentMonthCount !== 3) {
+            currentMonthCount++;
             TweenMax.to(slides, 0.5, {
-                x: width[currentImageCount]
+                x: width[currentMonthCount]
             });
             TweenMax.to(previousMonth, 0.2, {
                 opacity: 1
             });
-            if (currentImageCount === 3) {
+            if (currentMonthCount === 3) {
                 TweenMax.to(nextMonth, 0.2, {
                     opacity: 0.3
                 });
@@ -797,15 +807,15 @@ Template.map.rendered = function () {
     };
     //move month text to previous
     var moveToPrevious = function () {
-        if (currentImageCount !== 1) {
-            currentImageCount--;
+        if (currentMonthCount !== 1) {
+            currentMonthCount--;
             TweenMax.to(slides, 0.5, {
-                x: width2[currentImageCount]
+                x: width2[currentMonthCount]
             });
             TweenMax.to(nextMonth, 0.2, {
                 opacity: 1
             });
-            if (currentImageCount === 1) {
+            if (currentMonthCount === 1) {
                 TweenMax.to(previousMonth, 0.2, {
                     opacity: 0.3
                 });
@@ -818,14 +828,14 @@ Template.map.rendered = function () {
     };
     //add events to buttons
     nextMonth.addEventListener('mouseover', function () {
-        if (currentImageCount !== 3) {
+        if (currentMonthCount !== 3) {
             TweenMax.to(nextMonth, 0.2, {
                 opacity: 0.60
             });
         }
     });
     nextMonth.addEventListener('mouseout', function () {
-        if (currentImageCount !== 3) {
+        if (currentMonthCount !== 3) {
             TweenMax.to(nextMonth, 0.2, {
                 opacity: 1
             });
@@ -833,14 +843,14 @@ Template.map.rendered = function () {
 
     });
     previousMonth.addEventListener('mouseover', function () {
-        if (currentImageCount !== 1) {
+        if (currentMonthCount !== 1) {
             TweenMax.to(previousMonth, 0.2, {
                 opacity: 0.60
             });
         }
     });
     previousMonth.addEventListener('mouseout', function () {
-        if (currentImageCount !== 1) {
+        if (currentMonthCount !== 1) {
             TweenMax.to(previousMonth, 0.2, {
                 opacity: 1
             });
@@ -850,16 +860,16 @@ Template.map.rendered = function () {
     //toggle through months
     function toggleMonths(fotosDataJuly, fotosDataAugust, fotosDataSeptember) {
         nextMonth.addEventListener('click', function () {
-            var juliIcons = selectors('.foto-icon-july');
+            var julyIcons = selectors('.foto-icon-july');
             var augustIcons = selectors('.foto-icon-august');
             var sepemberIcons = selectors('.foto-icon-september');
-            //            fotosDataJuly
+
             setTimeout(function () {
                 crowdedness.classList.remove('disabled');
-                if (currentImageCount === 2) {
+                if (currentMonthCount === 2) {
                     var j = 0;
-                    for (j; j < juliIcons.length; j++) {
-                        juliIcons[j].parentNode.removeChild(juliIcons[j]);
+                    for (j; j < julyIcons.length; j++) {
+                        julyIcons[j].parentNode.removeChild(julyIcons[j]);
                     }
                     // set foto's August on map
                     var AmountfotosAugust = fotosDataAugust.length,
@@ -872,7 +882,7 @@ Template.map.rendered = function () {
                         }).addTo(map);
                     }
                 }
-                if (currentImageCount === 3) {
+                if (currentMonthCount === 3) {
                     var s = 0;
                     for (s; s < augustIcons.length; s++) {
                         augustIcons[s].parentNode.removeChild(augustIcons[s]);
@@ -892,13 +902,13 @@ Template.map.rendered = function () {
             moveToNext()
         });
         previousMonth.addEventListener('click', function () {
-            var juliIcons = selectors('.foto-icon-july');
+            var julyIcons = selectors('.foto-icon-july');
             var augustIcons = selectors('.foto-icon-august');
             var sepemberIcons = selectors('.foto-icon-september');
 
             setTimeout(function () {
                 crowdedness.classList.remove('disabled');
-                if (currentImageCount === 1) {
+                if (currentMonthCount === 1) {
                     var j = 0;
                     for (j; j < augustIcons.length; j++) {
                         augustIcons[j].parentNode.removeChild(augustIcons[j]);
@@ -914,7 +924,7 @@ Template.map.rendered = function () {
                         }).addTo(map);
                     }
                 }
-                if (currentImageCount === 2) {
+                if (currentMonthCount === 2) {
                     var j = 0;
                     for (j; j < sepemberIcons.length; j++) {
                         sepemberIcons[j].parentNode.removeChild(sepemberIcons[j]);
@@ -960,9 +970,9 @@ Template.map.rendered = function () {
                 closeZoomState()
             }
         }
-    }
+    };
 
-      /*
+    /*
     _____________________________________________________________
     |***********************************************************|
     |***********************Other features**********************|

@@ -21,7 +21,7 @@ Template.intro.rendered = function () {
             initEvents();
             startSlideshow();
         }
-
+//        Creates the events of the buttons, in this case they are click events
         function initEvents() {
             startSlideshow();
 
@@ -66,21 +66,14 @@ Template.intro.rendered = function () {
 
         }
 
+//        Starts the slideshow and runs based on a given interval
         function startSlideshow() {
-            // Help Here
             isSlideshowActive = true;
             clearTimeout(slideshowtime);
             slideshowtime = setTimeout(function () {
                 navigate('next');
                 startSlideshow();
             }, interval);
-
-            /*
-            TweenLite.killTweensOf(slideshowtime);
-            slideshowtime = TweenLite.delayedCall(3.5, function () {
-                navigate( 'next' );
-                startSlideshow();
-            });*/
         }
 
         return {
@@ -88,6 +81,8 @@ Template.intro.rendered = function () {
         };
 
     })();
+    
+//    Executes the slider function created above
     $(function () {
         slider.init();
     });

@@ -26,25 +26,22 @@ Meteor.startup(function () {
             var flickrGetPlaceIdUrl = result.data.flickrGetPlaceId,
                 flickrGetPhotosUrl = result.data.flickrGetPhotos,
                 flickrGetGeoPhotoUrl = result.data.flickrGetGeoPhoto;
+            
             getGeoFlickrPhotos(flickrGetPlaceIdUrl, flickrGetPhotosUrl, flickrGetGeoPhotoUrl);
         }
     });
 });
 
 var getGeoFlickrPhotos = function (flickrGetPlaceIdUrl, flickrGetPhotosUrl, flickrGetGeoPhotoUrl) {
-
-    console.log(fotoLocationsJulyCollection.find().fetch().length)
-
-
-    //get place_d of amsterdam centrum
+    //get place_id of amsterdam centrum
     var city = "Amsterdam",
         postCode = 1013,
         country = "Nederland",
         url = flickrGetPlaceIdUrl[0] + city + "%2C" + country + "%2C" + postCode + flickrGetPlaceIdUrl[1],
         placeID = HTTP.get(url).data.places.place[0].place_id,
 
-        //get foto's with the placeID
-        //divine min and max take date
+        //get photos with the placeID
+        //define min and max taken date
         July = {
             "min_taken_date": "2015-07-01",
             "max_taken_date": "2015-07-31"
@@ -58,6 +55,8 @@ var getGeoFlickrPhotos = function (flickrGetPlaceIdUrl, flickrGetPhotosUrl, flic
             "max_taken_date": "2015-09-30"
         },
         firstPage = 1,
+        
+        //Builds url's from url.json
         url2July = flickrGetPhotosUrl[0] + July.min_taken_date + flickrGetPhotosUrl[1] + July.max_taken_date + flickrGetPhotosUrl[2] + placeID + flickrGetPhotosUrl[3] + firstPage + flickrGetPhotosUrl[4],
         url2August = flickrGetPhotosUrl[0] + August.min_taken_date + flickrGetPhotosUrl[1] + August.max_taken_date + flickrGetPhotosUrl[2] + placeID + flickrGetPhotosUrl[3] + firstPage + flickrGetPhotosUrl[4],
         url2September = flickrGetPhotosUrl[0] + September.min_taken_date + flickrGetPhotosUrl[1] + September.max_taken_date + flickrGetPhotosUrl[2] + placeID + flickrGetPhotosUrl[3] + firstPage + flickrGetPhotosUrl[4],
@@ -93,7 +92,7 @@ var getGeoFlickrPhotos = function (flickrGetPlaceIdUrl, flickrGetPhotosUrl, flic
         }
     });
 
-    //Get foto's of a month July
+    //Get photos of July
     var getAllFotosJuly = function (page, pagesJuly, totalPhotosJuly, month) {
         if (fotoLocationsJulyCollection.find().fetch()[0] === undefined) {
 
@@ -106,15 +105,15 @@ var getGeoFlickrPhotos = function (flickrGetPlaceIdUrl, flickrGetPhotosUrl, flic
                         console.log(err);
                     }
                     if (result) {
-                        var anoumtPhotoIDs = result.data.photos.photo.length,
+                        var amountPhotoIDs = result.data.photos.photo.length,
                             p = 0;
-                        for (p; p < anoumtPhotoIDs; p++) {
+                        for (p; p < amountPhotoIDs; p++) {
                             photosJuly.push(result.data.photos.photo[p].id);
                             if (page === pagesJuly + 1) {
                                 if (photosJuly.length === totalPhotosJuly) {
-                                    if (p === anoumtPhotoIDs - 1) {
+                                    if (p === amountPhotoIDs - 1) {
                                         console.log("Get geo location of July");
-                                        getGeoLoctionOfPhotoIdsJuly(photosJuly);
+                                        getGeoLocationOfPhotoIdsJuly(photosJuly);
                                     }
                                 }
                             }
@@ -122,8 +121,8 @@ var getGeoFlickrPhotos = function (flickrGetPlaceIdUrl, flickrGetPhotosUrl, flic
                     }
                 });
             }
-            //get geolocation of foto's
-            var getGeoLoctionOfPhotoIdsJuly = function (photosJuly) {
+            //get geolocation of photos
+            var getGeoLocationOfPhotoIdsJuly = function (photosJuly) {
 
                 //loop to get gps location
                 var amountPhotos = photosJuly.length,
@@ -147,13 +146,13 @@ var getGeoFlickrPhotos = function (flickrGetPlaceIdUrl, flickrGetPhotosUrl, flic
                 }
             };
         } else {
-            console.log("collection of july has " + JSON.stringify(fotoLocationsJulyCollection.find().fetch().length) + " foto's");
+            console.log("collection of july has " + JSON.stringify(fotoLocationsJulyCollection.find().fetch().length) + " photos");
 
             var deletelength = fotoLocationsJulyCollection.find().fetch().length,
                 deletedata = fotoLocationsJulyCollection.find().fetch(),
-                a = 0
+                a = 0;
 
-            // uncommend this code if you want to delete the fotoLocationsJulyCollection
+            // uncomment this code if you want to delete the fotoLocationsJulyCollection
             //            for (0; a < deletelength; a++) {
             //                fotoLocationsJulyCollection.remove(deletedata[a]._id)
             //                console.log(fotoLocationsJulyCollection.find().fetch().length)
@@ -171,15 +170,15 @@ var getGeoFlickrPhotos = function (flickrGetPlaceIdUrl, flickrGetPhotosUrl, flic
                         console.log(err);
                     }
                     if (result) {
-                        var anoumtPhotoIDs = result.data.photos.photo.length,
+                        var amountPhotoIDs = result.data.photos.photo.length,
                             p = 0;
 
-                        console.log(anoumtPhotoIDs);
-                        for (p; p < anoumtPhotoIDs; p++) {
+                        console.log(amountPhotoIDs);
+                        for (p; p < amountPhotoIDs; p++) {
                             photosAugust.push(result.data.photos.photo[p].id);
                             if (page === pagesAugust + 1) {
                                 if (photosAugust.length === totalPhotosAugust - 1) {
-                                    if (p === anoumtPhotoIDs - 2) {
+                                    if (p === amountPhotoIDs - 2) {
                                         console.log("Get geo location of August")
                                         getGeoLoctionOfPhotoIdsAugust(photosAugust);
 
@@ -191,7 +190,7 @@ var getGeoFlickrPhotos = function (flickrGetPlaceIdUrl, flickrGetPhotosUrl, flic
                 });
             }
 
-            //get geolocation of foto's
+            //get geolocation of photos
             var getGeoLoctionOfPhotoIdsAugust = function (photosAugust) {
                 //loop to get gps location
 
@@ -214,12 +213,12 @@ var getGeoFlickrPhotos = function (flickrGetPlaceIdUrl, flickrGetPhotosUrl, flic
                 }
             };
         } else {
-            console.log("collection of augustus has " + JSON.stringify(fotoLocationsAugustCollection.find().fetch().length) + " foto's")
+            console.log("collection of augustus has " + JSON.stringify(fotoLocationsAugustCollection.find().fetch().length) + " photos")
             var deletelength = fotoLocationsAugustCollection.find().fetch().length,
                 deletedata = fotoLocationsAugustCollection.find().fetch(),
                 a = 0;
 
-            // uncommend this code if you want to delete the fotoLocationsAugustCollection
+            // uncomment this code if you want to delete the fotoLocationsAugustCollection
             //            for (0; a < deletelength; a++) {
             //                fotoLocationsAugustCollection.remove(deletedata[a]._id)
             //                console.log(fotoLocationsAugustCollection.find().fetch().length)
@@ -237,13 +236,13 @@ var getGeoFlickrPhotos = function (flickrGetPlaceIdUrl, flickrGetPhotosUrl, flic
                         console.log(err);
                     }
                     if (result) {
-                        var anoumtPhotoIDs = result.data.photos.photo.length,
+                        var amountPhotoIDs = result.data.photos.photo.length,
                             p = 0;
-                        for (p; p < anoumtPhotoIDs; p++) {
+                        for (p; p < amountPhotoIDs; p++) {
                             photosSeptember.push(result.data.photos.photo[p].id)
                             if (page === pagesSeptember + 1) {
                                 if (photosSeptember.length === totalPhotosSeptember - 1) {
-                                    if (p === anoumtPhotoIDs - 1) {
+                                    if (p === amountPhotoIDs - 1) {
                                         console.log("Get geo location of September");
                                         getGeoLoctionOfPhotoIdsSeptember(photosSeptember);
 
@@ -255,7 +254,7 @@ var getGeoFlickrPhotos = function (flickrGetPlaceIdUrl, flickrGetPhotosUrl, flic
                 });
             }
 
-            //get geolocation of foto's
+            //get geolocation of photos
             var getGeoLoctionOfPhotoIdsSeptember = function (photosSeptember) {
                 //loop to get gps location
                 var amountPhotos = photosSeptember.length,
@@ -277,12 +276,12 @@ var getGeoFlickrPhotos = function (flickrGetPlaceIdUrl, flickrGetPhotosUrl, flic
                 };
             };
         } else {
-            console.log("collection of september has " + JSON.stringify(fotoLocationsCollection.find().fetch().length) + " foto's");
+            console.log("collection of september has " + JSON.stringify(fotoLocationsCollection.find().fetch().length) + " photos");
             var deletelength = fotoLocationsCollection.find().fetch().length,
                 deletedata = fotoLocationsCollection.find().fetch(),
                 a = 0;
 
-            // uncommend this code if you want to delete the fotoLocationsCollection
+            // uncomment this code if you want to delete the fotoLocationsCollection
             //            for (0; a < deletelength; a++) {
             //                fotoLocationsCollection.remove(deletedata[a]._id)
             //                console.log(fotoLocationsCollection.find().fetch().length)
