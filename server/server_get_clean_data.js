@@ -4,6 +4,9 @@ Meteor.publish("trashesCollection", function () {
     return trashesCollection.find();
 });
 
+
+
+
 var rawDataUrl,
     mapQuestUrl;
 

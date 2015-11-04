@@ -32,6 +32,10 @@ Meteor.startup(function () {
 });
 
 var getGeoFlickrPhotos = function (flickrGetPlaceIdUrl, flickrGetPhotosUrl, flickrGetGeoPhotoUrl) {
+
+    console.log(fotoLocationsJulyCollection.find().fetch().length)
+
+
     //get place_d of amsterdam centrum
     var city = "Amsterdam",
         postCode = 1013,
@@ -104,14 +108,13 @@ var getGeoFlickrPhotos = function (flickrGetPlaceIdUrl, flickrGetPhotosUrl, flic
                     if (result) {
                         var anoumtPhotoIDs = result.data.photos.photo.length,
                             p = 0;
-
                         for (p; p < anoumtPhotoIDs; p++) {
                             photosJuly.push(result.data.photos.photo[p].id);
                             if (page === pagesJuly + 1) {
                                 if (photosJuly.length === totalPhotosJuly) {
                                     if (p === anoumtPhotoIDs - 1) {
                                         console.log("Get geo location of July");
-                                         getGeoLoctionOfPhotoIdsJuly(photosJuly);
+                                        getGeoLoctionOfPhotoIdsJuly(photosJuly);
                                     }
                                 }
                             }
@@ -151,10 +154,10 @@ var getGeoFlickrPhotos = function (flickrGetPlaceIdUrl, flickrGetPhotosUrl, flic
                 a = 0
 
             // uncommend this code if you want to delete the fotoLocationsJulyCollection
-//              for (0; a < deletelength; a++) {
-//                fotoLocationsJulyCollection.remove(deletedata[a]._id)
-//                 console.log(fotoLocationsJulyCollection.find().fetch().length)
-//               }
+            //            for (0; a < deletelength; a++) {
+            //                fotoLocationsJulyCollection.remove(deletedata[a]._id)
+            //                console.log(fotoLocationsJulyCollection.find().fetch().length)
+            //            }
         }
     };
     var getAllFotosAugust = function (page, pagesAugust, totalPhotosAugust, month) {
@@ -170,6 +173,8 @@ var getGeoFlickrPhotos = function (flickrGetPlaceIdUrl, flickrGetPhotosUrl, flic
                     if (result) {
                         var anoumtPhotoIDs = result.data.photos.photo.length,
                             p = 0;
+
+                        console.log(anoumtPhotoIDs);
                         for (p; p < anoumtPhotoIDs; p++) {
                             photosAugust.push(result.data.photos.photo[p].id);
                             if (page === pagesAugust + 1) {
@@ -208,18 +213,17 @@ var getGeoFlickrPhotos = function (flickrGetPlaceIdUrl, flickrGetPhotosUrl, flic
                     console.log(fotoLocationsAugustCollection.find().fetch().length);
                 }
             };
-        }
-        else {
+        } else {
             console.log("collection of augustus has " + JSON.stringify(fotoLocationsAugustCollection.find().fetch().length) + " foto's")
             var deletelength = fotoLocationsAugustCollection.find().fetch().length,
                 deletedata = fotoLocationsAugustCollection.find().fetch(),
                 a = 0;
 
             // uncommend this code if you want to delete the fotoLocationsAugustCollection
-             for (0; a < deletelength; a++) {
-                 fotoLocationsAugustCollection.remove(deletedata[a]._id)
-                 console.log(fotoLocationsAugustCollection.find().fetch().length)
-             }
+            //            for (0; a < deletelength; a++) {
+            //                fotoLocationsAugustCollection.remove(deletedata[a]._id)
+            //                console.log(fotoLocationsAugustCollection.find().fetch().length)
+            //            }
         };
     };
 
@@ -272,18 +276,17 @@ var getGeoFlickrPhotos = function (flickrGetPlaceIdUrl, flickrGetPhotosUrl, flic
                     console.log(fotoLocationsCollection.find().fetch().length);
                 };
             };
-        }
-        else {
+        } else {
             console.log("collection of september has " + JSON.stringify(fotoLocationsCollection.find().fetch().length) + " foto's");
             var deletelength = fotoLocationsCollection.find().fetch().length,
                 deletedata = fotoLocationsCollection.find().fetch(),
                 a = 0;
 
             // uncommend this code if you want to delete the fotoLocationsCollection
-            for (0; a < deletelength; a++) {
-                fotoLocationsCollection.remove(deletedata[a]._id)
-                console.log(fotoLocationsCollection.find().fetch().length)
-                            }
+            //            for (0; a < deletelength; a++) {
+            //                fotoLocationsCollection.remove(deletedata[a]._id)
+            //                console.log(fotoLocationsCollection.find().fetch().length)
+            //            }
         }
 
     };
