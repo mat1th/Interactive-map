@@ -1,4 +1,6 @@
 Template.intro.rendered = function () {
+    //code is from http://codepen.io/anon/pen/wBBqxB
+
     var slider = (function () {
 
         var $slideshow = $('#slideshow'),
@@ -81,7 +83,7 @@ Template.intro.rendered = function () {
         };
 
     })();
-    
+
 //    Executes the slider function created above
     $(function () {
         slider.init();
