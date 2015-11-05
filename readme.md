@@ -18,7 +18,6 @@ curl https://install.meteor.com | /bin/sh
 ```
 
 Download:
-
 https://github.com/matth96/Leaflet-with-meteor.git
 
 Go to the project:
@@ -27,7 +26,7 @@ Go to the project:
 cd path/to/Interactive-map
 ```
 
-run meteor:
+Run meteor:
 ```bash
 meteor
 ```
@@ -60,6 +59,18 @@ In the file [public/data/url.json](https://github.com/matth96/Interactive-map/bl
  - [Melvin](http://oege.ie.hva.nl/~reijnom001/testportfolio/index.html) for coding
  - [Matthias](http://mdolstra.me) for coding
  - [Shanice](http://www.shanicedesign.com) for interaction
+
+## Screenshots
+
+### Intro
+![intro](http://hva.mdolstra.me/informotion/intro.png)
+
+### Map
+![intro](http://hva.mdolstra.me/informotion/normal.png)
+
+### Map
+![intro](http://hva.mdolstra.me/informotion/zoomed.png)
+
 
 ## License
 Licensed under the  Apache License  see [LICENSE](https://github.com/matth96/Interactive-map/blob/master/LICENSE.md)
