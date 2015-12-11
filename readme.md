@@ -63,13 +63,13 @@ In the file [public/data/url.json](https://github.com/matth96/Interactive-map/bl
 ## Screenshots
 
 ### Intro
-![intro](http://hva.mdolstra.me/informotion/intro.png)
+![intro](https://raw.githubusercontent.com/matth96/Interactive-map/master/intro.png)
 
 ### Map
-![intro](http://hva.mdolstra.me/informotion/normal.png)
+![intro](https://raw.githubusercontent.com/matth96/Interactive-map/master/normal.png)
 
-### Map
-![intro](http://hva.mdolstra.me/informotion/zoomed.png)
+### Map zoomed
+![intro](https://raw.githubusercontent.com/matth96/Interactive-map/master/zoomed.png)
 
 
 ## License
