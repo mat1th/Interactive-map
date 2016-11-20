@@ -56,8 +56,8 @@ In the file [public/data/url.json](https://github.com/matth96/Interactive-map/bl
 ## Contributors
  - [Avia]() for motion
  - [Niels](http://cremind.nl) for design
- - [Melvin](http://oege.ie.hva.nl/~reijnom001/testportfolio/index.html) for coding
- - [Matthias](http://mdolstra.me) for coding
+ - [Melvin](http://reijnoudt.com) for coding
+ - [Matthias](http://dolstra.me) for coding
  - [Shanice](http://www.shanicedesign.com) for interaction
 
 ## Screenshots
