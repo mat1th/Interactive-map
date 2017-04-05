@@ -2,8 +2,8 @@
 App.info({
     name: 'Interactive map',
     description: 'An interactive map with geo data',
-    author: 'Matthias Dolstra',
-    website: 'http://mdolstra.me'
+    author: 'Matthias',
+    website: 'https://dolstra.me'
 });
 
 Plugin.registerCompiler({
