@@ -4,6 +4,9 @@
 [![forthebadge](http://forthebadge.com/images/badges/uses-js.svg)](http://informotion.meteor.com)
 [![forthebadge](http://forthebadge.com/images/badges/uses-css.svg)](http://informotion.meteor.com)
 
+> [!WARNING]
+> This project is no longer maintained. Only there for code reference. It contains multiple security issues in dependencies.
+
 ## Synopsis
 This application was created as a school project for the municipality of Amsterdam. We are asked to help them in their effort to keep the city clean. We have visualized the crowds in Amsterdam Center to make a map, based on GPS location of flickr pictures taken in Amsterdam Centrum. So we can see the crowds on a GPS base. We combined this dataset with all the trashbins in Amsterdam Centrum.
 
